@@ -155,12 +155,6 @@ vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 
---vim.keymap.set('n', '<leader>Df', require('spire').open_spire_window(), { desc = 'open spire' })
-local spire = require 'spire'
-vim.api.nvim_create_user_command('OpenSpire', function()
-  spire.open_spire_window()
-end, { desc = 'Open Spire' })
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
