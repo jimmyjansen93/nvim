@@ -102,7 +102,7 @@ vim.opt.number = true
 -- vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
+-- vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
@@ -146,7 +146,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.o.scrolloff = 999
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -198,6 +198,25 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Open the help window always in a vertical split
+-- simply because that is more readable to me
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Open help in vertical split',
+  pattern = 'help,qf,netrw',
+  group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
+  callback = function()
+    vim.cmd 'wincmd L'
+    vim.cmd 'vertical resize 80'
+    vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  desc = 'Stop commenting next line',
+  group = vim.api.nvim_create_augroup('jj-comments', { clear = true }),
+  command = [[set formatoptions -=cro]],
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -218,7 +237,7 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require('lazy').setup {
+require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -815,7 +834,7 @@ require('lazy').setup {
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
-}
+}, { checker = { notify = false } })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
