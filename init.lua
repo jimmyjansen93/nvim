@@ -150,10 +150,18 @@ vim.o.scrolloff = 999
 
 --vim.o.filetype = 'plugin indent on'
 vim.cmd 'filetype plugin indent on'
-vim.cmd 'set expandtab'
+vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+-- vim.cmd [[
+-- set autoindent
+-- set expandtab
+-- set shiftwidth=2
+-- set smartindent
+-- set softtabstop=2
+-- set tabstop=2
+-- ]]
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -167,20 +175,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -224,6 +218,39 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
+vim.api.nvim_create_autocmd('BufEnter', {
+  desc = 'expand tab please',
+  group = vim.api.nvim_create_augroup('jj-expandtab', { clear = true }),
+  callback = function()
+    vim.cmd 'filetype plugin indent on'
+    vim.o.tabstop = 2
+    vim.o.softtabstop = 2
+    vim.o.shiftwidth = 2
+    vim.o.expandtab = true
+  end,
+})
+
+-- ORG mode refilling
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'org',
+  group = vim.api.nvim_create_augroup('orgmode_telescope_nvim', { clear = true }),
+  callback = function()
+    vim.keymap.set('n', '<leader>or', require('telescope').extensions.orgmode.refile_heading)
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '*.org',
+  group = vim.api.nvim_create_augroup('jj-autocommit-org', { clear = true }),
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+})
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '~/.config/nvim/**/*',
+  group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -247,11 +274,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
-  {
-    dir = '~/projects/nvim/spire',
-    as = 'spire',
-  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -315,6 +337,79 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'doctorfree/cheatsheet.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      { 'nvim-telescope/telescope.nvim' },
+      { 'nvim-lua/popup.nvim' },
+      { 'nvim-lua/plenary.nvim' },
+    },
+    config = function()
+      local ctactions = require 'cheatsheet.telescope.actions'
+      require('cheatsheet').setup {
+        bundled_cheetsheets = {
+          enabled = { 'default', 'lua', 'markdown', 'regex', 'netrw', 'unicode' },
+          disabled = { 'nerd-fonts' },
+        },
+        bundled_plugin_cheatsheets = {
+          enabled = {
+            'auto-session',
+            'goto-preview',
+            'octo.nvim',
+            'telescope.nvim',
+            'vim-easy-align',
+            'vim-sandwich',
+          },
+          disabled = { 'gitsigns' },
+        },
+        include_only_installed_plugins = true,
+        telescope_mappings = {
+          ['<CR>'] = ctactions.select_or_fill_commandline,
+          ['<A-CR>'] = ctactions.select_or_execute,
+          ['<C-Y>'] = ctactions.copy_cheat_value,
+          ['<C-E>'] = ctactions.edit_user_cheatsheet,
+        },
+      }
+    end,
+    keys = {
+      { '<leader>?', '<CMD>Cheatsheet<CR>', mode = 'n', desc = 'Open Cheatsheet' },
+    },
+  },
+
+  {
+    'FeiyouG/commander.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('commander').setup {
+        components = {
+          'DESC',
+          'KEYS',
+          'CMD',
+          'CAT',
+        },
+        sort_by = {
+          'DESC',
+          'KEYS',
+          'CAT',
+          'CMD',
+        },
+        integration = {
+          telescope = {
+            enable = true,
+          },
+          lazy = {
+            enable = true,
+            set_plugin_name_as_cat = true,
+          },
+        },
+      }
+    end,
+    keys = {
+      { '<leader>cc', '<CMD>Telescope commander<CR>', mode = 'n', desc = 'Open commander' },
+    },
+  },
+
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
@@ -328,6 +423,9 @@ require('lazy').setup({
     branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-file-browser.nvim',
+      'Snikimonkd/telescope-git-conflicts.nvim',
+      'BurntSushi/ripgrep',
       { -- If encountering errors, see telescope-fzf-native README for install instructions
         'nvim-telescope/telescope-fzf-native.nvim',
 
@@ -384,15 +482,23 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          ['file_browser'] = {
+            theme = 'ivy',
+            hidden = { file_browser = true, folder_browser = true },
+            hijack_netrw = true,
+          },
         },
       }
 
       -- Enable telescope extensions, if they are installed
+      pcall(require('telescope').load_extension, 'file_browser')
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension 'conflicts')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<leader>sc', ':Telescope conflicts<CR>', { desc = '[S]earch [C]onflicts' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
@@ -402,14 +508,20 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = '[,] Find existing buffers' })
+
+      -- Built spire without writing too much lua
+      vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
+      -- A telescope keybinding on leader+ff that opens the file picker at the bottom of the screen with 100% and 30% height with the input at the top
+      vim.keymap.set('n', '<leader>fb', ':Telescope file_browser<CR>', { desc = '[F]ile [B]rowser' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
           previewer = false,
+          layout_strategy = 'center',
+          layout_config = { width = 0.6, height = 0.6 },
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -427,6 +539,12 @@ require('lazy').setup({
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
+  },
+  {
+    'pmizio/typescript-tools.nvim',
+    event = 'BufEnter *.ts,*.tsx',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
   },
 
   { -- LSP Configuration & Plugins
@@ -654,10 +772,27 @@ require('lazy').setup({
     },
   },
 
+  -- Install Copilot as it is useful for certain stuff
+  {
+    'zbirenbaum/copilot.lua',
+    event = 'BufEnter',
+    opts = {
+      panel = { enabled = false },
+      suggestion = { enabled = false },
+      filetypes = { org = false },
+    },
+  },
+
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
+      {
+        'zbirenbaum/copilot-cmp',
+        config = function()
+          require('copilot_cmp').setup()
+        end,
+      },
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
@@ -679,6 +814,9 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
 
+      -- pictograms for completion menu
+      'onsails/lspkind.nvim',
+
       -- If you want to add a bunch of pre-configured snippets,
       --    you can use this plugin to help you. It even has snippets
       --    for various frameworks/libraries/etc. but you will have to
@@ -689,9 +827,28 @@ require('lazy').setup({
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require 'lspkind'
       luasnip.config.setup {}
 
       cmp.setup {
+        formatting = {
+          format = lspkind.cmp_format {
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            -- can also be a function to dynamically calculate max width such as
+            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            -- show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+            symbol_map = { Copilot = '' },
+
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            -- before = function (entry, vim_item)
+            --   ...
+            --   return vim_item
+            -- end
+          },
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -717,7 +874,7 @@ require('lazy').setup({
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-.>'] = cmp.mapping.complete {},
+          ['C-.'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -739,9 +896,11 @@ require('lazy').setup({
           end, { 'i', 's' }),
         },
         sources = {
+          { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'orgmode' },
         },
       }
     end,
@@ -764,8 +923,154 @@ require('lazy').setup({
     end,
   },
 
+  -- Org Mode attempt
+  {
+    'nvim-orgmode/orgmode',
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter', lazy = true },
+      'nvim-telescope/telescope.nvim',
+
+      {
+        'danilshvalov/org-modern.nvim',
+        config = function()
+          local Menu = require 'org-modern.menu'
+          require('orgmode').setup {
+            ui = {
+              menu = {
+                handler = function(data)
+                  Menu:new({
+                    window = {
+                      margin = { 1, 0, 1, 0 },
+                      padding = { 0, 1, 0, 1 },
+                      title_pos = 'center',
+                      border = 'single',
+                      zindex = 1000,
+                    },
+                    icons = {
+                      separator = '➜',
+                    },
+                  }):open(data)
+                end,
+              },
+            },
+          }
+        end,
+      },
+
+      {
+        'michaelb/sniprun',
+        branch = 'master',
+        build = 'sh install.sh',
+        config = function()
+          require('sniprun').setup {}
+        end,
+      },
+      {
+        'jimmyjansen93/telescope-orgmode.nvim',
+        config = function()
+          require('telescope').load_extension 'orgmode'
+          vim.keymap.set('n', '<leader>oR', require('telescope').extensions.orgmode.refile_heading, { desc = '[O]rg [R]efile' })
+          vim.keymap.set('n', '<leader>oH', require('telescope').extensions.orgmode.search_headings, { desc = '[O]rg [H]eadings' })
+        end,
+      },
+      { 'dhruvasagar/vim-table-mode' },
+      { 'nvim-orgmode/org-bullets.nvim', opts = {} },
+      { 'lukas-reineke/headlines.nvim', opts = {} },
+    },
+    event = 'BufEnter',
+    config = function()
+      -- Load treesitter grammar for org
+      require('orgmode').setup_ts_grammar()
+
+      -- Setup treesitter
+      require('nvim-treesitter.configs').setup {
+        highlight = {
+          enable = true,
+        },
+        ensure_installed = { 'org' },
+      }
+
+      -- Setup orgmode
+      require('orgmode').setup {
+        org_agenda_files = '~/org/**/*',
+        org_default_notes_file = '~/org/refile.org',
+        org_startup_folded = 'content',
+        org_log_into_drawer = 'LOGBOOK',
+        calendar_week_start_day = 1,
+        org_log_done = 'note',
+        org_agenda_skip_scheduled_if_done = true,
+        org_tags_column = 120,
+        mappings = {
+          org_return_uses_meta_return = true,
+          org = {
+            org_toggle_checkbox = '<CR>',
+          },
+        },
+        org_todo_keywords = {
+          'BACKLOG(b)',
+          'PLANNED(p)',
+          'TODO(t)',
+          'NEXT(n)',
+          'ACTIVE(a)',
+          'REVIEW(v)',
+          'WAIT(w)',
+          'HOLD(h)',
+          '|',
+          'DONE(d)',
+          'CANCELED(k)',
+        },
+        win_split_mode = { 'float', 0.9 },
+        org_capture_templates = {
+          t = {
+            description = 'Todo',
+            template = '* TODO %?\n %u',
+            target = '~/org/todo.org',
+            dateTree = { reversed = true },
+            headline = 'Work',
+          },
+          T = {
+            description = 'Todo',
+            template = '* TODO %?\n %u',
+            target = '~/org/todo.org',
+            dateTree = { reversed = true },
+            headline = 'Private',
+          },
+          j = {
+            description = 'Journal',
+            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
+            dateTree = { tree_type = 'day' },
+            target = '~/org/journal.org',
+            headline = 'Work',
+          },
+          J = {
+            description = 'Journal',
+            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
+            dateTree = { tree_type = 'day' },
+            target = '~/org/journal.org',
+            headline = 'Private',
+          },
+          m = {
+            description = 'Meeting',
+            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
+            dateTree = { tree_type = 'day' },
+            target = '~/org/journal.org',
+            headline = 'Work',
+          },
+        },
+      }
+
+      local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<leader>of', function()
+        builtin.find_files { cwd = '~/org' }
+      end, { desc = '[O]rg [F]iles' })
+    end,
+    keys = {
+      { '<leader>o', '', desc = 'Org mode' },
+    },
+  },
+
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
