@@ -239,13 +239,13 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufWritePost', {
+vim.api.nvim_create_autocmd('QuitePre', {
   pattern = '*.org',
   group = vim.api.nvim_create_augroup('jj-autocommit-org', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
-vim.api.nvim_create_autocmd('BufWritePost', {
+vim.api.nvim_create_autocmd('QuitePre', {
   pattern = '$MYVIMCONFIG/*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
@@ -270,7 +270,6 @@ vim.opt.rtp:prepend(lazypath)
 --  To update plugins, you can run
 --    :Lazy update
 --
--- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -296,11 +295,128 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '▎' },
+        untracked = { text = '▎' },
+      },
+    },
+  },
+
+  {
+    'folke/trouble.nvim',
+    cmd = { 'TroubleToggle', 'Trouble' },
+    opts = { use_diagnostic_signs = true },
+    keys = {
+      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
+      { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
+      { '<leader>xL', '<cmd>TroubleToggle loclist<cr>', desc = 'Location List (Trouble)' },
+      { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix List (Trouble)' },
+      {
+        '[q',
+        function()
+          if require('trouble').is_open() then
+            require('trouble').previous { skip_groups = true, jump = true }
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = 'Previous trouble/quickfix item',
+      },
+      {
+        ']q',
+        function()
+          if require('trouble').is_open() then
+            require('trouble').next { skip_groups = true, jump = true }
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = 'Next trouble/quickfix item',
+      },
+    },
+  },
+  {
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    event = 'BufReadPre',
+    config = true,
+  -- stylua: ignore
+  keys = {
+    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+    { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+    { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+    { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+    { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+  },
+  },
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    opts = {
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+      },
+    },
+    keys = {
+      {
+        '<leader>H',
+        function()
+          require('harpoon'):list():append()
+        end,
+        desc = 'Harpoon file',
+      },
+      {
+        '<leader>h',
+        function()
+          local harpoon = require 'harpoon'
+          harpoon.ui:toggle_quick_menu(harpoon:list())
+        end,
+        desc = 'Harpoon quick menu',
+      },
+      {
+        '<leader>1',
+        function()
+          require('harpoon'):list():select(1)
+        end,
+        desc = 'Harpoon to file 1',
+      },
+      {
+        '<leader>2',
+        function()
+          require('harpoon'):list():select(2)
+        end,
+        desc = 'Harpoon to file 2',
+      },
+      {
+        '<leader>3',
+        function()
+          require('harpoon'):list():select(3)
+        end,
+        desc = 'Harpoon to file 3',
+      },
+      {
+        '<leader>4',
+        function()
+          require('harpoon'):list():select(4)
+        end,
+        desc = 'Harpoon to file 4',
+      },
+      {
+        '<leader>5',
+        function()
+          require('harpoon'):list():select(5)
+        end,
+        desc = 'Harpoon to file 5',
       },
     },
   },
