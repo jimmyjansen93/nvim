@@ -1,4 +1,5 @@
 --[[
+
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -245,7 +246,7 @@ vim.api.nvim_create_autocmd('QuitPre', {
 })
 
 vim.api.nvim_create_autocmd('QuitPre', {
-  pattern = '$MYVIMCONFIG/*.lua',
+  pattern = '*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
