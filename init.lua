@@ -1,5 +1,4 @@
 --[[
-
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -232,7 +231,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 -- ORG mode refilling
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'org',
+  pattern = '*.org',
   group = vim.api.nvim_create_augroup('orgmode_telescope_nvim', { clear = true }),
   callback = function()
     vim.keymap.set('n', '<leader>or', require('telescope').extensions.orgmode.refile_heading)
@@ -246,7 +245,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
-  pattern = '~/.config/nvim/*.lua',
+  pattern = '*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
