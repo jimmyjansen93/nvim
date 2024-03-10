@@ -142,3 +142,4 @@ return {
       { '<leader>o', '', desc = 'Org mode' },
     },
   },
+}
