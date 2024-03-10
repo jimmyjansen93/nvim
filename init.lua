@@ -253,6 +253,9 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'norcalli/nvim-colorizer.lua',
+  },
 
   {
     'folke/trouble.nvim',
