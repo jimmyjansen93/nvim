@@ -263,14 +263,41 @@ require('lazy').setup({
   {
     'andrewferrier/debugprint.nvim',
     version = '*',
-    opts = {},
-    keys = {
-      { '<leader>dp', '<cmd>lua require("debugprint").debugprint()<cr>', desc = 'Debug Print' },
-      { '<leader>dP', '<cmd>lua require("debugprint").debugprint({above=true})<cr>', desc = 'Debug Print Above' },
-      { '<leader>dv', '<cmd>lua require("debugprint").debugprint({variable=true})<cr>', desc = 'Debug Variable' },
-      { '<leader>dV', '<cmd>lua require("debugprint").debugprint({variable=true,above=true})<cr>', desc = 'Debug Variable Above' },
-      { '<leader>dD', '<cmd>lua require("debugprint").deleteprints()<cr>', desc = 'Delete Debug Prints' },
-    },
+    config = function()
+      require 'debugprint'
+
+      vim.keymap.set('n', '<Leader>dp', function()
+        return require('debugprint').debugprint()
+      end, {
+        expr = true,
+        desc = 'Debug Print',
+      })
+      vim.keymap.set('n', '<Leader>dP', function()
+        return require('debugprint').debugprint { above = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Above',
+      })
+
+      vim.keymap.set('n', '<Leader>dv', function()
+        return require('debugprint').debugprint { variable = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Variable',
+      })
+
+      vim.keymap.set('n', '<Leader>dV', function()
+        return require('debugprint').debugprint { above = true, variable = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Variable Above',
+      })
+
+      vim.keymap.set('n', '<leader>dq', '<CMD>DeleteDebugPrints<CR>', {
+        expr = true,
+        desc = 'Delete Debug Prints',
+      })
+    end,
   },
 
   {
