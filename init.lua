@@ -295,7 +295,6 @@ require('lazy').setup({
       })
 
       vim.keymap.set('n', '<leader>dq', '<CMD>DeleteDebugPrints<CR>', {
-        expr = true,
         desc = 'Delete Debug Prints',
       })
     end,
