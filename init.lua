@@ -264,30 +264,31 @@ require('lazy').setup({
     'andrewferrier/debugprint.nvim',
     version = '*',
     config = function()
-      require 'debugprint'
+      require('debugprint').setup()
+      local debugprint = require 'debugprint'
 
       vim.keymap.set('n', '<Leader>dp', function()
-        return require('debugprint').debugprint()
+        return debugprint.debugprint()
       end, {
         expr = true,
         desc = 'Debug Print',
       })
       vim.keymap.set('n', '<Leader>dP', function()
-        return require('debugprint').debugprint { above = true }
+        return debugprint.debugprint { above = true }
       end, {
         expr = true,
         desc = 'Debug Print Above',
       })
 
       vim.keymap.set('n', '<Leader>dv', function()
-        return require('debugprint').debugprint { variable = true }
+        return debugprint.debugprint { variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable',
       })
 
       vim.keymap.set('n', '<Leader>dV', function()
-        return require('debugprint').debugprint { above = true, variable = true }
+        return debugprint.debugprint { above = true, variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable Above',
