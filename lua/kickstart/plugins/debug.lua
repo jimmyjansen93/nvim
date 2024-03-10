@@ -21,7 +21,10 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    { 'mxsdev/nvim-dap-vscode-js', run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out' },
+    {
+      'mxsdev/nvim-dap-vscode-js',
+      run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -77,7 +80,7 @@ return {
     }
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+    vim.keymap.set('n', '<leader>bl', dapui.toggle, { desc = 'Debug: See last session result.' })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -85,5 +88,44 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
+    require('nvim-dap-vscode-js').setup {
+      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+    }
+
+    for _, language in ipairs { 'typescript', 'javascript' } do
+      require('dap').configurations[language] = {
+        {
+          {
+            type = 'pwa-node',
+            request = 'launch',
+            name = 'Launch file',
+            program = '${file}',
+            cwd = '${workspaceFolder}',
+          },
+          {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Attach',
+            processId = require('dap.utils').pick_process,
+            cwd = '${workspaceFolder}',
+          },
+          {
+            type = 'pwa-node',
+            request = 'launch',
+            name = 'Debug Jest Tests',
+            -- trace = true, -- include debugger info
+            runtimeExecutable = 'node',
+            runtimeArgs = {
+              './node_modules/jest/bin/jest.js',
+              '--runInBand',
+            },
+            rootPath = '${workspaceFolder}',
+            cwd = '${workspaceFolder}',
+            console = 'integratedTerminal',
+            internalConsoleOptions = 'neverOpen',
+          },
+        },
+      }
+    end
   end,
 }
