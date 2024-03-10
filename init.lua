@@ -322,8 +322,8 @@ require('lazy').setup({
       },
       { '<leader>xt', '<cmd>TodoTrouble<cr>', desc = 'Todo Trouble' },
       { '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme Trouble' },
-      { '<leader>st', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
-      { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
+      { '<leader>xs', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
+      { '<leader>xS', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
     },
   },
 
@@ -398,6 +398,8 @@ require('lazy').setup({
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
+        ['<leader>f'] = { name = '[F]ile', _ = 'which_key_ignore' },
       }
     end,
   },
