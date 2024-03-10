@@ -392,7 +392,7 @@ require('lazy').setup({
         desc = 'Harpoon quick menu',
       },
       {
-        'H',
+        '<C-S-H>',
         function()
           local harpoon = require 'harpoon'
           harpoon:list():prev()
@@ -400,7 +400,7 @@ require('lazy').setup({
         desc = 'Harpoon prev',
       },
       {
-        'L',
+        '<C-S-L>',
         function()
           local harpoon = require 'harpoon'
           harpoon:list():next()
