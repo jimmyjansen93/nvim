@@ -261,6 +261,19 @@ require('lazy').setup({
   },
 
   {
+    'andrewferrier/debugprint.nvim',
+    version = '*',
+    opts = {},
+    keys = {
+      { '<leader>dp', '<lua>require("debugprint").debugprint()<cr>', desc = 'Debug Print' },
+      { '<leader>dP', '<lua>require("debugprint").debugprint({above=true})<cr>', desc = 'Debug Print Above' },
+      { '<leader>dv', '<lua>require("debugprint").debugprint({variable=true})<cr>', desc = 'Debug Variable' },
+      { '<leader>dV', '<lua>require("debugprint").debugprint({variable=true,above=true})<cr>', desc = 'Debug Variable Above' },
+      { '<leader>dD', '<lua>require("debugprint").deleteprints()<cr>', desc = 'Delete Debug Prints' },
+    },
+  },
+
+  {
     'folke/trouble.nvim',
     cmd = { 'TroubleToggle', 'Trouble' },
     opts = { use_diagnostic_signs = true },
@@ -1063,7 +1076,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'jimmy.org',
 
