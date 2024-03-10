@@ -265,11 +265,11 @@ require('lazy').setup({
     version = '*',
     opts = {},
     keys = {
-      { '<leader>dp', '<lua>require("debugprint").debugprint()<cr>', desc = 'Debug Print' },
-      { '<leader>dP', '<lua>require("debugprint").debugprint({above=true})<cr>', desc = 'Debug Print Above' },
-      { '<leader>dv', '<lua>require("debugprint").debugprint({variable=true})<cr>', desc = 'Debug Variable' },
-      { '<leader>dV', '<lua>require("debugprint").debugprint({variable=true,above=true})<cr>', desc = 'Debug Variable Above' },
-      { '<leader>dD', '<lua>require("debugprint").deleteprints()<cr>', desc = 'Delete Debug Prints' },
+      { '<leader>dp', '<cmd>lua require("debugprint").debugprint()<cr>', desc = 'Debug Print' },
+      { '<leader>dP', '<cmd>lua require("debugprint").debugprint({above=true})<cr>', desc = 'Debug Print Above' },
+      { '<leader>dv', '<cmd>lua require("debugprint").debugprint({variable=true})<cr>', desc = 'Debug Variable' },
+      { '<leader>dV', '<cmd>lua require("debugprint").debugprint({variable=true,above=true})<cr>', desc = 'Debug Variable Above' },
+      { '<leader>dD', '<cmd>lua require("debugprint").deleteprints()<cr>', desc = 'Delete Debug Prints' },
     },
   },
 
