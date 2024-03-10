@@ -24,6 +24,9 @@ return {
     {
       'mxsdev/nvim-dap-vscode-js',
       run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+      opts = {
+        adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+      },
     },
   },
   config = function()
@@ -88,9 +91,6 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
-    require('nvim-dap-vscode-js').setup {
-      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
-    }
 
     for _, language in ipairs { 'typescript', 'javascript' } do
       require('dap').configurations[language] = {
