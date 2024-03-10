@@ -191,13 +191,13 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = '*.org',
   group = vim.api.nvim_create_augroup('jj-autocommit-org', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = '*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -994,8 +994,6 @@ require('lazy').setup({
     end,
   },
 
-  -- Org Mode attempt
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
 
@@ -1071,7 +1069,7 @@ require('lazy').setup({
   --
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
-  --require 'jimmy.org',
+  require 'jimmy.org',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
