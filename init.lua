@@ -305,6 +305,18 @@ require('lazy').setup({
       })
     end,
   },
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    config = true,
+    keys = {
+      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neogit' },
+    },
+  },
 
   {
     'folke/trouble.nvim',
@@ -448,6 +460,7 @@ require('lazy').setup({
         ['<leader>f'] = { name = '[F]ile', _ = 'which_key_ignore' },
         ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
         ['<leader>o'] = { name = '[O]rg', _ = 'which_key_ignore' },
+        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
       }
     end,
   },

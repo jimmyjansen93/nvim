@@ -48,7 +48,7 @@ return {
           vim.keymap.set('n', '<leader>oH', require('telescope').extensions.orgmode.search_headings, { desc = '[O]rg [H]eadings' })
         end,
       },
-      { 'dhruvasagar/vim-table-mode', event = 'BufEnter *.org' },
+      { 'dhruvasagar/vim-table-mode' },
       { 'nvim-orgmode/org-bullets.nvim', opts = {} },
       { 'lukas-reineke/headlines.nvim', opts = {} },
     },
