@@ -233,7 +233,7 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim', lazy = false, opts = {} },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
@@ -264,7 +264,7 @@ require('lazy').setup({
     'andrewferrier/debugprint.nvim',
     version = '*',
     config = function()
-      require('debugprint').setup()
+      require('debugprint').setup { print_tag = 'DEBUG' }
       local debugprint = require 'debugprint'
 
       vim.keymap.set('n', '<Leader>dp', function()
@@ -653,6 +653,8 @@ require('lazy').setup({
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
+
+  { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
