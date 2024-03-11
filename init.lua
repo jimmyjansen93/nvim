@@ -200,6 +200,12 @@ vim.api.nvim_create_autocmd('QuitPre', {
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
+vim.api.nvim_create_autocmd('QuitPre', {
+  pattern = '*.kdl',
+  group = vim.api.nvim_create_augroup('jj-autocommit-kdl', { clear = true }),
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -440,6 +446,8 @@ require('lazy').setup({
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = '[F]ile', _ = 'which_key_ignore' },
+        ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
+        ['<leader>o'] = { name = '[O]rg', _ = 'which_key_ignore' },
       }
     end,
   },
