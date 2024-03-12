@@ -317,6 +317,9 @@ require('lazy').setup({
       { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neogit' },
     },
   },
+  {
+    'tpope/vim-fugitive',
+  },
 
   {
     'folke/trouble.nvim',
