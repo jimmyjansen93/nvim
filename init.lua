@@ -648,7 +648,7 @@ require('lazy').setup({
       vim.keymap.set(
         'n',
         '<leader>fb',
-        '<CMD>lua require "telescope".extensions.file_browser.file_browser({layout_config={height=0.5}})<CR>',
+        '<CMD>lua require "telescope".extensions.file_browser.file_browser({layout_config={height=0.4}})<CR>',
         { desc = '[F]ile [B]rowser' }
       )
 
