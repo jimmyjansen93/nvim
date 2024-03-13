@@ -645,7 +645,12 @@ require('lazy').setup({
       -- Built spire without writing too much lua
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
       -- A telescope keybinding on leader+ff that opens the file picker at the bottom of the screen with 100% and 30% height with the input at the top
-      vim.keymap.set('n', '<leader>fb', ':Telescope file_browser<CR>', { desc = '[F]ile [B]rowser' })
+      vim.keymap.set(
+        'n',
+        '<leader>fb',
+        '<CMD>lua require "telescope".extensions.file_browser.file_browser({layout_config={height=0.5}})<CR>',
+        { desc = '[F]ile [B]rowser' }
+      )
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
