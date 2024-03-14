@@ -894,6 +894,7 @@ require('lazy').setup({
       }
     end,
   },
+  { 'wuelnerdotexe/vim-astro' },
 
   { -- Autoformat
     'stevearc/conform.nvim',
