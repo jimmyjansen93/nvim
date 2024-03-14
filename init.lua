@@ -363,6 +363,10 @@ require('lazy').setup({
   },
 
   {
+    'gpanders/editorconfig.nvim',
+  },
+
+  {
     'folke/todo-comments.nvim',
     cmd = { 'TodoTrouble', 'TodoTelescope' },
     event = 'BufReadPre',
