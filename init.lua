@@ -37,7 +37,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ','
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -179,30 +179,9 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
--- ORG mode refilling
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = '*.org',
-  group = vim.api.nvim_create_augroup('orgmode_telescope_nvim', { clear = true }),
-  callback = function()
-    vim.keymap.set('n', '<leader>or', require('telescope').extensions.orgmode.refile_heading)
-  end,
-})
-
-vim.api.nvim_create_autocmd('QuitPre', {
-  pattern = '*.org',
-  group = vim.api.nvim_create_augroup('jj-autocommit-org', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
-})
-
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = '*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
-})
-
-vim.api.nvim_create_autocmd('QuitPre', {
-  pattern = '*.kdl',
-  group = vim.api.nvim_create_augroup('jj-autocommit-kdl', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
@@ -473,79 +452,6 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'doctorfree/cheatsheet.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      { 'nvim-telescope/telescope.nvim' },
-      { 'nvim-lua/popup.nvim' },
-      { 'nvim-lua/plenary.nvim' },
-    },
-    config = function()
-      local ctactions = require 'cheatsheet.telescope.actions'
-      require('cheatsheet').setup {
-        bundled_cheetsheets = {
-          enabled = { 'default', 'lua', 'markdown', 'regex', 'netrw', 'unicode' },
-          disabled = { 'nerd-fonts' },
-        },
-        bundled_plugin_cheatsheets = {
-          enabled = {
-            'auto-session',
-            'goto-preview',
-            'octo.nvim',
-            'telescope.nvim',
-            'vim-easy-align',
-            'vim-sandwich',
-          },
-          disabled = { 'gitsigns' },
-        },
-        include_only_installed_plugins = true,
-        telescope_mappings = {
-          ['<CR>'] = ctactions.select_or_fill_commandline,
-          ['<A-CR>'] = ctactions.select_or_execute,
-          ['<C-Y>'] = ctactions.copy_cheat_value,
-          ['<C-E>'] = ctactions.edit_user_cheatsheet,
-        },
-      }
-    end,
-    keys = {
-      { '<leader>?', '<CMD>Cheatsheet<CR>', mode = 'n', desc = 'Open Cheatsheet' },
-    },
-  },
-
-  {
-    'FeiyouG/commander.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim' },
-    config = function()
-      require('commander').setup {
-        components = {
-          'DESC',
-          'KEYS',
-          'CMD',
-          'CAT',
-        },
-        sort_by = {
-          'DESC',
-          'KEYS',
-          'CAT',
-          'CMD',
-        },
-        integration = {
-          telescope = {
-            enable = true,
-          },
-          lazy = {
-            enable = true,
-            set_plugin_name_as_cat = true,
-          },
-        },
-      }
-    end,
-    keys = {
-      { '<leader>pc', '<CMD>Telescope commander<CR>', mode = 'n', desc = 'Open commander' },
-    },
-  },
-
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
@@ -630,7 +536,7 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'file_browser')
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension 'conflicts')
+      pcall(require('telescope').load_extension, 'conflicts')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -652,7 +558,7 @@ require('lazy').setup({
       vim.keymap.set(
         'n',
         '<leader>fb',
-        '<CMD>lua require "telescope".extensions.file_browser.file_browser({layout_config={height=0.45}})<CR>',
+        require('telescope').extensions.file_browser.file_browser { layout_config = { height = 0.45 } },
         { desc = '[F]ile [B]rowser' }
       )
 
@@ -864,6 +770,8 @@ require('lazy').setup({
         },
       }
 
+      require('lspconfig').astro.setup {}
+
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
       --  other tools, you can run
@@ -894,7 +802,6 @@ require('lazy').setup({
       }
     end,
   },
-  { 'wuelnerdotexe/vim-astro' },
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -1115,7 +1022,37 @@ require('lazy').setup({
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'rust', 'javascript', 'go', 'typescript' },
+        ensure_installed = {
+          'bash',
+          'c',
+          'cpp',
+          'css',
+          'diff',
+          'git_rebase',
+          'git_config',
+          'gitignore',
+          'gomod',
+          'http',
+          'llvm',
+          'make',
+          'prisma',
+          'sql',
+          'ssh_config',
+          'tmux',
+          'xml',
+          'yaml',
+          'json',
+          'zig',
+          'html',
+          'lua',
+          'markdown',
+          'vim',
+          'vimdoc',
+          'rust',
+          'javascript',
+          'go',
+          'typescript',
+        },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
