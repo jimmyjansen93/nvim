@@ -558,7 +558,7 @@ require('lazy').setup({
       vim.keymap.set(
         'n',
         '<leader>fb',
-        require('telescope').extensions.file_browser.file_browser { layout_config = { height = 0.45 } },
+        "<lua>require('telescope').extensions.file_browser.file_browser { layout_config = { height = 0.45 } }<cr>",
         { desc = '[F]ile [B]rowser' }
       )
 
