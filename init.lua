@@ -3,6 +3,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
+vim.o.termguicolors = true
+
 -- [[ Setting options ]]
 -- Make line numbers default
 vim.opt.number = true
@@ -850,7 +852,9 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000,
     config = function()
-      require('catppuccin').setup {}
+      require('catppuccin').setup {
+        LineNr = { fg = '#ed8796' },
+      }
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
