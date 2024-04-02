@@ -305,6 +305,177 @@ require('lazy').setup({
     },
   },
 
+  {
+    'LukasPietzschmann/boo.nvim',
+    opts = {
+      -- win_opts will be used when creating the window. You can put everything here,
+      -- that vim.api.nvim_open_win (https://neovim.io/doc/user/api.html#nvim_open_win())
+      -- can handle.
+      win_opts = {
+        title = 'LSP Info',
+        title_pos = 'center',
+        relative = 'cursor',
+        row = 1,
+        col = 0,
+        style = 'minimal',
+        border = 'rounded',
+        focusable = true,
+      },
+      -- The window will not be wider than max_width (in character cells)
+      max_width = 80,
+      -- The window will not be taller than max_height (in character cells)
+      max_height = 20,
+      -- When the boo window is focused, pressing one of these will close it.
+      -- They will only be mapped in normalmode
+      escape_mappings = { 'q', '<esc>' },
+      -- Focus boo's window automatically after it's created
+      focus_on_open = true,
+      -- When the boo window is focused, and you'll focus another buffer,
+      -- the window will be closed when this is set to true
+      close_on_leave = true,
+      -- When moving the cursor in the buffer that boo was opened from, boo
+      -- will be closed. This makes most sense when paired with
+      -- `focus_on_open = false`
+      close_on_mouse_move = true,
+    },
+    keys = {
+      { '<leader>K', '<cmd>lua require("boo").boo()<cr>', desc = 'Lsp Info' },
+    },
+  },
+
+  {
+    'IsWladi/Gittory',
+    dependencies = {
+      { 'rcarriga/nvim-notify' }, -- optional
+    },
+    opts = { -- you can omit this, is the default
+      atStartUp = true, -- If you want to initialize Gittory when Neovim starts
+      notifySettings = {
+        enabled = false, -- This flag enables the notification system, allowing Gittory to send alerts about its operational status changes.
+      },
+    },
+  },
+
+  {
+    'Zeioth/compiler.nvim',
+    cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
+    dependencies = { 'stevearc/overseer.nvim' },
+    config = function()
+      vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { noremap = true, silent = true })
+    end,
+  },
+
+  {
+    'vhyrro/luarocks.nvim',
+    priority = 1000,
+    config = true,
+  },
+
+  {
+    'rest-nvim/rest.nvim',
+    ft = 'http',
+    dependencies = { 'luarocks.nvim' },
+    config = function()
+      require('rest-nvim').setup {
+        client = 'curl',
+        env_file = '.env',
+        env_pattern = '\\.env$',
+        env_edit_command = 'tabedit',
+        encode_url = true,
+        skip_ssl_verification = false,
+        custom_dynamic_variables = {},
+        logs = {
+          level = 'info',
+          save = true,
+        },
+        result = {
+          split = {
+            horizontal = false,
+            in_place = false,
+            stay_in_current_window_after_split = true,
+          },
+          behavior = {
+            decode_url = true,
+            show_info = {
+              url = true,
+              headers = true,
+              http_info = true,
+              curl_command = true,
+            },
+            statistics = {
+              enable = true,
+              ---@see https://curl.se/libcurl/c/curl_easy_getinfo.html
+              stats = {
+                { 'total_time', title = 'Time taken:' },
+                { 'size_download_t', title = 'Download size:' },
+              },
+            },
+            formatters = {
+              json = 'jq',
+              html = function(body)
+                if vim.fn.executable 'tidy' == 0 then
+                  return body, { found = false, name = 'tidy' }
+                end
+                local fmt_body = vim.fn
+                  .system({
+                    'tidy',
+                    '-i',
+                    '-q',
+                    '--tidy-mark',
+                    'no',
+                    '--show-body-only',
+                    'auto',
+                    '--show-errors',
+                    '0',
+                    '--show-warnings',
+                    '0',
+                    '-',
+                  }, body)
+                  :gsub('\n$', '')
+
+                return fmt_body, { found = true, name = 'tidy' }
+              end,
+            },
+          },
+        },
+        highlight = {
+          enable = true,
+          timeout = 750,
+        },
+        ---Example:
+        ---
+        ---```lua
+        ---keybinds = {
+        ---  {
+        ---    "<localleader>rr", "<cmd>Rest run<cr>", "Run request under the cursor",
+        ---  },
+        ---  {
+        ---    "<localleader>rl", "<cmd>Rest run last<cr>", "Re-run latest request",
+        ---  },
+        ---}
+        ---
+        ---```
+        ---@see vim.keymap.set
+        keybinds = {},
+      }
+    end,
+  },
+
+  {
+    'stevearc/overseer.nvim',
+    cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
+    opts = {
+      task_list = {
+        direction = 'bottom',
+        min_height = 25,
+        max_height = 25,
+        default_detail = 1,
+      },
+    },
+  },
+
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -455,6 +626,74 @@ require('lazy').setup({
   },
 
   { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
+
+  { 'dmmulroy/ts-error-translator.nvim' },
+
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' },
+  },
+
+  {
+    'luckasRanarison/tailwind-tools.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {}, -- your configuration
+  },
+
+  {
+    'catgoose/do-the-needful.nvim',
+    event = 'BufReadPre',
+    keys = {
+      { '<leader>;', [[<cmd>Telescope do-the-needful please<cr>]], 'n' },
+      { '<leader>:', [[<cmd>Telescope do-the-needful<cr>]], 'n' },
+    },
+    dependencies = 'nvim-lua/plenary.nvim',
+    opts = {
+      tasks = {
+        {
+          name = 'ripgrep current directory',
+          cmd = 'rg ${pattern} ${cwd}',
+          tags = { 'ripgrep', 'cwd', 'search', 'pattern' },
+          ask = {
+            ['${pattern}'] = {
+              title = 'Pattern to use',
+              default = 'error',
+            },
+          },
+          window = {
+            name = 'Ripgrep',
+            close = false,
+            keep_current = true,
+          },
+        },
+      },
+      edit_mode = 'buffer', -- buffer, tab, split, vsplit
+      config_file = '.tasks.json', -- name of json config file for project/global config
+      config_order = { -- default: { project, global, opts }.  Order in which
+        -- tasks are aggregated
+        'project', -- .task.json in project directory
+        'global', -- .tasks.json in stdpath('data')
+        'opts', -- tasks defined in setup opts
+      },
+      tag_source = true, -- display #project, #global, or #opt after tags
+      global_tokens = {
+        ['${cwd}'] = vim.fn.getcwd,
+        ['${do-the-needful}'] = 'please',
+        ['${projectname}'] = function()
+          return vim.fn.system 'basename $(git rev-parse --show-toplevel)'
+        end,
+      },
+      ask_functions = {
+        get_cwd = function()
+          return vim.fn.getcwd()
+        end,
+        current_file = function()
+          return vim.fn.expand '%'
+        end,
+      },
+    },
+  },
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
