@@ -139,16 +139,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Open the help window always in a vertical split
 -- simply because that is more readable to me
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Open help in vertical split',
-  pattern = 'help,qf,netrw',
-  group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
-  callback = function()
-    vim.cmd 'wincmd L'
-    vim.cmd 'vertical resize 80'
-    vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
-  end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   desc = 'Open help in vertical split',
+--   pattern = 'help,qf,netrw',
+--   group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
+--   callback = function()
+--     vim.cmd 'wincmd L'
+--     vim.cmd 'vertical resize 80'
+--     vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd('BufEnter', {
   desc = 'Stop commenting next line',
@@ -233,6 +233,11 @@ require('lazy').setup({
       })
     end,
   },
+
+  { 'anuvyklack/help-vsplit.nvim', opts = {
+    always = true,
+    side = 'right',
+  } },
 
   {
     'NeogitOrg/neogit',
