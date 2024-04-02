@@ -3,8 +3,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
-vim.g.termguicolors = true
-
 -- [[ Setting options ]]
 -- Make line numbers default
 vim.opt.number = true
