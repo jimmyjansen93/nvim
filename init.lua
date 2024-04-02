@@ -134,11 +134,9 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', lazy = false, opts = {} },
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+
+  {
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -300,21 +298,6 @@ require('lazy').setup({
     },
   },
 
-  -- NOTE: Plugins can also be configured to run lua code when they are loaded.
-  --
-  -- This is often very useful to both group configuration, as well as handle
-  -- lazy loading plugins that don't need to be loaded immediately at startup.
-  --
-  -- For example, in the following configuration, we use:
-  --  event = 'VimEnter'
-  --
-  -- which loads which-key before all the UI elements are loaded. Events can be
-  -- normal autocommands events (`:help autocmd-events`).
-  --
-  -- Then, because we use the `config` key, the configuration only runs
-  -- after the plugin has been loaded:
-  --  config = function() ... end
-
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -345,24 +328,14 @@ require('lazy').setup({
       'nvim-telescope/telescope-file-browser.nvim',
       'Snikimonkd/telescope-git-conflicts.nvim',
       'BurntSushi/ripgrep',
-      { -- If encountering errors, see telescope-fzf-native README for install instructions
+      {
         'nvim-telescope/telescope-fzf-native.nvim',
-
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
         build = 'make',
-
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      -- Useful for getting pretty icons, but requires special font.
-      --  If you already have a Nerd Font, or terminal set up with fallback fonts
-      --  you can enable this
       { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
