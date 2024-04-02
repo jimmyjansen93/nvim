@@ -156,26 +156,12 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
--- vim.api.nvim_create_autocmd('BufEnter', {
---   desc = 'expand tab please',
---   group = vim.api.nvim_create_augroup('jj-expandtab', { clear = true }),
---   callback = function()
---     vim.cmd 'filetype plugin indent on'
---     vim.o.tabstop = 2
---     vim.o.softtabstop = 2
---     vim.o.shiftwidth = 2
---     vim.o.expandtab = true
---   end,
--- })
-
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = '*.lua',
   group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -183,35 +169,9 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
---
---  To check the current status of your plugins, run
---    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins, you can run
---    :Lazy update
---
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-  --  This is equivalent to:
-  --    require('Comment').setup({})
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', lazy = false, opts = {} },
-
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following lua:
-  --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -286,9 +246,12 @@ require('lazy').setup({
       { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neogit' },
     },
   },
+
   {
     'tpope/vim-fugitive',
   },
+
+  { 'aserowy/tmux.nvim', opts = {} },
 
   {
     'folke/trouble.nvim',
