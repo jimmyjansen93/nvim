@@ -74,13 +74,6 @@ vim.opt.smartcase = true
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
--- set folding
-function _G.FoldText()
-  return vim.fn.getline(vim.v.foldstart) .. ' ... ' .. vim.fn.getline(vim.v.foldend):gsub('^%s*', '')
-end
-vim.opt.fdm = 'expr'
-vim.opt.foldexpr = FoldText()
-
 -- Decrease update time
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
@@ -240,6 +233,8 @@ require('lazy').setup({
       })
     end,
   },
+
+  { 'anuvyklack/pretty-fold.nvim', opts = {} },
 
   { 'anuvyklack/help-vsplit.nvim', opts = {
     always = true,
