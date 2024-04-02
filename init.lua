@@ -853,7 +853,11 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       require('catppuccin').setup {
-        LineNr = { fg = '#ed8796' },
+        highlight_overrides = {
+          all = {
+            LineNr = { fg = '#ed8796' },
+          },
+        },
       }
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
