@@ -138,16 +138,24 @@ require('lazy').setup({
 
   {
     'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '▎' },
-        change = { text = '▎' },
-        delete = { text = '' },
-        topdelete = { text = '' },
-        changedelete = { text = '▎' },
-        untracked = { text = '▎' },
-      },
-    },
+    config = function()
+      require('gitsigns').setup {
+        signs = {
+          add = { text = '▎' },
+          change = { text = '▎' },
+          delete = { text = '' },
+          topdelete = { text = '' },
+          changedelete = { text = '▎' },
+          untracked = { text = '▎' },
+        },
+      }
+
+      vim.keymap.set('n', '<leader>gp', '<CMD>lua require("gitsigns").preview_hunk()<CR>', { desc = '[G]it [P]review hunk' })
+      vim.keymap.set('n', '<leader>gt', '<CMD>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = '[G]it [T]oggle blame' })
+      vim.keymap.set('n', '<leader>gl', '<CMD>lua require("gitsigns").setloclist()<CR>', { desc = '[G]it [l]oclist' })
+      vim.keymap.set('n', ']c', '<CMD>lua require("gitsigns").next_hunk()<CR>', { desc = 'Git next change' })
+      vim.keymap.set('n', '[c', '<CMD>lua require("gitsigns").prev_hunk()<CR>', { desc = 'Git prev change' })
+    end,
   },
   {
     'norcalli/nvim-colorizer.lua',
@@ -198,6 +206,8 @@ require('lazy').setup({
     side = 'right',
   } },
 
+  { 'sindrets/diffview.nvim', opts = {} },
+
   {
     'NeogitOrg/neogit',
     dependencies = {
@@ -205,14 +215,13 @@ require('lazy').setup({
       'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    config = true,
+    opts = {
+      disable_signs = false,
+      graph_style = 'unicode',
+    },
     keys = {
       { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neogit' },
     },
-  },
-
-  {
-    'tpope/vim-fugitive',
   },
 
   {
