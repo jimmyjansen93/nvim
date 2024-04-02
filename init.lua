@@ -120,6 +120,12 @@ vim.api.nvim_create_autocmd('QuitPre', {
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
+vim.api.nvim_create_autocmd('QuitPre', {
+  pattern = 'tmux.conf',
+  group = vim.api.nvim_create_augroup('jj-autocommit-tmux', { clear = true }),
+  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+})
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
