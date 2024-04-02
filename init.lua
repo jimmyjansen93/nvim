@@ -852,11 +852,11 @@ require('lazy').setup({
     config = function()
       require('catppuccin').setup {
         vim.g.termguicolors,
-        -- custom_highlights = function(colors)
-        --   SignColumn = {
-        --     fg = colors.pink,
-        --   }
-        -- end,
+        custom_highlights = function(colors)
+          SignColumn = {
+            fg = colors.pink,
+          }
+        end,
       }
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
