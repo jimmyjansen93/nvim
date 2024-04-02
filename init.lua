@@ -850,14 +850,7 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000,
     config = function()
-      require('catppuccin').setup {
-        vim.g.termguicolors,
-        custom_highlights = function(colors)
-          SignColumn = {
-            fg = colors.pink,
-          }
-        end,
-      }
+      require('catppuccin').setup {}
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
