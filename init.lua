@@ -103,17 +103,6 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
--- vim.cmd [[
--- set autoindent
--- set expandtab
--- set shiftwidth=2
--- set smartindent
--- set softtabstop=2
--- set tabstop=2
--- ]]
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
