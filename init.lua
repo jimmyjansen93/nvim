@@ -145,7 +145,7 @@ vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
   callback = function()
     vim.cmd 'wincmd L'
-    vim.cmd 'vertical resize 100'
+    vim.cmd 'vertical resize 80'
     vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
   end,
 })
