@@ -850,7 +850,13 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000,
     config = function()
-      require('catppuccin').setup { flavour = 'macchiato' }
+      require('catppuccin').setup {
+        custom_highlights = function(colors)
+          SignColumn = {
+            fg = colors.pink,
+          }
+        end,
+      }
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
   },
