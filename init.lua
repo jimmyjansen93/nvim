@@ -855,7 +855,7 @@ require('lazy').setup({
       require('catppuccin').setup {
         highlight_overrides = {
           all = {
-            LineNr = { fg = '#f2d5cf80' },
+            LineNr = { fg = '#8aadf4' },
           },
         },
       }
