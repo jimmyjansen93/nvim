@@ -156,17 +156,17 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  desc = 'expand tab please',
-  group = vim.api.nvim_create_augroup('jj-expandtab', { clear = true }),
-  callback = function()
-    vim.cmd 'filetype plugin indent on'
-    vim.o.tabstop = 2
-    vim.o.softtabstop = 2
-    vim.o.shiftwidth = 2
-    vim.o.expandtab = true
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   desc = 'expand tab please',
+--   group = vim.api.nvim_create_augroup('jj-expandtab', { clear = true }),
+--   callback = function()
+--     vim.cmd 'filetype plugin indent on'
+--     vim.o.tabstop = 2
+--     vim.o.softtabstop = 2
+--     vim.o.shiftwidth = 2
+--     vim.o.expandtab = true
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = '*.lua',
@@ -195,7 +195,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
