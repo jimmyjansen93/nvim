@@ -856,6 +856,7 @@ require('lazy').setup({
         highlight_overrides = {
           all = {
             LineNr = { fg = '#8aadf4' },
+            CursorLineNr = { fg = '#ed8796' },
           },
         },
       }
