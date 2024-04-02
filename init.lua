@@ -76,7 +76,7 @@ vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
 vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 250
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -137,15 +137,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Open the help window always in a vertical split
--- simply because that is more readable to me
 vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Open help in vertical split',
+  desc = 'Quit help with q',
   pattern = 'help,qf,netrw',
   group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
   callback = function()
-    -- vim.cmd 'wincmd L'
-    -- vim.cmd 'vertical resize 80'
     vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
   end,
 })
@@ -213,75 +209,22 @@ require('lazy').setup({
         expr = true,
         desc = 'Debug Print Above',
       })
-
       vim.keymap.set('n', '<Leader>dv', function()
         return debugprint.debugprint { variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable',
       })
-
       vim.keymap.set('n', '<Leader>dV', function()
         return debugprint.debugprint { above = true, variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable Above',
       })
-
       vim.keymap.set('n', '<leader>dq', '<CMD>DeleteDebugPrints<CR>', {
         desc = 'Delete Debug Prints',
       })
     end,
-  },
-
-  {
-    'anuvyklack/pretty-fold.nvim',
-    opts = {
-      {
-        sections = {
-          left = {
-            'content',
-          },
-          right = {
-            ' ',
-            'number_of_folded_lines',
-            function(config)
-              return config.fill_char:rep(3)
-            end,
-          },
-        },
-        fill_char = '•',
-
-        remove_fold_markers = true,
-
-        -- Keep the indentation of the content of the fold string.
-        keep_indentation = true,
-
-        -- Possible values:
-        -- "delete" : Delete all comment signs from the fold string.
-        -- "spaces" : Replace all comment signs with equal number of spaces.
-        -- false    : Do nothing with comment signs.
-        process_comment_signs = 'spaces',
-
-        -- Comment signs additional to the value of `&commentstring` option.
-        comment_signs = {},
-
-        -- List of patterns that will be removed from content foldtext section.
-        stop_words = {
-          '@brief%s*', -- (for C++) Remove '@brief' and all spaces after.
-        },
-
-        add_close_pattern = true, -- true, 'last_line' or false
-
-        matchup_patterns = {
-          { '{', '}' },
-          { '%(', ')' }, -- % to escape lua pattern char
-          { '%[', ']' }, -- % to escape lua pattern char
-        },
-
-        ft_ignore = {},
-      },
-    },
   },
 
   { 'anuvyklack/help-vsplit.nvim', opts = {
@@ -389,49 +332,6 @@ require('lazy').setup({
     },
   },
 
-  {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-    },
-    keys = {
-      {
-        '<leader>H',
-        function()
-          require('harpoon'):list():append()
-        end,
-        desc = 'Harpoon file',
-      },
-      {
-        '<leader>h',
-        function()
-          local harpoon = require 'harpoon'
-          harpoon.ui:toggle_quick_menu(harpoon:list())
-        end,
-        desc = 'Harpoon quick menu',
-      },
-      {
-        '<S-p>',
-        function()
-          local harpoon = require 'harpoon'
-          harpoon:list():prev()
-        end,
-        desc = 'Harpoon prev',
-      },
-      {
-        '<S-n>',
-        function()
-          local harpoon = require 'harpoon'
-          harpoon:list():next()
-        end,
-        desc = 'Harpoon next',
-      },
-    },
-  },
-
   -- NOTE: Plugins can also be configured to run lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -463,18 +363,10 @@ require('lazy').setup({
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = '[F]ile', _ = 'which_key_ignore' },
         ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
-        ['<leader>o'] = { name = '[O]rg', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
       }
     end,
   },
-
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -575,7 +467,7 @@ require('lazy').setup({
       vim.keymap.set(
         'n',
         '<leader>fb',
-        "<cmd>lua require('telescope').extensions.file_browser.file_browser { layout_config = { height = 0.45 } }<cr>",
+        "<cmd>lua require('telescope').extensions.file_browser.file_browser { layout_config = { height = 0.5 } }<cr>",
         { desc = '[F]ile [B]rowser' }
       )
 
@@ -604,6 +496,7 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
+
   {
     'pmizio/typescript-tools.nvim',
     event = 'BufEnter *.ts,*.tsx',
