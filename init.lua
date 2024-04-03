@@ -403,10 +403,9 @@ require('lazy').setup({
         ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
+        --['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
-        ['<leader>p'] = { name = 'Project', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
         ['<leader>b'] = { name = 'Debug', _ = 'which_key_ignore' },
       }
