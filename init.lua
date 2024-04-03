@@ -72,7 +72,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
@@ -453,17 +453,17 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = '[S]earch [C]onflicts' })
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = '[,] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search [C]onflicts' })
+      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
+      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
+      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'Search Files' })
+      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = 'Search Select Telescope' })
+      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search Current Word' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by Grep' })
+      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
+      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
+      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = ', Find existing buffers' })
 
       -- Built spire without writing too much lua
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
@@ -529,30 +529,10 @@ require('lazy').setup({
     },
     dependencies = 'nvim-lua/plenary.nvim',
     opts = {
-      tasks = {
-        {
-          name = 'ripgrep current directory',
-          cmd = 'rg ${pattern} ${cwd}',
-          tags = { 'ripgrep', 'cwd', 'search', 'pattern' },
-          ask = {
-            ['${pattern}'] = {
-              title = 'Pattern to use',
-              default = '',
-            },
-          },
-          window = {
-            name = 'Ripgrep',
-            close = false,
-            keep_current = false,
-          },
-        },
-      },
       edit_mode = 'buffer', -- buffer, tab, split, vsplit
       config_file = '.tasks.json', -- name of json config file for project/global config
       config_order = { -- default: { project, global, opts }.  Order in which
-        'project', -- .task.json in project directory
         'global', -- .tasks.json in stdpath('data')
-        'opts', -- tasks defined in setup opts
       },
       tag_source = true, -- display #project, #global, or #opt after tags
       global_tokens = {

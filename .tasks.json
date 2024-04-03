@@ -1,0 +1,27 @@
+{
+    "tasks": [
+        {
+            "name": "Ripgrep current directory",
+            "cmd": "rg ${pattern} ${cwd}",
+            "tags": [
+                "ripgrep",
+                "cwd",
+                "search",
+                "pattern"
+            ],
+            "ask": {
+                "${pattern}": {
+                    "title": "pattern to use",
+                    "default": ""
+                }
+            },
+            "window": {
+                "name": "Ripgrep",
+                "close": false,
+                "keep_current": false,
+                "open_relative": true,
+                "relative": "after"
+            }
+        }
+    ]
+}
