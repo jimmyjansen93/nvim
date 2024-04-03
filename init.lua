@@ -524,25 +524,25 @@ require('lazy').setup({
     'catgoose/do-the-needful.nvim',
     event = 'BufReadPre',
     dependencies = 'nvim-lua/plenary.nvim',
-    opts = {
-      config_order = { 'global' },
-      global_tokens = {
-        ['${cwd}'] = vim.fn.getcwd,
-        ['${do-the-needful}'] = 'please',
-        ['${projectname}'] = function()
-          return vim.fn.system 'basename $(git rev-parse --show-toplevel)'
-        end,
-      },
-      ask_functions = {
-        get_cwd = function()
-          return vim.fn.getcwd()
-        end,
-        current_file = function()
-          return vim.fn.expand '%'
-        end,
-      },
-    },
     config = function()
+      require('do-the-neddful').setup {
+        config_order = { 'global' },
+        global_tokens = {
+          ['${cwd}'] = vim.fn.getcwd,
+          ['${do-the-needful}'] = 'please',
+          ['${projectname}'] = function()
+            return vim.fn.system 'basename $(git rev-parse --show-toplevel)'
+          end,
+        },
+        ask_functions = {
+          get_cwd = function()
+            return vim.fn.getcwd()
+          end,
+          current_file = function()
+            return vim.fn.expand '%'
+          end,
+        },
+      }
       vim.keymap.set('n', '<leader>;', '<CMD>require("do-the-needful").please()<CR>', { desc = 'Tmux run' })
       vim.keymap.set('n', '<leader>qr', '<CMD>lua require("do-the-needful").edit_config("global")<CR><cr>', { desc = 'Edit Tmux run' })
     end,
