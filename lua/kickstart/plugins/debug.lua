@@ -18,7 +18,11 @@ return {
     'leoluz/nvim-dap-go',
     {
       'mxsdev/nvim-dap-vscode-js',
-      build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+      dependencies = {
+        'microsoft/vscode-js-debug',
+        opt = {},
+        run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+      },
     },
   },
   config = function()
