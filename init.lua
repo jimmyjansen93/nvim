@@ -419,18 +419,6 @@ require('lazy').setup({
           enable = true,
           timeout = 750,
         },
-        keybinds = {
-          {
-            '<localleader>rh',
-            '<cmd>Rest run<cr>',
-            'Run request under the cursor',
-          },
-          {
-            '<localleader>rl',
-            '<cmd>Rest run last<cr>',
-            'Re-run latest request',
-          },
-        },
       }
     end,
   },
