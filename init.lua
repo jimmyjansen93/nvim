@@ -523,10 +523,6 @@ require('lazy').setup({
   {
     'catgoose/do-the-needful.nvim',
     event = 'BufReadPre',
-    keys = {
-      { '<leader>;', '<CMD>Telescope do-the-needful please<CR>', 'n' },
-      { '<leader>qr', '<CMD>lua require("do-the-needful").edit_config("global")<CR><cr>', 'n' },
-    },
     dependencies = 'nvim-lua/plenary.nvim',
     opts = {
       config_order = { 'global' },
@@ -546,6 +542,10 @@ require('lazy').setup({
         end,
       },
     },
+    config = function()
+      vim.keyboard.set { 'n', '<leader>;', '<CMD>Telescope do-the-needful please<CR>', desc = 'Tmux run' }
+      vim.keyboard.set { 'n', '<leader>qr', '<CMD>lua require("do-the-needful").edit_config("global")<CR><cr>', desc = 'Edit Tmux run' }
+    end,
   },
 
   {
