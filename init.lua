@@ -356,37 +356,23 @@ require('lazy').setup({
                 { 'size_download_t', title = 'Download size:' },
               },
             },
-            formatters = {
-              json = 'jq',
-              html = function(body)
-                if vim.fn.executable 'tidy' == 0 then
-                  return body, { found = false, name = 'tidy' }
-                end
-                local fmt_body = vim.fn
-                  .system({
-                    'tidy',
-                    '-i',
-                    '-q',
-                    '--tidy-mark',
-                    'no',
-                    '--show-body-only',
-                    'auto',
-                    '--show-errors',
-                    '0',
-                    '--show-warnings',
-                    '0',
-                    '-',
-                  }, body)
-                  :gsub('\n$', '')
-
-                return fmt_body, { found = true, name = 'tidy' }
-              end,
-            },
           },
         },
         highlight = {
           enable = true,
           timeout = 750,
+        },
+        keys = {
+          {
+            '<leader>rq',
+            '<cmd>Rest run<cr>',
+            'Run request under the cursor',
+          },
+          {
+            '<leader>rl',
+            '<cmd>Rest run last<cr>',
+            'Re-run latest request',
+          },
         },
       }
     end,
