@@ -1,6 +1,7 @@
 return {
   {
-    'Zeioth/compiler.nvim',
+    -- 'Zeioth/compiler.nvim',
+    'jimmyjansen93/compiler.nvim',
     dependencies = { 'stevearc/overseer.nvim' },
     config = function()
       require('compiler').setup {}
