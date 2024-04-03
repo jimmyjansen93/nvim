@@ -330,7 +330,7 @@ require('lazy').setup({
     config = function()
       require('compiler').setup {}
       vim.keymap.set('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { desc = 'Compiler open' })
-      vim.keymap.set('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
+      --vim.keymap.set('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
       vim.keymap.set('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { desc = 'Compiler results' })
     end,
   },
