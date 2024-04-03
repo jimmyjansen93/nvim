@@ -94,28 +94,6 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', lazy = false, opts = {} },
 
   {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup {
-        signs = {
-          add = { text = '▎' },
-          change = { text = '▎' },
-          delete = { text = '' },
-          topdelete = { text = '' },
-          changedelete = { text = '▎' },
-          untracked = { text = '▎' },
-        },
-      }
-
-      vim.keymap.set('n', '<leader>gp', '<CMD>lua require("gitsigns").preview_hunk()<CR>', { desc = 'Git preview hunk' })
-      vim.keymap.set('n', '<leader>gt', '<CMD>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'Git toggle blame' })
-      vim.keymap.set('n', '<leader>gl', '<CMD>lua require("gitsigns").setloclist()<CR>', { desc = 'Git loclist' })
-      vim.keymap.set('n', ']c', '<CMD>lua require("gitsigns").next_hunk()<CR>', { desc = 'Git next change' })
-      vim.keymap.set('n', '[c', '<CMD>lua require("gitsigns").prev_hunk()<CR>', { desc = 'Git prev change' })
-    end,
-  },
-
-  {
     'norcalli/nvim-colorizer.lua',
     config = function()
       require('colorizer').setup { '*' }
@@ -163,22 +141,6 @@ require('lazy').setup({
     always = true,
     side = 'right',
   } },
-
-  {
-    'NeogitOrg/neogit',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
-      'nvim-telescope/telescope.nvim',
-    },
-    opts = {
-      disable_signs = false,
-      graph_style = 'unicode',
-    },
-    keys = {
-      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open git window' },
-    },
-  },
 
   {
     'aserowy/tmux.nvim',
@@ -272,68 +234,9 @@ require('lazy').setup({
   },
 
   {
-    'IsWladi/Gittory',
-    opts = {
-      atStartUp = true,
-      notifySettings = {
-        enabled = false,
-      },
-    },
-  },
-
-  {
-    'Zeioth/compiler.nvim',
-    dependencies = { 'stevearc/overseer.nvim' },
-    config = function()
-      require('compiler').setup {}
-      vim.keymap.set('n', '<leader>rr', '<CMD>CompilerOpen<CR>', { desc = 'Compiler open' })
-      vim.keymap.set('n', '<leader>rs', '<CMD>CompilerStop<CR>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
-      vim.keymap.set('n', '<leader>rt', '<CMD>CompilerToggleResults<CR>', { desc = 'Compiler results' })
-    end,
-  },
-
-  {
     'vhyrro/luarocks.nvim',
     priority = 1000,
     config = true,
-  },
-
-  {
-    'rest-nvim/rest.nvim',
-    ft = 'http',
-    dependencies = { 'luarocks.nvim' },
-    config = function()
-      require('rest-nvim').setup {
-        result = {
-          behavior = {
-            statistics = {
-              enable = true,
-              --- https://curl.se/libcurl/c/curl_easy_getinfo.html
-              stats = {
-                { 'total_time', title = 'Time taken:' },
-                { 'size_download_t', title = 'Download size:' },
-              },
-            },
-          },
-        },
-        highlight = {
-          enable = true,
-          timeout = 750,
-        },
-        keys = {
-          {
-            '<leader>rq',
-            '<cmd>Rest run<cr>',
-            'Run request under the cursor',
-          },
-          {
-            '<leader>rl',
-            '<cmd>Rest run last<cr>',
-            'Re-run latest request',
-          },
-        },
-      }
-    end,
   },
 
   {
@@ -445,29 +348,6 @@ require('lazy').setup({
   },
 
   { 'sitiom/nvim-numbertoggle' },
-
-  {
-    'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'typescriptreact' },
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
-  },
-
-  { 'dmmulroy/tsc.nvim', ft = { 'typescript', 'typescriptreact' }, dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
-
-  { 'dmmulroy/ts-error-translator.nvim', ft = { 'typescript', 'typescriptreact' } },
-
-  {
-    'mrcjkb/rustaceanvim',
-    version = '^4',
-    ft = { 'rust' },
-  },
-
-  {
-    'luckasRanarison/tailwind-tools.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = {},
-  },
 
   {
     'catgoose/do-the-needful.nvim',
