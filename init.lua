@@ -345,9 +345,6 @@ require('lazy').setup({
 
   {
     'IsWladi/Gittory',
-    dependencies = {
-      { 'rcarriga/nvim-notify' }, -- optional
-    },
     opts = { -- you can omit this, is the default
       atStartUp = true, -- If you want to initialize Gittory when Neovim starts
       notifySettings = {
@@ -363,13 +360,8 @@ require('lazy').setup({
     config = function()
       require('compiler').setup()
       vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { desc = 'Compiler open' })
-      vim.api.nvim_set_keymap(
-        'n',
-        '<leader>rs',
-        '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>',
-        { noremap = true, silent = true, desc = 'Compiler restart' }
-      )
-      vim.api.nvim_set_keymap('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { noremap = true, silent = true, desc = 'Compiler results' })
+      vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
+      vim.api.nvim_set_keymap('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { desc = 'Compiler results' })
     end,
   },
 
@@ -385,31 +377,8 @@ require('lazy').setup({
     dependencies = { 'luarocks.nvim' },
     config = function()
       require('rest-nvim').setup {
-        client = 'curl',
-        env_file = '.env',
-        env_pattern = '\\.env$',
-        env_edit_command = 'tabedit',
-        encode_url = true,
-        skip_ssl_verification = false,
-        custom_dynamic_variables = {},
-        logs = {
-          level = 'info',
-          save = true,
-        },
         result = {
-          split = {
-            horizontal = false,
-            in_place = false,
-            stay_in_current_window_after_split = true,
-          },
           behavior = {
-            decode_url = true,
-            show_info = {
-              url = true,
-              headers = true,
-              http_info = true,
-              curl_command = true,
-            },
             statistics = {
               enable = true,
               ---@see https://curl.se/libcurl/c/curl_easy_getinfo.html
@@ -450,21 +419,18 @@ require('lazy').setup({
           enable = true,
           timeout = 750,
         },
-        ---Example:
-        ---
-        ---```lua
-        ---keybinds = {
-        ---  {
-        ---    "<localleader>rr", "<cmd>Rest run<cr>", "Run request under the cursor",
-        ---  },
-        ---  {
-        ---    "<localleader>rl", "<cmd>Rest run last<cr>", "Re-run latest request",
-        ---  },
-        ---}
-        ---
-        ---```
-        ---@see vim.keymap.set
-        keybinds = {},
+        keybinds = {
+          {
+            '<leader>rh',
+            '<cmd>Rest run<cr>',
+            'Run request under the cursor',
+          },
+          {
+            '<leader>rl',
+            '<cmd>Rest run last<cr>',
+            'Re-run latest request',
+          },
+        },
       }
     end,
   },
@@ -482,10 +448,10 @@ require('lazy').setup({
     },
   },
 
-  { -- Useful plugin to show you pending keybinds.
+  {
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
+    event = 'VimEnter',
+    config = function()
       require('which-key').setup()
 
       -- Document existing key chains
@@ -503,7 +469,7 @@ require('lazy').setup({
     end,
   },
 
-  { -- Fuzzy Finder (files, lsp, etc)
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
