@@ -421,12 +421,12 @@ require('lazy').setup({
         },
         keybinds = {
           {
-            '<leader>rh',
+            '<localleader>rh',
             '<cmd>Rest run<cr>',
             'Run request under the cursor',
           },
           {
-            '<leader>rl',
+            '<localleader>rl',
             '<cmd>Rest run last<cr>',
             'Re-run latest request',
           },
