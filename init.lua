@@ -553,36 +553,7 @@ require('lazy').setup({
     config = function()
       local hydra = require 'hydra'
 
-      hydra.setup {
-        debug = false,
-        exit = false,
-        foreign_keys = nil,
-        color = 'red',
-        timeout = false,
-        invoke_on_body = false,
-        hint = {
-          show_name = true,
-          position = { 'bottom' },
-          offset = 0,
-          float_opts = {},
-        },
-        on_enter = nil,
-        on_exit = nil,
-        on_key = nil,
-      }
-      hydra {
-        name = 'Change buffer size',
-        mode = 'n',
-        body = '<leader>qs',
-        hint = [[ Resize split ]],
-        config = { hint = { position = 'center' } },
-        heads = {
-          { 'h', '<CMD>resize +5<CR>' },
-          { 'j', '<CMD>resize -5<CR>' },
-          { 'k', '<CMDvertical resize +5<CR>' },
-          { 'l', '<CMD>vertical resize -5<CR>' },
-        },
-      }
+      hydra.setup {}
     end,
   },
 
