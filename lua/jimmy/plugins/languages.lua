@@ -70,4 +70,41 @@ return {
       }
     end,
   },
+
+  {
+    'andrewferrier/debugprint.nvim',
+    version = '*',
+    config = function()
+      require('debugprint').setup { print_tag = 'DEBUG' }
+      local debugprint = require 'debugprint'
+
+      vim.keymap.set('n', '<Leader>dp', function()
+        return debugprint.debugprint()
+      end, {
+        expr = true,
+        desc = 'Debug Print',
+      })
+      vim.keymap.set('n', '<Leader>dP', function()
+        return debugprint.debugprint { above = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Above',
+      })
+      vim.keymap.set('n', '<Leader>dv', function()
+        return debugprint.debugprint { variable = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Variable',
+      })
+      vim.keymap.set('n', '<Leader>dV', function()
+        return debugprint.debugprint { above = true, variable = true }
+      end, {
+        expr = true,
+        desc = 'Debug Print Variable Above',
+      })
+      vim.keymap.set('n', '<leader>dq', '<CMD>DeleteDebugPrints<CR>', {
+        desc = 'Delete Debug Prints',
+      })
+    end,
+  },
 }
