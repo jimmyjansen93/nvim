@@ -397,13 +397,12 @@ require('lazy').setup({
     config = function()
       require('which-key').setup()
 
-      -- Document existing key chains
       require('which-key').register {
         ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-        --['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
+        ['<leader>q'] = { name = 'General', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
@@ -525,7 +524,8 @@ require('lazy').setup({
     'catgoose/do-the-needful.nvim',
     event = 'BufReadPre',
     keys = {
-      { '<leader>;', '<cmd>Telescope do-the-needful please<cr>', 'n' },
+      { '<leader>;', '<CMD>Telescope do-the-needful please<CR>', 'n' },
+      { '<leader>qr', '<CMD>lua require("do-the-needful").edit_config("global")<CR><cr>', 'n' },
     },
     dependencies = 'nvim-lua/plenary.nvim',
     opts = {
@@ -569,6 +569,19 @@ require('lazy').setup({
         on_enter = nil,
         on_exit = nil,
         on_key = nil,
+      }
+      hydra {
+        name = 'Change buffer size',
+        mode = 'n',
+        body = '<leader>qs',
+        hint = [[ Resize split ]],
+        config = { hint = { position = 'center' } },
+        heads = {
+          { 'h', '<CMD>resize +5<CR>' },
+          { 'j', '<CMD>resize -5<CR>' },
+          { 'k', '<CMDvertical resize +5<CR>' },
+          { 'l', '<CMD>vertical resize -5<CR>' },
+        },
       }
     end,
   },
