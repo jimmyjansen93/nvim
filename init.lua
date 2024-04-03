@@ -525,7 +525,7 @@ require('lazy').setup({
     event = 'BufReadPre',
     dependencies = 'nvim-lua/plenary.nvim',
     config = function()
-      require('do-the-neddful').setup {
+      require('do-the-needful').setup {
         config_order = { 'global' },
         global_tokens = {
           ['${cwd}'] = vim.fn.getcwd,
