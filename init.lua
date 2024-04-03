@@ -408,6 +408,7 @@ require('lazy').setup({
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
         ['<leader>p'] = { name = 'Project', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
+        ['<leader>b'] = { name = 'Debug', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -529,12 +530,7 @@ require('lazy').setup({
     },
     dependencies = 'nvim-lua/plenary.nvim',
     opts = {
-      edit_mode = 'buffer', -- buffer, tab, split, vsplit
-      config_file = '.tasks.json', -- name of json config file for project/global config
-      config_order = { -- default: { project, global, opts }.  Order in which
-        'global', -- .tasks.json in stdpath('data')
-      },
-      tag_source = true, -- display #project, #global, or #opt after tags
+      config_order = { 'global' },
       global_tokens = {
         ['${cwd}'] = vim.fn.getcwd,
         ['${do-the-needful}'] = 'please',
