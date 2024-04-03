@@ -71,10 +71,10 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
+-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'help,qf,netrw',
   group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
   callback = function()
-    vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = '[q]uit' })
+    vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = 'quit' })
   end,
 })
 
@@ -432,37 +432,7 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
-      -- The easiest way to use telescope, is to start by doing something like:
-      --  :Telescope help_tags
-      --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of help_tags options and
-      -- a corresponding preview of the help.
-      --
-      -- Two important keymaps to use while in telescope are:
-      --  - Insert mode: <c-/>
-      --  - Normal mode: ?
-      --
-      -- This opens a window that shows you all of the keymaps for the current
-      -- telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
-
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -505,26 +475,21 @@ require('lazy').setup({
         { desc = '[F]ile [B]rowser' }
       )
 
-      -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
+      vim.keymap.set('n', '<leader>s\\', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
           previewer = false,
           layout_strategy = 'center',
           layout_config = { width = 0.6, height = 0.6 },
         })
-      end, { desc = '[/] Fuzzily search in current buffer' })
+      end, { desc = '/ Fuzzily search in current buffer' })
 
-      -- Also possible to pass additional configuration options.
-      --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         }
-      end, { desc = '[S]earch [/] in Open Files' })
+      end, { desc = 'Search in Open Files' })
 
-      -- Shortcut for searching your neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
@@ -546,22 +511,21 @@ require('lazy').setup({
 
   {
     'mrcjkb/rustaceanvim',
-    version = '^4', -- Recommended
+    version = '^4',
     ft = { 'rust' },
   },
 
   {
     'luckasRanarison/tailwind-tools.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = {}, -- your configuration
+    opts = {},
   },
 
   {
     'catgoose/do-the-needful.nvim',
     event = 'BufReadPre',
     keys = {
-      { '<leader>;', [[<cmd>Telescope do-the-needful please<cr>]], 'n' },
-      { '<leader>:', [[<cmd>Telescope do-the-needful<cr>]], 'n' },
+      { '<leader>;', '<cmd>Telescope do-the-needful please<cr>', 'n' },
     },
     dependencies = 'nvim-lua/plenary.nvim',
     opts = {
@@ -573,20 +537,19 @@ require('lazy').setup({
           ask = {
             ['${pattern}'] = {
               title = 'Pattern to use',
-              default = 'error',
+              default = '',
             },
           },
           window = {
             name = 'Ripgrep',
             close = false,
-            keep_current = true,
+            keep_current = false,
           },
         },
       },
       edit_mode = 'buffer', -- buffer, tab, split, vsplit
       config_file = '.tasks.json', -- name of json config file for project/global config
       config_order = { -- default: { project, global, opts }.  Order in which
-        -- tasks are aggregated
         'project', -- .task.json in project directory
         'global', -- .tasks.json in stdpath('data')
         'opts', -- tasks defined in setup opts
