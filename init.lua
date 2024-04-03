@@ -33,9 +33,9 @@ vim.o.scrolloff = 999
 
 vim.cmd 'filetype plugin indent on'
 vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
 
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')

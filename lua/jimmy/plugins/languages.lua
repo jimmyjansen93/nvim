@@ -23,17 +23,6 @@ return {
   },
 
   {
-    'Zeioth/compiler.nvim',
-    dependencies = { 'stevearc/overseer.nvim' },
-    config = function()
-      require('compiler').setup {}
-      vim.keymap.set('n', '<leader>rr', '<CMD>CompilerOpen<CR>', { desc = 'Compiler open' })
-      vim.keymap.set('n', '<leader>rs', '<CMD>CompilerStop<CR>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
-      vim.keymap.set('n', '<leader>rt', '<CMD>CompilerToggleResults<CR>', { desc = 'Compiler results' })
-    end,
-  },
-
-  {
     'rest-nvim/rest.nvim',
     ft = 'http',
     dependencies = { 'luarocks.nvim' },
