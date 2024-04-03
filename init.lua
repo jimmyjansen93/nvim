@@ -218,7 +218,7 @@ require('lazy').setup({
       graph_style = 'unicode',
     },
     keys = {
-      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neogit' },
+      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neo[g]it' },
     },
   },
 
@@ -361,7 +361,7 @@ require('lazy').setup({
     cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
     dependencies = { 'stevearc/overseer.nvim' },
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { noremap = true, silent = true, desc = 'Compiler open' })
+      vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { desc = 'Compiler open' })
       vim.api.nvim_set_keymap(
         'n',
         '<leader>rs',
