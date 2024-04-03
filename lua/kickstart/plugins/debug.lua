@@ -19,7 +19,9 @@ return {
     {
       'microsoft/vscode-js-debug',
       build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
-      opts = {},
+      config = function()
+        require('vscode-js-debug').setup {}
+      end,
     },
   },
   config = function()
