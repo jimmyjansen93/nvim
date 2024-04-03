@@ -543,7 +543,7 @@ require('lazy').setup({
           end,
         },
       }
-      vim.keymap.set('n', '<leader>;', '<CMD>require("do-the-needful").please()<CR>', { desc = 'Tmux run' })
+      vim.keymap.set('n', '<leader>;', '<CMD>lua require("do-the-needful").please()<CR>', { desc = 'Tmux run' })
       vim.keymap.set('n', '<leader>qr', '<CMD>lua require("do-the-needful").edit_config("global")<CR><cr>', { desc = 'Edit Tmux run' })
     end,
   },
