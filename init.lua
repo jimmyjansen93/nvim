@@ -150,13 +150,14 @@ require('lazy').setup({
         },
       }
 
-      vim.keymap.set('n', '<leader>gp', '<CMD>lua require("gitsigns").preview_hunk()<CR>', { desc = '[G]it [P]review hunk' })
-      vim.keymap.set('n', '<leader>gt', '<CMD>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = '[G]it [T]oggle blame' })
-      vim.keymap.set('n', '<leader>gl', '<CMD>lua require("gitsigns").setloclist()<CR>', { desc = '[G]it [l]oclist' })
+      vim.keymap.set('n', '<leader>gp', '<CMD>lua require("gitsigns").preview_hunk()<CR>', { desc = 'Git preview hunk' })
+      vim.keymap.set('n', '<leader>gt', '<CMD>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'Git toggle blame' })
+      vim.keymap.set('n', '<leader>gl', '<CMD>lua require("gitsigns").setloclist()<CR>', { desc = 'Git loclist' })
       vim.keymap.set('n', ']c', '<CMD>lua require("gitsigns").next_hunk()<CR>', { desc = 'Git next change' })
       vim.keymap.set('n', '[c', '<CMD>lua require("gitsigns").prev_hunk()<CR>', { desc = 'Git prev change' })
     end,
   },
+
   {
     'norcalli/nvim-colorizer.lua',
     config = function()
@@ -218,7 +219,7 @@ require('lazy').setup({
       graph_style = 'unicode',
     },
     keys = {
-      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open Neo[g]it' },
+      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open git window' },
     },
   },
 
@@ -380,7 +381,6 @@ require('lazy').setup({
 
   {
     'stevearc/overseer.nvim',
-    cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
     opts = {
       task_list = {
         direction = 'bottom',
@@ -399,15 +399,15 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]un', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
+        ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = '[F]ile', _ = 'which_key_ignore' },
-        ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
-        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+        ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
+        ['<leader>p'] = { name = 'Project', _ = 'which_key_ignore' },
+        ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -635,7 +635,7 @@ require('lazy').setup({
     end,
   },
 
-  { -- LSP Configuration & Plugins
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
       'williamboman/mason.nvim',
@@ -645,94 +645,27 @@ require('lazy').setup({
       'artemave/workspace-diagnostics.nvim',
     },
     config = function()
-      -- Brief Aside: **What is LSP?**
-      --
-      -- LSP is an acronym you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
-      --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself
-          -- many times.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-T>.
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-
-          -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-
-          -- Jump to the type of the word under your cursor.
-          --  Useful when you're not sure what type a variable is and you want to see
-          --  the definition of its *type*, not where it was *defined*.
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-
-          -- Fuzzy find all the symbols in your current document.
-          --  Symbols are things like variables, functions, types, etc.
-          map('<leader>cs', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-
-          -- Fuzzy find all the symbols in your current workspace
-          --  Similar to document symbols, except searches over your whole project.
-          map('<leader>cw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-          -- Rename the variable under your cursor
-          --  Most Language Servers support renaming across files, etc.
-          map('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-          -- Opens a popup that displays documentation about the word under your cursor
-          --  See `:help K` for why this keymap
+          map('gd', require('telescope.builtin').lsp_definitions, 'Goto Definition')
+          map('gr', require('telescope.builtin').lsp_references, 'Goto References')
+          map('gI', require('telescope.builtin').lsp_implementations, 'Goto Implementation')
+          map('<leader>cd', require('telescope.builtin').lsp_type_definitions, 'Type Definition')
+          map('<leader>cs', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+          map('<leader>cw', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
+          map('<leader>cr', vim.lsp.buf.rename, 'Rename')
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -853,24 +786,8 @@ require('lazy').setup({
       },
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
         javascript = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
       },
-    },
-  },
-
-  -- Install Copilot as it is useful for certain stuff
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'BufEnter',
-    opts = {
-      panel = { enabled = false },
-      suggestion = { enabled = false },
-      filetypes = { org = false },
     },
   },
 
@@ -884,35 +801,34 @@ require('lazy').setup({
           require('copilot_cmp').setup()
         end,
       },
-      -- Snippet Engine & its associated nvim-cmp source
+      {
+        'zbirenbaum/copilot.lua',
+        opts = {
+          panel = { enabled = false },
+          suggestion = { enabled = false },
+        },
+      },
+
       {
         'L3MON4D3/LuaSnip',
         build = (function()
-          -- Build Step is needed for regex support in snippets
-          -- This step is not supported in many windows environments
-          -- Remove the below condition to re-enable on windows
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
           return 'make install_jsregexp'
         end)(),
       },
       'saadparwaiz1/cmp_luasnip',
 
-      -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      {
+        'David-Kunz/cmp-npm',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        ft = 'json',
+        config = function()
+          require('cmp-npm').setup {}
+        end,
+      },
 
-      -- pictograms for completion menu
       'onsails/lspkind.nvim',
-
-      -- If you want to add a bunch of pre-configured snippets,
-      --    you can use this plugin to help you. It even has snippets
-      --    for various frameworks/libraries/etc. but you will have to
-      --    set up the ones that are useful for you.
-      -- 'rafamadriz/friendly-snippets',
     },
     config = function()
       -- See `:help cmp`
@@ -924,20 +840,12 @@ require('lazy').setup({
       cmp.setup {
         formatting = {
           format = lspkind.cmp_format {
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            -- can also be a function to dynamically calculate max width such as
-            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            -- show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+            mode = 'symbol',
+            maxwidth = function()
+              return math.floor(0.4 * vim.o.columns)
+            end,
+            ellipsis_char = '...',
             symbol_map = { Copilot = '' },
-
-            -- The function below will be called before any actual modifications from lspkind
-            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-            -- before = function (entry, vim_item)
-            --   ...
-            --   return vim_item
-            -- end
           },
         },
         snippet = {
@@ -952,27 +860,12 @@ require('lazy').setup({
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
           ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
           ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
           ['<C-y>'] = cmp.mapping.confirm { select = true },
 
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
-          ['C-.'] = cmp.mapping.complete {},
+          ['C-o'] = cmp.mapping.complete {},
 
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
           ['<C-l>'] = cmp.mapping(function()
@@ -991,28 +884,12 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
-          { name = 'orgmode' },
+          { name = 'npm', keyword_length = 4 },
         },
       }
     end,
   },
 
-  -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is
-  --   --
-  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-  --   'folke/tokyonight.nvim',
-  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-  --   config = function()
-  --     -- Load the colorscheme here
-  --     vim.cmd.colorscheme 'tokyonight-storm'
-  --
-  --     -- You can configure highlights by doing something like
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
   {
     'catppuccin/nvim',
     name = 'catppuccin',
