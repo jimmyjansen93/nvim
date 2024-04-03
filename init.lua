@@ -361,9 +361,14 @@ require('lazy').setup({
     cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
     dependencies = { 'stevearc/overseer.nvim' },
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { noremap = true, silent = true, desc = 'Compiler open' })
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>rs',
+        '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>',
+        { noremap = true, silent = true, desc = 'Compiler restart' }
+      )
+      vim.api.nvim_set_keymap('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { noremap = true, silent = true, desc = 'Compiler results' })
     end,
   },
 
@@ -486,7 +491,7 @@ require('lazy').setup({
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = '[R]un', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
