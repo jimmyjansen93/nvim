@@ -325,13 +325,12 @@ require('lazy').setup({
 
   {
     'Zeioth/compiler.nvim',
-    cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
     dependencies = { 'stevearc/overseer.nvim' },
     config = function()
       require('compiler').setup {}
-      vim.keymap.set('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { desc = 'Compiler open' })
-      --vim.keymap.set('n', '<leader>rs', '<cmd>CompilerStop<cr>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
-      vim.keymap.set('n', '<leader>rt', '<cmd>CompilerToggleResults<cr>', { desc = 'Compiler results' })
+      vim.keymap.set('n', '<leader>rr', '<CMD>CompilerOpen<CR>', { desc = 'Compiler open' })
+      vim.keymap.set('n', '<leader>rs', '<CMD>CompilerStop<CR>' .. '<cmd>CompilerRedo<cr>', { desc = 'Compiler restart' })
+      vim.keymap.set('n', '<leader>rt', '<CMD>CompilerToggleResults<CR>', { desc = 'Compiler results' })
     end,
   },
 
@@ -498,7 +497,7 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sc', ':Telescope conflicts<CR>', { desc = '[S]earch [C]onflicts' })
+      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = '[S]earch [C]onflicts' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
