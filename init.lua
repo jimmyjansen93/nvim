@@ -535,14 +535,14 @@ require('lazy').setup({
 
   {
     'pmizio/typescript-tools.nvim',
-    event = 'BufEnter *.ts,*.tsx',
+    ft = { 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
 
-  { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
+  { 'dmmulroy/tsc.nvim', ft = { 'typescript', 'typescriptreact' }, dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
 
-  { 'dmmulroy/ts-error-translator.nvim' },
+  { 'dmmulroy/ts-error-translator.nvim', ft = { 'typescript', 'typescriptreact' } },
 
   {
     'mrcjkb/rustaceanvim',
