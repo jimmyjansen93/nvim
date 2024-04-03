@@ -361,6 +361,7 @@ require('lazy').setup({
     cmd = { 'CompilerOpen', 'CompilerToggleResults', 'CompilerRedo' },
     dependencies = { 'stevearc/overseer.nvim' },
     config = function()
+      require('compiler').setup()
       vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>CompilerOpen<cr>', { desc = 'Compiler open' })
       vim.api.nvim_set_keymap(
         'n',
