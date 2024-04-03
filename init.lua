@@ -723,14 +723,11 @@ require('lazy').setup({
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
+      'artemave/workspace-diagnostics.nvim',
     },
     config = function()
       -- Brief Aside: **What is LSP?**
@@ -920,6 +917,10 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            -- FIXME: just an experiment to see if this works
+            server.on_attach = function(client, bufnr)
+              require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
