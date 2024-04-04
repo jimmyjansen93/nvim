@@ -163,7 +163,6 @@ require('lazy').setup({
     end,
   },
 
-  require 'kickstart.plugins.indent_line',
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = {
   notify = false,
