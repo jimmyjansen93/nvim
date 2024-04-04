@@ -8,18 +8,11 @@ return {
     event = 'VeryLazy',
     opts = {
       lsp = {
+        progress = { enabled = false },
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
           ['cmp.entry.get_documentation'] = true,
-        },
-      },
-      views = {
-        cmdline_popup = {
-          position = {
-            row = '50%',
-            col = '30%',
-          },
         },
       },
       routes = {
@@ -32,7 +25,6 @@ return {
               { find = '; before #%d+' },
             },
           },
-          -- view = 'mini',
         },
       },
       presets = {
@@ -42,6 +34,9 @@ return {
         inc_rename = true,
       },
       notify = {
+        enabled = false,
+      },
+      message = {
         enabled = false,
       },
     },
