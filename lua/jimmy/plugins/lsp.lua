@@ -126,12 +126,4 @@ return {
       }
     end,
   },
-
-  {
-    'LukasPietzschmann/boo.nvim',
-    opts = {},
-    keys = {
-      { '<leader>K', '<cmd>lua require("boo").boo()<cr>', desc = 'Lsp Info' },
-    },
-  },
 }
