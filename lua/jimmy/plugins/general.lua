@@ -28,4 +28,5 @@ return {
     priority = 1000,
     config = true,
   },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
 }
