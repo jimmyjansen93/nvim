@@ -15,6 +15,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.signcolumn = 'yes'
+vim.opt.relativenumber = true
 
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 250
@@ -81,6 +82,29 @@ vim.api.nvim_create_autocmd('QuitPre', {
   pattern = 'tmux.conf',
   group = vim.api.nvim_create_augroup('jj-autocommit-tmux', { clear = true }),
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+})
+
+local augroup = vim.api.nvim_create_augroup('jj-numbertoggle', {})
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
+  pattern = '*',
+  group = augroup,
+  callback = function()
+    if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
+      vim.opt.relativenumber = true
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
+  pattern = '*',
+  group = augroup,
+  callback = function()
+    if vim.o.nu then
+      vim.opt.relativenumber = false
+      vim.cmd 'redraw'
+    end
+  end,
 })
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
