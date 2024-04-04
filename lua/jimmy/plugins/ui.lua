@@ -18,14 +18,14 @@ return {
         cmdline_popup = {
           position = {
             row = '100%',
-            col = '20%',
+            col = '50%',
           },
         },
-        cmdline = {
-          position = {
-            row = '100%',
-            col = '20%',
-          },
+        -- cmdline = {
+        --   position = {
+        --     row = '100%',
+        --     col = '20%',
+        --   },
         },
       },
       routes = {
