@@ -1,4 +1,6 @@
 return {
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+
   {
     'norcalli/nvim-colorizer.lua',
     config = function()
