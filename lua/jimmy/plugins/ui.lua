@@ -105,8 +105,8 @@ return {
         },
         sections = {
           lualine_x = {},
-          lualine_y = { { 'filetype' } },
-          lualine_z = { { 'buffers' } },
+          lualine_y = { { 'buffers' } },
+          lualine_z = {},
         },
       }
     end,
