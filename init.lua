@@ -84,11 +84,9 @@ vim.api.nvim_create_autocmd('QuitPre', {
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
-local augroup = vim.api.nvim_create_augroup('jj-numbertoggle', {})
-
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   pattern = '*',
-  group = augroup,
+  group = vim.api.nvim_create_augroup('jj-numbertoggle', {}),
   callback = function()
     if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
       vim.opt.relativenumber = true
@@ -98,7 +96,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'Cmdline
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
   pattern = '*',
-  group = augroup,
+  group = vim.api.nvim_create_augroup('jj-numbertoggle', {}),
   callback = function()
     if vim.o.nu then
       vim.opt.relativenumber = false
