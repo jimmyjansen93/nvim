@@ -165,7 +165,9 @@ require('lazy').setup({
 
   require 'kickstart.plugins.indent_line',
   { import = 'jimmy.plugins' },
-}, { checker = { notify = false } })
+}, { checker = { notify = false }, change_detection = {
+  notify = false,
+} })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

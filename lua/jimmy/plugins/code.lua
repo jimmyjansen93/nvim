@@ -83,6 +83,9 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
+        typescript = { 'prettierd', 'prettier' },
+        typescriptreact = { 'prettierd', 'prettier' },
       },
     },
   },
