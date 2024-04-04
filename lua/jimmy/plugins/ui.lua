@@ -14,6 +14,20 @@ return {
           ['cmp.entry.get_documentation'] = true,
         },
       },
+      views = {
+        cmdline_popup = {
+          position = {
+            row = '100%',
+            col = '20%',
+          },
+        },
+        cmdline = {
+          position = {
+            row = '100%',
+            col = '20%',
+          },
+        },
+      },
       routes = {
         {
           filter = {
@@ -24,7 +38,7 @@ return {
               { find = '; before #%d+' },
             },
           },
-          view = 'mini',
+          -- view = 'mini',
         },
       },
       presets = {
@@ -32,6 +46,9 @@ return {
         command_palette = true,
         long_message_to_split = true,
         inc_rename = true,
+      },
+      notify = {
+        enabled = false,
       },
     },
 
@@ -42,7 +59,7 @@ return {
           require('noice').redirect(vim.fn.getcmdline())
         end,
         mode = 'c',
-        desc = 'Redirect Cmdline',
+        desc = 'Noise Redirect Cmdline',
       },
       {
         '<leader>qm',
@@ -70,7 +87,7 @@ return {
         function()
           require('noice').cmd 'dismiss'
         end,
-        desc = 'Dismiss All',
+        desc = 'Noice Dismiss All',
       },
       {
         '<c-f>',
