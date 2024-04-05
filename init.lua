@@ -49,8 +49,8 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<S-h>', '<CMD>bnext<cr>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<S-l>', '<CMD>bprev<cr>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<S-l>', '<CMD>bnext<cr>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<S-h>', '<CMD>bprev<cr>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<S-q>', '<CMD>bd<cr>', { desc = 'Kill buffer' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
