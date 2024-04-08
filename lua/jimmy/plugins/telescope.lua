@@ -43,7 +43,7 @@ return {
       vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search [C]onflicts' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'Search Files' })
+      vim.keymap.set('n', '<leader>sf', '<CMD>Telescope find_files hidden=true<CR>', { desc = 'Search Files' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = 'Search Select Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search Current Word' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by Grep' })
@@ -51,9 +51,9 @@ return {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = ', Find existing buffers' })
-      vim.keymap.set('n', '<leader> ', '<CMD>builtin.find_files { hidden = true }<CR>', { desc = 'Find File' })
-      vim.keymap.set('n', '<leader>fr', '<CMD>Telescope file_browser<CR>', { desc = 'File Browser Root' })
-      vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h<CR>', { desc = 'File Browser Current' })
+      vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
+      vim.keymap.set('n', '<leader>fr', '<CMD>Telescope file_browser hidden=true<CR>', { desc = 'File Browser Root' })
+      vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h<CR> hidden = true', { desc = 'File Browser Current' })
       vim.keymap.set('n', '<leader>s\\', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
           previewer = false,
