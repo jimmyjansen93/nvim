@@ -89,7 +89,7 @@ vim.api.nvim_create_autocmd('QuitPre', {
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter', 'ModeChanged' }, {
   pattern = '*',
   group = vim.api.nvim_create_augroup('jj-numbertoggle', {}),
   callback = function()
