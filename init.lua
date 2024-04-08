@@ -39,6 +39,7 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 
 vim.opt.hlsearch = true
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
@@ -76,11 +77,11 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
-vim.api.nvim_create_autocmd('QuitPre', {
-  pattern = '*.lua',
-  group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
-})
+--vim.api.nvim_create_autocmd('QuitPre', {
+--  pattern = '*.lua',
+--  group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
+--  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
+--})
 
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = 'tmux.conf',
