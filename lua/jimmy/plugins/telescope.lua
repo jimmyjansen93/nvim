@@ -53,7 +53,7 @@ return {
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = ', Find existing buffers' })
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
       vim.keymap.set('n', '<leader>fr', '<CMD>Telescope file_browser hidden=true<CR>', { desc = 'File Browser Root' })
-      vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h<CR> hidden = true', { desc = 'File Browser Current' })
+      vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h hidden=true <CR>', { desc = 'File Browser Current' })
       vim.keymap.set('n', '<leader>s\\', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
           previewer = false,
