@@ -30,9 +30,12 @@ return {
     },
     opts = {
       disable_signs = false,
+      use_per_project_settings = true,
+      remember_settings = true,
       graph_style = 'unicode',
       ignored_settings = {
-        'NeogitPushPopup--force-with-lease',
+        'NeogitPushPopup--force',
+        'NeogitPullPopup--rebase',
         'NeogitCommitPopup--allow-empty',
         'NeogitRevertPopup--no-edit',
       },
