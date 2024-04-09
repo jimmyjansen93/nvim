@@ -40,12 +40,13 @@ return {
         },
       }
 
-      local group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true })
       vim.api.nvim_create_autocmd('User', {
+        desc = 'Close Neogit after push',
         pattern = 'NeogitPushComplete',
-        group = group,
+        group = vim.api.nvim_create_augroup('Neogit', { clear = true }),
         callback = require('neogit').close,
       })
+      vim.api.nvim_exec_autocmds('User', { group = 'Neogit' })
     end,
     keys = {
       { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open git window' },

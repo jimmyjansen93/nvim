@@ -92,14 +92,14 @@ vim.api.nvim_create_autocmd('QuitPre', {
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   desc = 'Set relative number in normal mode',
   pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle-leave', { clear = true }),
+  group = vim.api.nvim_create_augroup('jj-numbertoggle', { clear = true }),
   command = [[set relativenumber | set number]],
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
   desc = 'Set absolute number in insert mode',
   pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle-enter', { clear = true }),
+  group = vim.api.nvim_create_augroup('jj-numbertoggle', { clear = true }),
   command = [[set norelativenumber | set number]],
 })
 
