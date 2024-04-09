@@ -28,26 +28,15 @@ return {
       'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    config = function()
-      local neogit = require 'neogit'
-      neogit.setup {
-        disable_signs = false,
-        graph_style = 'unicode',
-        ignored_settings = {
-          'NeogitPushPopup--force-with-lease',
-          'NeogitCommitPopup--allow-empty',
-          'NeogitRevertPopup--no-edit',
-        },
-      }
-
-      vim.api.nvim_create_autocmd('User', {
-        desc = 'Close Neogit after push',
-        pattern = 'NeogitPushComplete',
-        group = vim.api.nvim_create_augroup('Neogit', { clear = true }),
-        callback = require('neogit').close,
-      })
-      vim.api.nvim_exec_autocmds('User', { group = 'Neogit' })
-    end,
+    opts = {
+      disable_signs = false,
+      graph_style = 'unicode',
+      ignored_settings = {
+        'NeogitPushPopup--force-with-lease',
+        'NeogitCommitPopup--allow-empty',
+        'NeogitRevertPopup--no-edit',
+      },
+    },
     keys = {
       { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open git window' },
     },
