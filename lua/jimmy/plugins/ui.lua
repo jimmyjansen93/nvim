@@ -115,7 +115,7 @@ return {
         inactive_sections = {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
-          lualine_c = { 'filename' },
+          lualine_c = { 'filename', 'filetype' },
           lualine_x = {},
           lualine_y = { { 'buffers' } },
           lualine_z = {},
