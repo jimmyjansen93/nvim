@@ -133,6 +133,7 @@ require('lazy').setup({
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
+        ['<leader>gc'] = { name = 'Conflicts', _ = 'which_key_ignore' },
         ['<leader>b'] = { name = 'Debug', _ = 'which_key_ignore' },
       }
     end,
