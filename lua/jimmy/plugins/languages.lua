@@ -23,44 +23,6 @@ return {
   },
 
   {
-    'rest-nvim/rest.nvim',
-    ft = 'http',
-    dependencies = { 'luarocks.nvim' },
-    config = function()
-      require('rest-nvim').setup {
-        result = {
-          behavior = {
-            statistics = {
-              enable = true,
-              --- https://curl.se/libcurl/c/curl_easy_getinfo.html
-              stats = {
-                { 'total_time', title = 'Time taken:' },
-                { 'size_download_t', title = 'Download size:' },
-              },
-            },
-          },
-        },
-        highlight = {
-          enable = true,
-          timeout = 750,
-        },
-        keys = {
-          {
-            '<leader>rq',
-            '<cmd>Rest run<cr>',
-            'Run request under the cursor',
-          },
-          {
-            '<leader>rl',
-            '<cmd>Rest run last<cr>',
-            'Re-run latest request',
-          },
-        },
-      }
-    end,
-  },
-
-  {
     'andrewferrier/debugprint.nvim',
     version = '*',
     config = function()
