@@ -54,4 +54,19 @@ return {
       },
     },
   },
+
+  {
+    'akinsho/git-conflict.nvim',
+    version = '*',
+    config = function()
+      require('git-conflict').setup {}
+    end,
+    keys = {
+      { '<Leader>gcb', '<cmd>GitConflictChooseBoth<CR>', desc = 'Choose both' },
+      { '<Leader>gcn', '<cmd>GitConflictNextConflict<CR>', desc = 'Move to next conflict' },
+      { '<Leader>gcc', '<cmd>GitConflictChooseOurs<CR>', desc = 'Choose current' },
+      { '<Leader>gcp', '<cmd>GitConflictPrevConflict<CR>', desc = 'Move to prev conflict' },
+      { '<Leader>gci', '<cmd>GitConflictChooseTheirs<CR>', desc = 'Choose incoming' },
+    },
+  },
 }
