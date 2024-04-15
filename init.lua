@@ -126,7 +126,8 @@ require('lazy').setup({
 
       require('which-key').register {
         ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
+        ['<leader>cc'] = { name = 'Chat', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
         ['<leader>q'] = { name = 'General', _ = 'which_key_ignore' },
@@ -134,7 +135,6 @@ require('lazy').setup({
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
         ['<leader>gc'] = { name = 'Conflicts', _ = 'which_key_ignore' },
-        ['<leader>b'] = { name = 'Debug', _ = 'which_key_ignore' },
       }
     end,
   },

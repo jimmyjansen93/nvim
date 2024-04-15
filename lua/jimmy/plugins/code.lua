@@ -42,14 +42,11 @@ return {
   },
 
   {
-    'gpanders/editorconfig.nvim',
-  },
-
-  {
     'folke/todo-comments.nvim',
     cmd = { 'TodoTrouble', 'TodoTelescope' },
-    event = 'BufReadPre',
-    config = true,
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = { signs = true },
     keys = {
       {
         ']t',
@@ -73,6 +70,10 @@ return {
   },
 
   {
+    'gpanders/editorconfig.nvim',
+  },
+
+  {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
@@ -89,6 +90,4 @@ return {
       },
     },
   },
-
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
 }

@@ -33,12 +33,12 @@ return {
       },
     }
 
-    vim.keymap.set('n', '<leader>bs', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<leader>bi', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<leader>bo', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<leader>bt', dap.step_out, { desc = 'Debug: Step Out' })
-    vim.keymap.set('n', '<leader>bb', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-    vim.keymap.set('n', '<leader>bB', function()
+    vim.keymap.set('n', '<leader>ds', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<leader>dt', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+    vim.keymap.set('n', '<leader>dB', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
 

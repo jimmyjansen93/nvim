@@ -67,7 +67,7 @@ return {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-y>'] = cmp.mapping.confirm { select = true },
 
-          ['C-o'] = cmp.mapping.complete {},
+          ['C-m'] = cmp.mapping.complete {},
 
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
@@ -96,8 +96,8 @@ return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
-      { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
-      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+      { 'zbirenbaum/copilot.lua' },
+      { 'nvim-lua/plenary.nvim' },
     },
     opts = {
       window = { layout = 'float', height = 0.9, width = 0.9 },

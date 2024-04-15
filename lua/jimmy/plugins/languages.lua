@@ -29,31 +29,31 @@ return {
       require('debugprint').setup { print_tag = 'DEBUG' }
       local debugprint = require 'debugprint'
 
-      vim.keymap.set('n', '<Leader>dp', function()
+      vim.keymap.set('n', '<Leader>cl', function()
         return debugprint.debugprint()
       end, {
         expr = true,
         desc = 'Debug Print',
       })
-      vim.keymap.set('n', '<Leader>dP', function()
+      vim.keymap.set('n', '<Leader>cL', function()
         return debugprint.debugprint { above = true }
       end, {
         expr = true,
         desc = 'Debug Print Above',
       })
-      vim.keymap.set('n', '<Leader>dv', function()
+      vim.keymap.set('n', '<Leader>cv', function()
         return debugprint.debugprint { variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable',
       })
-      vim.keymap.set('n', '<Leader>dV', function()
+      vim.keymap.set('n', '<Leader>cV', function()
         return debugprint.debugprint { above = true, variable = true }
       end, {
         expr = true,
         desc = 'Debug Print Variable Above',
       })
-      vim.keymap.set('n', '<leader>dq', '<CMD>DeleteDebugPrints<CR>', {
+      vim.keymap.set('n', '<leader>cq', '<CMD>DeleteDebugPrints<CR>', {
         desc = 'Delete Debug Prints',
       })
     end,
