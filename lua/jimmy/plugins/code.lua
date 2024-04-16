@@ -32,27 +32,14 @@ return {
     cmd = { 'TodoTrouble', 'TodoTelescope' },
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = true },
-    keys = {
-      {
-        ']t',
-        function()
-          require('todo-comments').jump_next()
-        end,
-        desc = 'Next todo comment',
-      },
-      {
-        '[t',
-        function()
-          require('todo-comments').jump_prev()
-        end,
-        desc = 'Previous todo comment',
-      },
-      { '<leader>xt', '<cmd>TodoTrouble<cr>', desc = 'Todo Trouble' },
-      { '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme Trouble' },
-      { '<leader>xs', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
-      { '<leader>xS', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
-    },
+    config = function()
+      require('todo-comments').setup { signs = true }
+
+      vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble<cr>', { noremap = true, silent = true, desc = 'Todo Trouble' })
+      vim.keymap.set('n', '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', { noremap = true, silent = true, desc = 'Todo/Fix/Fixme Trouble' })
+      vim.keymap.set('n', '<leader>xs', '<cmd>TodoTelescope<cr>', { noremap = true, silent = true, desc = 'Todo Telescope' })
+      vim.keymap.set('n', '<leader>xS', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', { noremap = true, silent = true, desc = 'Todo/Fix/Fixme' })
+    end,
   },
 
   {
