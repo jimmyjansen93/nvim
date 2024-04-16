@@ -1,12 +1,26 @@
 return {
   { 'numToStr/Comment.nvim', lazy = false, opts = {} },
   { 'gpanders/editorconfig.nvim' },
+  { 'kylechui/nvim-surround', opts = {}, event = 'VeryLazy' },
+
+  {
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup { use_default_keymaps = false, notify = false }
+
+      vim.keymap.set('n', '<leader>cj', require('treesj').toggle, { desc = 'Toogle join' })
+    end,
+  },
 
   {
     'folke/trouble.nvim',
     cmd = { 'TroubleToggle', 'Trouble' },
     config = function()
-      require('trouble').setup { use_diagnostic_signs = true }
+      require('trouble').setup {
+        use_diagnostic_signs = true,
+        auto_close = false,
+      }
 
       vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', { noremap = true, silent = true, desc = 'Document Diagnostics' })
       vim.keymap.set('n', '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', { noremap = true, silent = true, desc = 'Workspace Diagnostics' })
@@ -24,6 +38,9 @@ return {
         '<cmd>lua require("trouble").next { skip_groups = true, jump = true }<cr>',
         { noremap = true, silent = true, desc = 'Next trouble/quickfix item' }
       )
+      vim.keymap.set('n', 'gR', function()
+        require('trouble').toggle 'lsp_references'
+      end)
     end,
   },
 
