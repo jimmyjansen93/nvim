@@ -1,14 +1,13 @@
 return {
   {
     'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
 
-  { 'dmmulroy/tsc.nvim', ft = { 'typescript', 'typescriptreact' }, dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
+  { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
 
-  { 'dmmulroy/ts-error-translator.nvim', ft = { 'typescript', 'typescriptreact' } },
+  { 'dmmulroy/ts-error-translator.nvim' },
 
   {
     'mrcjkb/rustaceanvim',

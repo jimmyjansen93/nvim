@@ -40,7 +40,7 @@ return {
 
       local builtin = require 'telescope.builtin'
 
-      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search [C]onflicts' })
+      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search Conflicts' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
       vim.keymap.set('n', '<leader>sf', '<CMD>Telescope find_files hidden=true<CR>', { desc = 'Search ALL Files' })
