@@ -28,21 +28,22 @@ return {
       'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    opts = {
-      disable_signs = false,
-      use_per_project_settings = true,
-      remember_settings = true,
-      graph_style = 'unicode',
-      ignored_settings = {
-        'NeogitPushPopup--force',
-        'NeogitPullPopup--rebase',
-        'NeogitCommitPopup--allow-empty',
-        'NeogitRevertPopup--no-edit',
-      },
-    },
-    keys = {
-      { '<leader>gg', '<CMD>Neogit<CR>', desc = 'Open git window' },
-    },
+    config = function()
+      require('neogit').setup {
+        disable_signs = false,
+        use_per_project_settings = true,
+        remember_settings = true,
+        graph_style = 'unicode',
+        ignored_settings = {
+          'NeogitPushPopup--force',
+          'NeogitPullPopup--rebase',
+          'NeogitCommitPopup--allow-empty',
+          'NeogitRevertPopup--no-edit',
+        },
+      }
+
+      vim.keymap.set('n', '<leader>gg', '<CMD>Neogit<CR>', { desc = 'Open git window' })
+    end,
   },
 
   {
@@ -60,13 +61,12 @@ return {
     version = '*',
     config = function()
       require('git-conflict').setup {}
+
+      vim.keymap.set('n', '<leader>gcb', '<CMD>GitConflictChooseBoth<CR>', { desc = 'Choose both' })
+      vim.keymap.set('n', '<leader>gcn', '<CMD>GitConflictNextConflict<CR>', { desc = 'Move to next conflict' })
+      vim.keymap.set('n', '<leader>gcc', '<CMD>GitConflictChooseOurs<CR>', { desc = 'Choose current' })
+      vim.keymap.set('n', '<leader>gcp', '<CMD>GitConflictPrevConflict<CR>', { desc = 'Move to prev conflict' })
+      vim.keymap.set('n', '<leader>gci', '<CMD>GitConflictChooseTheirs<CR>', { desc = 'Choose incoming' })
     end,
-    keys = {
-      { '<Leader>gcb', '<cmd>GitConflictChooseBoth<CR>', desc = 'Choose both' },
-      { '<Leader>gcn', '<cmd>GitConflictNextConflict<CR>', desc = 'Move to next conflict' },
-      { '<Leader>gcc', '<cmd>GitConflictChooseOurs<CR>', desc = 'Choose current' },
-      { '<Leader>gcp', '<cmd>GitConflictPrevConflict<CR>', desc = 'Move to prev conflict' },
-      { '<Leader>gci', '<cmd>GitConflictChooseTheirs<CR>', desc = 'Choose incoming' },
-    },
   },
 }
