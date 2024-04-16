@@ -17,14 +17,6 @@ return {
         },
       },
 
-      {
-        'L3MON4D3/LuaSnip',
-        build = (function()
-          return 'make install_jsregexp'
-        end)(),
-      },
-      'saadparwaiz1/cmp_luasnip',
-
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       {
@@ -40,9 +32,7 @@ return {
     },
     config = function()
       local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
-      luasnip.config.setup {}
 
       cmp.setup {
         formatting = {
@@ -55,11 +45,6 @@ return {
             symbol_map = { Copilot = '' },
           },
         },
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
         completion = { completeopt = 'menu,menuone,noinsert' },
 
         mapping = cmp.mapping.preset.insert {
@@ -68,24 +53,10 @@ return {
           ['<C-y>'] = cmp.mapping.confirm { select = true },
 
           ['C-m'] = cmp.mapping.complete {},
-
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            end
-          end, { 'i', 's' }),
         },
         sources = {
           { name = 'nvim_lsp' },
           { name = 'copilot' },
-          { name = 'luasnip' },
           { name = 'path' },
           { name = 'npm', keyword_length = 4 },
         },
@@ -110,7 +81,7 @@ return {
     },
   },
   keys = {
-    { '<leader>ccb', ':CopilotChatBuffer<cr>', desc = 'CopilotChat - Buffer' },
+    { '<leader>ccb', '<CMD>CopilotChatBuffer<cr>', desc = 'CopilotChat - Buffer' },
     { '<leader>cce', '<cmd>CopilotChatExplain<cr>', desc = 'CopilotChat - Explain code' },
     { '<leader>cct', '<cmd>CopilotChatTests<cr>', desc = 'CopilotChat - Generate tests' },
     {

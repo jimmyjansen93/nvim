@@ -54,6 +54,13 @@ vim.keymap.set('n', '<S-l>', '<CMD>bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<S-h>', '<CMD>bprev<cr>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<S-q>', '<CMD>bd<cr>', { desc = 'Kill buffer' })
 
+vim.keymap.set({ 'n', 'x' }, 'j', function()
+  return vim.v.count > 0 and 'j' or 'gj'
+end, { noremap = true, expr = true })
+vim.keymap.set({ 'n', 'x' }, 'k', function()
+  return vim.v.count > 0 and 'k' or 'gk'
+end, { noremap = true, expr = true })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -77,7 +84,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
---vim.api.nvim_create_autocmd('QuitPre', {
 --  pattern = '*.lua',
 --  group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
 --  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
@@ -126,11 +132,9 @@ require('lazy').setup({
 
       require('which-key').register {
         ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-        ['<leader>cc'] = { name = 'Chat', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-        ['<leader>q'] = { name = 'General', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
