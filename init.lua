@@ -98,14 +98,14 @@ vim.api.nvim_create_autocmd('QuitPre', {
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   desc = 'Set relative number in normal mode',
   pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle', { clear = true }),
+  group = vim.api.nvim_create_augroup('jj-numbertoggle-enable', { clear = true }),
   command = [[set relativenumber | set number]],
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
   desc = 'Set absolute number in insert mode',
   pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle', { clear = true }),
+  group = vim.api.nvim_create_augroup('jj-numbertoggle-disable', { clear = true }),
   command = [[set norelativenumber | set number]],
 })
 
@@ -157,21 +157,6 @@ require('lazy').setup({
         },
       }
       vim.cmd.colorscheme 'catppuccin-macchiato'
-    end,
-  },
-
-  {
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [']quote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
-
-      -- TODO: Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
 
