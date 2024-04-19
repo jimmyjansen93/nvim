@@ -52,7 +52,7 @@ return {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-y>'] = cmp.mapping.confirm { select = true },
 
-          ['C-m'] = cmp.mapping.complete {},
+          ['<C-m>'] = cmp.mapping.complete {},
         },
         sources = {
           { name = 'nvim_lsp' },
