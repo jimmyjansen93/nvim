@@ -4,9 +4,16 @@ return {
     return {
       cmd = { 'zig', 'build' },
       components = {
-        { 'on_output_quickfix', open = true },
+        {
+          'on_output_quickfix',
+          open = true,
+          close = true,
+          open_on_exit = 'failure',
+          tail = false,
+        },
+        'on_result_diagnostics',
+        'restart_on_save',
         'default',
-        -- 'on_result_diagnostics',
       },
     }
   end,
