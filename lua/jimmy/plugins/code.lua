@@ -6,8 +6,8 @@ return {
     'stevearc/overseer.nvim',
     config = function()
       require('overseer').setup {
-        templates = { 'user.zigBuild', 'user.zigBuildRun', 'builtin' },
-        task_list = { direction = 'bottom' },
+        templates = { 'user.zigBuild', 'user.zigBuildRun', 'user.zigTest', 'builtin' },
+        task_list = { direction = 'bottom', max_height = { 0.3 } },
       }
 
       vim.keymap.set('n', '<leader>rr', '<CMD>OverseerRun<CR>', { noremap = true, silent = true, desc = 'Overseer Run' })

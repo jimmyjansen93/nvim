@@ -6,9 +6,9 @@ return {
       components = {
         {
           'on_output_quickfix',
-          open = true,
+          open = false,
           close = true,
-          open_on_exit = 'failure',
+          open_on_exit = 'never',
           tail = false,
         },
         'on_result_diagnostics',

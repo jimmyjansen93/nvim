@@ -1,8 +1,8 @@
 return {
-  name = 'zigBuild',
+  name = 'zigTest',
   builder = function()
     return {
-      cmd = { 'zig', 'build' },
+      cmd = { 'zig', 'build', 'test' },
       components = {
         {
           'on_output_quickfix',
