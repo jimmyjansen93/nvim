@@ -19,6 +19,7 @@ return {
 
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       {
         'David-Kunz/cmp-npm',
         dependencies = { 'nvim-lua/plenary.nvim' },
@@ -54,6 +55,7 @@ return {
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'copilot' },
           { name = 'path' },
           { name = 'npm', keyword_length = 4 },
