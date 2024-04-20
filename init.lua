@@ -30,7 +30,7 @@ vim.opt.inccommand = 'split'
 
 vim.opt.cursorline = true
 
-vim.o.scrolloff = 999
+vim.o.scrolloff = 20
 
 vim.cmd 'filetype plugin indent on'
 vim.o.expandtab = true
