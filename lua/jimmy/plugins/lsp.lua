@@ -74,6 +74,14 @@ return {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        zls = {
+          path = '~/projects/tools/zls/zig-out/bin/zls',
+        },
+        -- gopls = {},
+        -- rust_analyzer = {},
+        -- pyright = {},
+        -- html = {},
+        -- cssls = {},
 
         lua_ls = {
           -- cmd = {...},
