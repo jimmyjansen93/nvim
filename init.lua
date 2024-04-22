@@ -23,6 +23,9 @@ vim.opt.timeoutlen = 250
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+vim.opt.foldmethod = 'indent'
+vim.opt.foldlevelstart = 99
+
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
