@@ -74,9 +74,6 @@ return {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-        zls = {
-          path = '~/projects/tools/zls/zig-out/bin/zls',
-        },
         -- gopls = {},
         -- rust_analyzer = {},
         -- pyright = {},
@@ -111,16 +108,16 @@ return {
         },
       }
 
-      require('lspconfig').astro.setup {}
       require('mason').setup()
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed, auto_install = false }
 
       require('mason-lspconfig').setup {
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -129,6 +126,10 @@ return {
               require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
             end
             require('lspconfig')[server_name].setup(server)
+            require('lspconfig')['zls'].setup {
+              cmd = { 'zls' },
+              filetypes = { 'zig' },
+            }
           end,
         },
       }
