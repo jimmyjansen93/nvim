@@ -56,9 +56,9 @@ return {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'nvim_lsp_signature_help' },
-          { name = 'copilot' },
           { name = 'path' },
           { name = 'npm', keyword_length = 4 },
+          -- { name = 'copilot' },
         },
       }
     end,
