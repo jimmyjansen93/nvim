@@ -32,4 +32,9 @@ return {
   },
 
   { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+
+  {
+    'b0o/schemastore.nvim',
+    lazy = true,
+  },
 }
