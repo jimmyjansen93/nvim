@@ -7,6 +7,15 @@ vim.opt.showmode = false
 
 vim.opt.clipboard = 'unnamedplus'
 
+vim.opt.backup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.writebackup = false
+
+vim.opt.cmdheight = 1
+
+vim.opt.completeopt = { 'menuone', 'noselect' }
+
 vim.opt.breakindent = true
 
 vim.opt.undofile = true
