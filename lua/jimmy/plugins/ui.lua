@@ -175,4 +175,9 @@ return {
       vim.keymap.set('n', '<leader>ff', '<CMD>Neotree position=current<CR>', { desc = 'Neotree fullscreen' })
     end,
   },
+
+  {
+    'nvim-focus/focus.nvim',
+    version = false,
+  },
 }
