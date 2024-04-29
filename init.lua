@@ -14,8 +14,6 @@ vim.opt.writebackup = false
 
 vim.opt.cmdheight = 1
 
-vim.opt.completeopt = { 'menuone', 'noselect' }
-
 vim.opt.breakindent = true
 
 vim.opt.undofile = true

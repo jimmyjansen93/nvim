@@ -11,7 +11,7 @@ return {
           override = {
             ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
             ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true,
+            ['cmp.entry.get_documentation'] = false,
           },
         },
         routes = {
@@ -28,7 +28,7 @@ return {
           bottom_search = true,
           long_message_to_split = true,
           inc_rename = true,
-          lsp_doc_border = true,
+          lsp_doc_border = false,
         },
         views = {
           cmdline_popup = {
@@ -62,6 +62,7 @@ return {
       }
     end,
   },
+
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -129,6 +130,49 @@ return {
       keymap.amend('n', 'zc', map.close_preview_without_defer)
       keymap.amend('n', 'zR', map.close_preview)
       keymap.amend('n', 'zM', map.close_preview_without_defer)
+    end,
+  },
+
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
+      vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
+      vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
+      vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+
+      require('neo-tree').setup {
+        close_if_last_window = true,
+        popup_border_style = 'rounded',
+        enable_git_status = true,
+        enable_diagnostics = true,
+        sort_case_insensitive = true,
+        default_component_configs = {
+          git_status = {
+            symbols = {
+              added = '󱤧',
+              modified = '',
+              deleted = '',
+              renamed = '󰁕',
+              untracked = '',
+              ignored = '',
+              unstaged = '',
+              staged = '󰘾',
+              conflict = '',
+            },
+          },
+        },
+      }
+
+      vim.keymap.set('n', '<leader>ft', '<CMD>Neotree toggle<CR>', { desc = 'Neotree toggle' })
+      vim.keymap.set('n', '<leader>ff', '<CMD>Neotree position=current<CR>', { desc = 'Neotree fullscreen' })
     end,
   },
 }
