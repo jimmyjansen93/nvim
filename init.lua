@@ -137,18 +137,23 @@ require('lazy').setup({
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
+    dependencies = {
+      'echasnovski/mini.nvim',
+    },
     config = function()
-      require('which-key').setup()
+      require('which-key').setup {
+        preset = 'modern',
+      }
 
-      require('which-key').register {
-        ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = 'Run', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-        ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = 'File', _ = 'which_key_ignore' },
-        ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
-        ['<leader>gc'] = { name = 'Conflicts', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = 'Code' },
+        { '<leader>d', group = 'Debug' },
+        { '<leader>r', group = 'Run' },
+        { '<leader>s', group = 'Search' },
+        { '<leader>x', group = 'Trouble' },
+        { '<leader>f', group = 'File' },
+        { '<leader>g', group = 'Git' },
+        { '<leader>gc', group = 'Conflicts' },
       }
     end,
   },
