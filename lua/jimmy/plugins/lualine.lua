@@ -5,6 +5,13 @@ return {
     config = function()
       local overseer = require 'overseer'
       require('lualine').setup {
+        options = {
+          globalstatus = true,
+          disabled_filetypes = {
+            statusline = { 'neo-tree' },
+            winbar = { 'neo-tree' },
+          },
+        },
         sections = {
           lualine_a = { 'mode' },
           lualine_b = {
@@ -23,8 +30,8 @@ return {
             'filename',
           },
           lualine_x = {},
-          lualine_y = {},
-          lualine_z = {},
+          lualine_y = { 'filetype' },
+          lualine_z = { 'diff', 'branch' },
         },
         inactive_sections = {
           lualine_a = {},
@@ -34,7 +41,6 @@ return {
           lualine_y = {},
           lualine_z = {},
         },
-        disabled_filetypes = {},
         ignore_focus = { 'overseer', 'NeogitStatus' },
       }
     end,
