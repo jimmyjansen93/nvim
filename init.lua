@@ -10,7 +10,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.undofile = true
-vim.opt.writebackup = false
+vim.opt.writebackup = true
 
 vim.opt.cmdheight = 1
 
@@ -94,11 +94,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
   group = vim.api.nvim_create_augroup('jj-comments', { clear = true }),
   command = [[set formatoptions -=cro]],
 })
-
---  pattern = '*.lua',
---  group = vim.api.nvim_create_augroup('jj-autocommit-nvim', { clear = true }),
---  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
---})
 
 vim.api.nvim_create_autocmd('QuitPre', {
   pattern = 'tmux.conf',
