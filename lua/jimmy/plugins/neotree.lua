@@ -20,6 +20,10 @@ return {
         enable_git_status = true,
         enable_diagnostics = true,
         sort_case_insensitive = true,
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = true,
+        },
         default_component_configs = {
           git_status = {
             symbols = {

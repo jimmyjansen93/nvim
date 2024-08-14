@@ -67,6 +67,7 @@ vim.keymap.set('n', '<S-q>', '<CMD>bd<cr>', { desc = 'Kill buffer' })
 vim.keymap.set({ 'n', 'x' }, 'j', function()
   return vim.v.count > 0 and 'j' or 'gj'
 end, { noremap = true, expr = true })
+
 vim.keymap.set({ 'n', 'x' }, 'k', function()
   return vim.v.count > 0 and 'k' or 'gk'
 end, { noremap = true, expr = true })
@@ -105,19 +106,19 @@ vim.api.nvim_create_autocmd('QuitPre', {
   command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
-  desc = 'Set relative number in normal mode',
-  pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle-enable', { clear = true }),
-  command = [[set relativenumber | set number]],
-})
-
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
-  desc = 'Set absolute number in insert mode',
-  pattern = '*',
-  group = vim.api.nvim_create_augroup('jj-numbertoggle-disable', { clear = true }),
-  command = [[set norelativenumber | set number]],
-})
+-- vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
+--   desc = 'Set relative number in normal mode',
+--   pattern = '*',
+--   group = vim.api.nvim_create_augroup('jj-numbertoggle-enable', { clear = true }),
+--   command = [[set relativenumber | set number]],
+-- })
+--
+-- vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
+--   desc = 'Set absolute number in insert mode',
+--   pattern = '*',
+--   group = vim.api.nvim_create_augroup('jj-numbertoggle-disable', { clear = true }),
+--   command = [[set norelativenumber | set number]],
+-- })
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Disable diagnostic in node_modules',
@@ -141,9 +142,7 @@ require('lazy').setup({
       'echasnovski/mini.nvim',
     },
     config = function()
-      require('which-key').setup {
-        preset = 'modern',
-      }
+      require('which-key').setup {}
 
       require('which-key').add {
         { '<leader>c', group = 'Code' },

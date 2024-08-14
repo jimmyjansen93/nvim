@@ -19,7 +19,6 @@ return {
               },
             },
           },
-
           lualine_c = {
             'filename',
           },
