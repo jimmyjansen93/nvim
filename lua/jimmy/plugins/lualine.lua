@@ -3,7 +3,6 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local overseer = require 'overseer'
       require('lualine').setup {
         options = {
           globalstatus = true,
@@ -14,18 +13,7 @@ return {
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = {
-            {
-              'overseer',
-              colored = true,
-              symbols = {
-                [overseer.STATUS.FAILURE] = '󰅚 ',
-                [overseer.STATUS.CANCELED] = ' ',
-                [overseer.STATUS.SUCCESS] = '󰄴 ',
-                [overseer.STATUS.RUNNING] = '󰑮 ',
-              },
-            },
-          },
+          lualine_b = {},
           lualine_c = {
             'filename',
           },
@@ -47,7 +35,7 @@ return {
           lualine_y = {},
           lualine_z = {},
         },
-        ignore_focus = { 'overseer', 'NeogitStatus' },
+        ignore_focus = { 'NeogitStatus' },
       }
     end,
   },
