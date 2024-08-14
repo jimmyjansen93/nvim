@@ -115,15 +115,30 @@ require('lazy').setup({
     config = function()
       require('which-key').setup {}
 
+      local webicon = require 'nvim-web-devicons'
+      local runIcon = webicon.get_icon('test.jsx', 'jsx')
+      local troubleIcon = webicon.get_icon('log', 'log')
+
       require('which-key').add {
         { '<leader>c', group = 'Code' },
         { '<leader>d', group = 'Debug' },
-        { '<leader>r', group = 'Run' },
+        { '<leader>r', group = 'Run', icon = runIcon },
         { '<leader>s', group = 'Search' },
-        { '<leader>x', group = 'Trouble' },
+        { '<leader>x', group = 'Trouble', icon = troubleIcon },
         { '<leader>f', group = 'File' },
         { '<leader>g', group = 'Git' },
         { '<leader>gc', group = 'Conflicts' },
+
+        {
+          '<leader>w',
+          function()
+            require('which-key').show {
+              keys = '<c-w>',
+              loop = true,
+            }
+          end,
+          group = 'Windows',
+        },
       }
     end,
   },
