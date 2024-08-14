@@ -50,7 +50,7 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = ', Find existing buffers' })
+      vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = 'Find existing buffers' })
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
       vim.keymap.set('n', '<leader>fr', '<CMD>Telescope file_browser hidden=true<CR>', { desc = 'File Browser Root' })
       vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h hidden=true <CR>', { desc = 'File Browser Current' })

@@ -95,26 +95,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
   command = [[set formatoptions -=cro]],
 })
 
-vim.api.nvim_create_autocmd('QuitPre', {
-  pattern = 'tmux.conf',
-  group = vim.api.nvim_create_augroup('jj-autocommit-tmux', { clear = true }),
-  command = [[execute ':silent ! if git rev-parse --git-dir > /dev/null 2>&1 ; then git add . ; git commit -m "Auto-commit: saved %"; git push; fi > /dev/null 2>&1']],
-})
-
--- vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
---   desc = 'Set relative number in normal mode',
---   pattern = '*',
---   group = vim.api.nvim_create_augroup('jj-numbertoggle-enable', { clear = true }),
---   command = [[set relativenumber | set number]],
--- })
---
--- vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
---   desc = 'Set absolute number in insert mode',
---   pattern = '*',
---   group = vim.api.nvim_create_augroup('jj-numbertoggle-disable', { clear = true }),
---   command = [[set norelativenumber | set number]],
--- })
-
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Disable diagnostic in node_modules',
   pattern = '*/node_modules/*',
