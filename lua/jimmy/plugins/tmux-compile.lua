@@ -38,10 +38,16 @@ return {
             build = 'go build .',
             debug = 'go test',
           },
+          {
+            extension = { 'zig' },
+            run = 'zig run .',
+            build = 'zig build .',
+            debug = 'zig test .',
+          },
         },
       }
 
-      vim.keymap.set('n', '<leader>rf', ':TMUXcompile Run<CR>', { silent = true, desc = 'Run in Tmux' })
+      vim.keymap.set('n', '<leader>rr', ':TMUXcompile Run<CR>', { silent = true, desc = 'Run in Tmux' })
       vim.keymap.set('n', '<F3>', ':TMUXcompile BuildBG<CR>', { silent = true, desc = 'Build in Tmux' })
       vim.keymap.set('n', '<F4>', ':TMUXcompile RunBG<CR>', { silent = true, desc = 'Run in Tmux' })
       vim.keymap.set('n', '<F5>', ':TMUXcompile DebugBG<CR>', { silent = true, desc = 'Debug in Tmux' })
