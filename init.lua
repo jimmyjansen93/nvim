@@ -153,22 +153,16 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    config = function()
-      require('catppuccin').setup {
-        highlight_overrides = {
-          all = {
-            LineNr = { fg = '#8aadf4' },
-            CursorLineNr = { fg = '#ed8796' },
-          },
-        },
-      }
-      vim.cmd.colorscheme 'catppuccin-macchiato'
-    end,
-  },
+  { 'numToStr/Comment.nvim', lazy = false, opts = {} },
+  { 'gpanders/editorconfig.nvim' },
+  { 'ThePrimeagen/vim-be-good' },
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+  { 'vhyrro/luarocks.nvim', priority = 1000, config = true },
+  { 'b0o/schemastore.nvim', lazy = true },
+  { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
+  { 'dmmulroy/ts-error-translator.nvim' },
+  { 'nvim-focus/focus.nvim', version = false },
 
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = {

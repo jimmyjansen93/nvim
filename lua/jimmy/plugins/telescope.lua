@@ -61,12 +61,14 @@ return {
           layout_config = { width = 0.6, height = 0.6 },
         })
       end, { desc = '/ Fuzzily search in current buffer' })
+
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         }
       end, { desc = 'Search in Open Files' })
+
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = 'Search Neovim files' })

@@ -55,56 +55,11 @@ return {
         },
         sources = {
           { name = 'nvim_lsp' },
-          -- { name = 'nvim_lsp_signature_help' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'path' },
           { name = 'npm', keyword_length = 4 },
-          -- { name = 'copilot' },
         },
       }
     end,
   },
-
-  -- {
-  --   'CopilotC-Nvim/CopilotChat.nvim',
-  --   dependencies = {
-  --     { 'zbirenbaum/copilot.lua' },
-  --     { 'nvim-lua/plenary.nvim' },
-  --   },
-  --   opts = {
-  --     window = { layout = 'float', height = 0.9, width = 0.9 },
-  --     prompts = {
-  --       Explain = 'Explain how it works.',
-  --       Review = 'Review the following code and provide concise suggestions.',
-  --       Tests = 'Briefly explain how the selected code works, then generate unit tests.',
-  --       Refactor = 'Refactor the code to improve clarity and readability.',
-  --     },
-  --   },
-  -- },
-  -- keys = {
-  --   { '<leader>ccb', '<CMD>CopilotChatBuffer<cr>', desc = 'CopilotChat - Buffer' },
-  --   { '<leader>cce', '<cmd>CopilotChatExplain<cr>', desc = 'CopilotChat - Explain code' },
-  --   { '<leader>cct', '<cmd>CopilotChatTests<cr>', desc = 'CopilotChat - Generate tests' },
-  --   {
-  --     '<leader>ccT',
-  --     '<cmd>CopilotChatVsplitToggle<cr>',
-  --     desc = 'CopilotChat - Toggle Vsplit', -- Toggle vertical split
-  --   },
-  --   {
-  --     '<leader>ccv',
-  --     ':CopilotChatVisual',
-  --     mode = 'x',
-  --     desc = 'CopilotChat - Open in vertical split',
-  --   },
-  --   {
-  --     '<leader>ccc',
-  --     ':CopilotChatInPlace<cr>',
-  --     mode = { 'n', 'x' },
-  --     desc = 'CopilotChat - Run in-place code',
-  --   },
-  --   {
-  --     '<leader>ccf',
-  --     '<cmd>CopilotChatFixDiagnostic<cr>', -- Get a fix for the diagnostic message under the cursor.
-  --     desc = 'CopilotChat - Fix diagnostic',
-  --   },
-  -- },
 }
