@@ -9,19 +9,19 @@ return {
 
       vim.keymap.set('n', '<C-a>', function()
         harpoon:list():add()
-      end)
+      end, { desc = 'Harpoon Add List' })
 
       vim.keymap.set('n', '<C-e>', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
+      end, { desc = 'Harpoon Toggle menu' })
 
       vim.keymap.set('n', '<C-j>', function()
-        harpoon:list():prev()
-      end)
+        harpoon:list():next()
+      end, { desc = 'Harpoon Next' })
 
       vim.keymap.set('n', '<C-k>', function()
-        harpoon:list():next()
-      end)
+        harpoon:list():prev()
+      end, { desc = 'Harpoon Next' })
     end,
   },
 }
