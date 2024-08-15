@@ -116,11 +116,27 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
+        'astro',
+        'clangd',
+        'cmake',
+        'gopls',
+        'html',
+        'htmx',
+        'eslint',
+        'tsserver',
+        'jsonls',
+        'marksman',
+        'ols',
+        'prismals',
+        'rust_analyzer',
+        'cssls',
+        'sqls',
+        'yamlls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, auto_install = false }
 
       require('mason-lspconfig').setup {
-        automatic_installation = false,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
