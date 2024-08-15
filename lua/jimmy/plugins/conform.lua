@@ -10,10 +10,8 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'goimports', { 'gofumpt', 'gofmt' }, 'golines', 'staticcheck' },
-        javascript = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
-        javascriptreact = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
-        typescript = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
-        typescriptreact = { { 'eslintd', 'eslint' }, { 'prettierd', 'prettier' } },
+        javascript = { 'eslint', 'prettier' },
+        typescript = { 'eslint', 'prettier' },
       },
     },
   },
