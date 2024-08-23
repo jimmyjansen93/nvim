@@ -33,8 +33,7 @@ return {
         views = {
           cmdline_popup = {
             position = {
-              row = 28,
-              col = 20,
+              row = 18,
             },
             size = {
               width = 60,

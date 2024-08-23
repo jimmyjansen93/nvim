@@ -20,15 +20,21 @@ return {
     },
     config = function()
       require('telescope').setup {
+        defaults = {
+          layout_strategy = 'vertical',
+          sorting_strategy = 'ascending',
+          layout_config = {
+            vertical = {
+              prompt_position = 'top',
+              height = 0.5,
+              width = 0.5,
+            },
+          },
+          preview = false,
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
-          },
-          ['file_browser'] = {
-            theme = 'ivy',
-            hidden = { file_browser = true, folder_browser = true },
-            hijack_netrw = true,
-            layout_config = { height = 0.5 },
           },
         },
       }
