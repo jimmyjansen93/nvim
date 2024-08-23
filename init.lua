@@ -114,7 +114,9 @@ require('lazy').setup({
       'echasnovski/mini.nvim',
     },
     config = function()
-      require('which-key').setup {}
+      require('which-key').setup {
+        sort = { 'case' },
+      }
 
       local webicon = require 'nvim-web-devicons'
       local runIcon = webicon.get_icon('test.jsx', 'jsx')
@@ -123,12 +125,14 @@ require('lazy').setup({
       require('which-key').add {
         { '<leader>c', group = 'Code' },
         { '<leader>d', group = 'Debug' },
+        { '<leader>f', group = 'File' },
+        { '<leader>ff', '<CMD>Lexplore<CR>', desc = 'Netrw root' },
+        { '<leader>fr', '<CMD>Lexplore %:p:h<CR>', desc = 'Netrw current' },
+        { '<leader>g', group = 'Git' },
+        { '<leader>gc', group = 'Conflicts' },
         { '<leader>r', group = 'Run', icon = runIcon },
         { '<leader>s', group = 'Search' },
         { '<leader>x', group = 'Trouble', icon = troubleIcon },
-        { '<leader>f', group = 'File' },
-        { '<leader>g', group = 'Git' },
-        { '<leader>gc', group = 'Conflicts' },
 
         {
           '<leader>w',

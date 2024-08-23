@@ -1,2 +1,2 @@
 vim.cmd 'wincmd L'
-vim.cmd 'vertical resize 80'
+vim.cmd 'vertical resize 100'
