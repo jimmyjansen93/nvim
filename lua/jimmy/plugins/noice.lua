@@ -42,8 +42,8 @@ return {
           },
           popupmenu = {
             position = {
-              row = 30,
-              col = 19,
+              row = 20,
+              col = 70,
             },
             size = {
               width = 60,
