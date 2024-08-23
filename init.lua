@@ -126,8 +126,6 @@ require('lazy').setup({
         { '<leader>c', group = 'Code' },
         { '<leader>d', group = 'Debug' },
         { '<leader>f', group = 'File' },
-        { '<leader>ff', '<CMD>Explore<CR>', desc = 'Netrw root' },
-        { '<leader>fr', '<CMD>Explore %:p:h<CR>', desc = 'Netrw current' },
         { '<leader>g', group = 'Git' },
         { '<leader>gc', group = 'Conflicts' },
         { '<leader>r', group = 'Run', icon = runIcon },
