@@ -153,7 +153,6 @@ require('lazy').setup({
   { 'b0o/schemastore.nvim', lazy = true },
   { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
   { 'dmmulroy/ts-error-translator.nvim' },
-  { 'nvim-focus/focus.nvim', version = false },
 
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = {
