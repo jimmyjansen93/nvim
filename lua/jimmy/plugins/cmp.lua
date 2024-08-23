@@ -22,7 +22,10 @@ return {
             ellipsis_char = '...',
           },
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+          autocomplete = false,
+        },
 
         mapping = cmp.mapping.preset.insert {
           ['<C-x>'] = cmp.mapping.complete(),
