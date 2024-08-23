@@ -1,3 +1,4 @@
+-- TODO: either properly configure or remove
 return {
   {
     'nvim-treesitter/nvim-treesitter-textobjects',

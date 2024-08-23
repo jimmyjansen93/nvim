@@ -1,3 +1,4 @@
+-- TODO: still in doubt whether to keep this here, can probably remove
 return {
   {
     'm4xshen/hardtime.nvim',

@@ -1,3 +1,4 @@
+-- TODO: can probably remove this in favor of just using telescope
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',

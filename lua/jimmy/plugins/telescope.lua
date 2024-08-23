@@ -49,18 +49,10 @@ return {
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by Grep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files' })
+
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = 'Find existing buffers' })
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
-      vim.keymap.set('n', '<leader>fr', '<CMD>Telescope file_browser hidden=true<CR>', { desc = 'File Browser Root' })
-      vim.keymap.set('n', '<leader>fb', '<CMD>Telescope file_browser path=%:p:h hidden=true <CR>', { desc = 'File Browser Current' })
-      vim.keymap.set('n', '<leader>s\\', function()
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
-          previewer = false,
-          layout_strategy = 'center',
-          layout_config = { width = 0.6, height = 0.6 },
-        })
-      end, { desc = '/ Fuzzily search in current buffer' })
 
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {

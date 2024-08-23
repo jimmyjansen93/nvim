@@ -1,3 +1,4 @@
+-- TODO: probably should adjust this when I adjust tmux config
 return {
   {
     'catppuccin/nvim',

@@ -8,6 +8,7 @@ return {
       }
       require('mini.git').setup()
       require('mini.diff').setup()
+      -- TODO: add surround with proper keybinds
 
       require('mini.statusline').setup {
         content = {

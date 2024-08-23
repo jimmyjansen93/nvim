@@ -1,3 +1,4 @@
+-- TODO: can probably inline this in after/
 return {
   {
     'ray-x/go.nvim',
