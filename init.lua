@@ -151,15 +151,12 @@ require('lazy').setup({
   { 'ThePrimeagen/vim-be-good' },
   { 'stevearc/dressing.nvim', event = 'VeryLazy' },
   { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
-  { 'vhyrro/luarocks.nvim', priority = 1000, config = true },
   { 'b0o/schemastore.nvim', lazy = true },
   { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
   { 'dmmulroy/ts-error-translator.nvim' },
 
   { import = 'jimmy.plugins' },
-}, { checker = { notify = false }, change_detection = {
-  notify = false,
-} })
+}, { checker = { notify = false }, change_detection = { notify = false } })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
