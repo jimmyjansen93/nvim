@@ -30,6 +30,21 @@ return {
       vim.keymap.set('n', 'gR', function()
         require('trouble').toggle 'lsp_references'
       end)
+
+      local function show_diagnostics()
+        require('telescope.builtin').diagnostics {
+          bufnr = 0,
+          winblend = 10,
+          layout_config = {
+            width = 0.9,
+            height = 0.7,
+            prompt_position = 'top',
+          },
+        }
+      end
+
+      -- New keymap for floating diagnostics
+      vim.keymap.set('n', '<leader>xf', show_diagnostics, { noremap = true, silent = true, desc = 'Show Floating Diagnostics' })
     end,
   },
 }
