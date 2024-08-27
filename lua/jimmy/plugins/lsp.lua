@@ -128,12 +128,15 @@ return {
         'marksman',
         'ols',
         'prismals',
-        'rust_analyzer',
         'cssls',
         'sqls',
         'yamlls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, auto_install = false }
+
+      require('mason-lspconfig').setup_handlers {
+        ['rust_analyzer'] = function() end,
+      }
 
       require('mason-lspconfig').setup {
         automatic_installation = true,
