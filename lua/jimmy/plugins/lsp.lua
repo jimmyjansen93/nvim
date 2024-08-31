@@ -134,10 +134,6 @@ return {
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, auto_install = false }
 
-      require('mason-lspconfig').setup_handlers {
-        ['rust_analyzer'] = function() end,
-      }
-
       require('mason-lspconfig').setup {
         automatic_installation = true,
         handlers = {
@@ -146,6 +142,7 @@ return {
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             server.on_attach = function(client, bufnr)
               require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+              vim.lsp.inlay_hint.enable(true)
             end
             require('lspconfig')[server_name].setup(server)
             require('lspconfig')['zls'].setup {
