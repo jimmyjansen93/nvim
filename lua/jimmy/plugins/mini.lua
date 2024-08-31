@@ -35,6 +35,20 @@ return {
         },
       }
 
+      vim.api.nvim_create_autocmd('RecordingEnter', {
+        pattern = '*',
+        callback = function()
+          vim.cmd 'redrawstatus'
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('RecordingLeave', {
+        pattern = '*',
+        callback = function()
+          vim.cmd 'redrawstatus'
+        end,
+      })
+
       require('mini.statusline').setup {
         content = {
           active = function()
@@ -47,12 +61,22 @@ return {
             local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
             local filename = MiniStatusline.section_filename { trunc_width = 12000 }
 
+            local check_macro_recording = function()
+              if vim.fn.reg_recording() ~= '' then
+                return 'Recording @' .. vim.fn.reg_recording()
+              else
+                return ''
+              end
+            end
+            local macro = check_macro_recording()
+
             return MiniStatusline.combine_groups {
               { hl = mode_hl, strings = { mode } },
               { hl = 'MiniStatuslineDevinfo', strings = { diagnostics, lsp } },
               '%<', -- Mark general truncate point
               { hl = 'MiniStatuslineFilename', strings = { filename } },
               '%=', -- End left alignment
+              { hl = 'MiniStatuslineFilename', strings = { macro } },
               { hl = 'MiniStatuslineDevinfo', strings = { diff } },
               { hl = 'MiniStatuslineDevinfo', strings = { git } },
             }
