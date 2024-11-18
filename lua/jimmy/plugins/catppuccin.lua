@@ -12,6 +12,7 @@ return {
             CursorLineNr = { fg = '#ed8796' },
           },
         },
+        transparent_background = true,
       }
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,

@@ -10,6 +10,7 @@ return {
       require('mini.diff').setup()
 
       require('mini.surround').setup {
+        enable = false,
         -- :h MiniSurround.config
         custom_surroundings = nil,
 

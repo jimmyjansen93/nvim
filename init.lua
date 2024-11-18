@@ -23,6 +23,7 @@ vim.opt.smartcase = true
 
 vim.opt.signcolumn = 'yes'
 vim.opt.relativenumber = true
+vim.opt.number = true
 
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 250
@@ -48,6 +49,9 @@ vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
+
+-- Disable virtual text by default
+vim.diagnostic.config { virtual_text = false }
 
 vim.opt.hlsearch = true
 
@@ -115,7 +119,7 @@ require('lazy').setup({
     },
     config = function()
       require('which-key').setup {
-        sort = { 'case' },
+        sort = { 'local', 'case', 'group' },
       }
 
       local webicon = require 'nvim-web-devicons'
@@ -131,6 +135,13 @@ require('lazy').setup({
         { '<leader>r', group = 'Run', icon = runIcon },
         { '<leader>s', group = 'Search' },
         { '<leader>x', group = 'Trouble', icon = troubleIcon },
+        {
+          '<leader>b',
+          group = 'buffers',
+          expand = function()
+            return require('which-key.extras').expand.buf()
+          end,
+        },
 
         {
           '<leader>w',

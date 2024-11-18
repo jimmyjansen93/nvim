@@ -8,7 +8,7 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
       'artemave/workspace-diagnostics.nvim',
     },
-    config = function()
+    config = function(_, opts)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -51,6 +51,11 @@ return {
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      -- for server, config in pairs(opts.servers or {}) do
+      --   config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+      --   require('lspconfig')[server].setup(config)
+      -- end
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -116,17 +121,12 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
-        'astro',
         'clangd',
         'cmake',
         'gopls',
         'html',
-        'htmx',
-        'eslint',
-        'tsserver',
         'jsonls',
         'marksman',
-        'ols',
         'prismals',
         'cssls',
         'sqls',
