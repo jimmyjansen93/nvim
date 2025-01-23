@@ -65,6 +65,14 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('n', '<leader>tt', '<cmd>terminal<cr>', { desc = 'Open terminal' })
+vim.keymap.set('n', '<leader>nc', function()
+  local config_path = vim.fn.stdpath 'config'
+  vim.cmd('cd ' .. config_path)
+  vim.cmd 'e init.lua'
+end, { desc = 'Open configuration' })
+
 vim.keymap.set({ 'n', 'x' }, 'j', function()
   return vim.v.count > 0 and 'j' or 'gj'
 end, { noremap = true, expr = true })
@@ -132,6 +140,7 @@ require('lazy').setup({
         { '<leader>f', group = 'File' },
         { '<leader>g', group = 'Git' },
         { '<leader>gc', group = 'Conflicts' },
+        { '<leader>n', group = 'Neovim' },
         { '<leader>r', group = 'Run', icon = runIcon },
         { '<leader>s', group = 'Search' },
         { '<leader>x', group = 'Trouble', icon = troubleIcon },
