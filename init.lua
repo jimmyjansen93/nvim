@@ -1,114 +1,6 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-vim.o.termguicolors = true
-
-vim.opt.showmode = false
-
-vim.opt.clipboard = 'unnamedplus'
-
-vim.opt.backup = false
-vim.opt.swapfile = false
-vim.opt.undofile = true
-vim.opt.writebackup = true
-
-vim.opt.cmdheight = 1
-
-vim.opt.breakindent = true
-
-vim.opt.undofile = true
-
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
-vim.opt.signcolumn = 'yes'
-vim.opt.relativenumber = true
-vim.opt.number = true
-
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 250
-
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.foldlevelstart = 99
-
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
-vim.opt.inccommand = 'split'
-
-vim.opt.cursorline = true
-
-vim.o.scrolloff = 20
-
-vim.cmd 'filetype plugin indent on'
-vim.o.expandtab = true
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-vim.o.shiftwidth = 2
-
--- Disable virtual text by default
-vim.diagnostic.config { virtual_text = false }
-
-vim.opt.hlsearch = true
-
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
-
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<leader>tt', '<cmd>terminal<cr>', { desc = 'Open terminal' })
-vim.keymap.set('n', '<leader>nc', function()
-  local config_path = vim.fn.stdpath 'config'
-  vim.cmd('cd ' .. config_path)
-  vim.cmd 'e init.lua'
-end, { desc = 'Open configuration' })
-
-vim.keymap.set({ 'n', 'x' }, 'j', function()
-  return vim.v.count > 0 and 'j' or 'gj'
-end, { noremap = true, expr = true })
-
-vim.keymap.set({ 'n', 'x' }, 'k', function()
-  return vim.v.count > 0 and 'k' or 'gk'
-end, { noremap = true, expr = true })
-
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Quit help with q',
-  pattern = 'help,qf,netrw',
-  group = vim.api.nvim_create_augroup('jj-help-utils', { clear = true }),
-  callback = function()
-    vim.keymap.set('n', 'q', '<C-w>c', { buffer = true, desc = 'quit' })
-  end,
-})
-
-vim.api.nvim_create_autocmd('BufEnter', {
-  desc = 'Stop commenting next line',
-  group = vim.api.nvim_create_augroup('jj-comments', { clear = true }),
-  command = [[set formatoptions -=cro]],
-})
-
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  desc = 'Disable diagnostic in node_modules',
-  pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
-})
+require 'options'
+require 'keymaps'
+require 'autocmds'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -172,8 +64,6 @@ require('lazy').setup({
   { 'stevearc/dressing.nvim', event = 'VeryLazy' },
   { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
   { 'b0o/schemastore.nvim', lazy = true },
-  { 'dmmulroy/tsc.nvim', dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
-  { 'dmmulroy/ts-error-translator.nvim' },
 
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = { notify = false } })

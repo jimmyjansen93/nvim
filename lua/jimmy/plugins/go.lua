@@ -7,6 +7,7 @@ return {
       'neovim/nvim-lspconfig',
       'nvim-treesitter/nvim-treesitter',
     },
+    enabled = false,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
 
