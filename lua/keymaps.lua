@@ -10,6 +10,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<leader>tt', '<cmd>terminal<cr>', { desc = 'Open terminal' })
+
 vim.keymap.set('n', '<leader>nc', function()
   local config_path = vim.fn.stdpath 'config'
   vim.cmd('cd ' .. config_path)
