@@ -23,4 +23,13 @@ return {
       vim.keymap.set('n', '<leader>gg', '<CMD>Neogit<CR>', { desc = 'Open git window' })
     end,
   },
+  {
+    'IsWladi/Gittory',
+    opts = {
+      atStartUp = true,
+      notifySettings = {
+        enabled = false,
+      },
+    },
+  },
 }

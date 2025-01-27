@@ -2,30 +2,49 @@ return {
   {
     'saghen/blink.cmp',
     enabled = false,
-    lazy = false, -- lazy loading handled internally
-    -- optional: provides snippets for the snippet source
-    dependencies = 'rafamadriz/friendly-snippets',
-
-    -- use a release tag to download pre-built binaries
+    lazy = false,
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      {
+        'saghen/blink.compat',
+        optional = true,
+        opts = {},
+        version = '*',
+      },
+    },
+    build = 'cargo build --release',
     version = 'v0.*',
-    -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
-
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
+    event = 'InsertEnter',
     opts = {
-      -- 'default' for mappings similar to built-in completion
-      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-      -- see the "default configuration" section below for full documentation on how to define
-      -- your own keymap.
-      -- keymap = { preset = 'default' },
+      completion = {
+        accept = {
+          auto_brackets = {
+            enabled = false,
+          },
+        },
+        menu = {
+          draw = {
+            treesitter = { 'lsp' },
+          },
+        },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 200,
+        },
+        ghost_text = {
+          enabled = vim.g.ai_cmp,
+        },
+      },
+      sources = {
+        -- adding any nvim-cmp sources here will enable them
+        -- with blink.compat
+        compat = {},
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        cmdline = {},
+      },
       keymap = {
-        ['C-space'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['C-x'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['<C-e>'] = { 'hide' },
+        ['K'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ['<Esc><Esc>'] = { 'hide' },
         ['<C-y>'] = { 'select_and_accept' },
 
         ['<C-p>'] = { 'select_prev', 'fallback' },
@@ -36,20 +55,44 @@ return {
       },
 
       highlight = {
-        -- sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- useful for when your theme doesn't support blink.cmp
-        -- will be removed in a future release, assuming themes add support
         use_nvim_cmp_as_default = true,
       },
-      -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'mono',
-
-      -- experimental auto-brackets support
-      -- accept = { auto_brackets = { enabled = true } }
-
-      -- experimental signature help support
-      -- trigger = { signature_help = { enabled = true } }
+      nerd_font_variant = 'normal',
+      trigger = { signature_help = { enabled = true } },
     },
+    -- config = function(_, opts)
+    --   local enabled = opts.sources.default
+    --   for _, source in ipairs(opts.sources.compat or {}) do
+    --     opts.sources.providers[source] = vim.tbl_deep_extend('force', { name = source, module = 'blink.compat.source' }, opts.sources.providers[source] or {})
+    --     if type(enabled) == 'table' and not vim.tbl_contains(enabled, source) then
+    --       table.insert(enabled, source)
+    --     end
+    --   end
+    --
+    --   opts.sources.compat = nil
+    --
+    --   for _, provider in pairs(opts.sources.providers or {}) do
+    --     if provider.kind then
+    --       local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+    --       local kind_idx = #CompletionItemKind + 1
+    --
+    --       CompletionItemKind[kind_idx] = provider.kind
+    --       CompletionItemKind[provider.kind] = kind_idx
+    --
+    --       local transform_items = provider.transform_items
+    --       provider.transform_items = function(ctx, items)
+    --         items = transform_items and transform_items(ctx, items) or items
+    --         for _, item in ipairs(items) do
+    --           item.kind = kind_idx or item.kind
+    --         end
+    --         return items
+    --       end
+    --
+    --       provider.kind = nil
+    --     end
+    --   end
+    --
+    --   require('blink.cmp').setup(opts)
+    -- end,
   },
 }
