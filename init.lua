@@ -28,15 +28,6 @@ require('lazy').setup({
       local troubleIcon = webicon.get_icon('log', 'log')
 
       require('which-key').add {
-        { '<leader>c', group = 'Code' },
-        { '<leader>d', group = 'Debug' },
-        { '<leader>f', group = 'File' },
-        { '<leader>g', group = 'Git' },
-        { '<leader>gc', group = 'Conflicts' },
-        { '<leader>n', group = 'Neovim' },
-        { '<leader>r', group = 'Run', icon = runIcon },
-        { '<leader>s', group = 'Search' },
-        { '<leader>x', group = 'Trouble', icon = troubleIcon },
         {
           '<leader>b',
           group = 'buffers',
@@ -44,7 +35,16 @@ require('lazy').setup({
             return require('which-key.extras').expand.buf()
           end,
         },
-
+        { '<leader>c', group = 'Code' },
+        { '<leader>d', group = 'Debug' },
+        { '<leader>f', group = 'File' },
+        { '<leader>g', group = 'Git' },
+        { '<leader>gc', group = 'Conflicts' },
+        { '<leader>n', group = 'Neovim' },
+        { '<leader>p', group = 'Project' },
+        { '<leader>r', group = 'Run', icon = runIcon },
+        { '<leader>s', group = 'Search' },
+        { '<leader>t', group = 'Terminal' },
         {
           '<leader>w',
           function()
@@ -55,6 +55,7 @@ require('lazy').setup({
           end,
           group = 'Windows',
         },
+        { '<leader>x', group = 'Trouble', icon = troubleIcon },
       }
     end,
   },

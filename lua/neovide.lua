@@ -25,4 +25,5 @@ if vim.g.neovide then
   vim.keymap.set('n', '<C-->', function()
     change_scale_factor(1 / 1.1)
   end)
+  vim.keymap.set('c', '<C-v>', '<C-R>+', { desc = 'Paste' })
 end

@@ -25,9 +25,6 @@ return {
           map('<leader>cr', vim.lsp.buf.rename, 'Rename')
           map('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
-
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -45,34 +42,14 @@ return {
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP Specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- for server, config in pairs(opts.servers or {}) do
-      --   config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-      --   require('lspconfig')[server].setup(config)
-      -- end
-
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         yamlls = {
           settings = {
             yaml = {
               schemaStore = {
-                -- You must disable built-in schemaStore support if you want to use
-                -- this plugin and its advanced options like `ignore`.
                 enable = false,
                 -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
                 url = '',
@@ -97,19 +74,14 @@ return {
               runtime = { version = 'LuaJIT' },
               workspace = {
                 checkThirdParty = false,
-                -- Tells lua_ls where to find all the Lua files that you have loaded
-                -- for your neovim configuration.
                 library = {
                   '${3rd}/luv/library',
                   unpack(vim.api.nvim_get_runtime_file('', true)),
                 },
-                -- If lua_ls is really slow on your computer, you can try this instead:
-                -- library = { vim.env.VIMRUNTIME },
               },
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = { disable = { 'missing-fields' } },
             },
           },
@@ -129,8 +101,10 @@ return {
         'marksman',
         'prismals',
         'cssls',
-        'sqls',
+        'sqlls',
         'yamlls',
+        'bashls',
+        'zls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, auto_install = false }
 
@@ -145,10 +119,6 @@ return {
               vim.lsp.inlay_hint.enable(true)
             end
             require('lspconfig')[server_name].setup(server)
-            require('lspconfig')['zls'].setup {
-              cmd = { 'zls' },
-              filetypes = { 'zig' },
-            }
           end,
         },
       }
@@ -156,10 +126,12 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    enabled = false,
     config = function()
+      require('lsp_lines').setup()
       vim.diagnostic.config { virtual_lines = true }
       vim.diagnostic.config { virtual_text = false }
-      require('lsp_lines').setup()
+
       vim.keymap.set('', '<Leader>cl', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
     end,
   },

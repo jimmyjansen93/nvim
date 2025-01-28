@@ -9,7 +9,11 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<leader>tt', '<cmd>terminal<cr>', { desc = 'Open terminal' })
+vim.keymap.set('n', '<leader>tt', function()
+  vim.cmd.tabnew()
+  vim.cmd.terminal()
+  vim.cmd.startinsert()
+end, { desc = 'Open terminal' })
 
 vim.keymap.set('n', '<leader>nc', function()
   local config_path = vim.fn.stdpath 'config'

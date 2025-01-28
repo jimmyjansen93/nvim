@@ -5,8 +5,6 @@ return {
     branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-file-browser.nvim',
-      'Snikimonkd/telescope-git-conflicts.nvim',
       'BurntSushi/ripgrep',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
@@ -39,14 +37,14 @@ return {
         },
       }
 
-      pcall(require('telescope').load_extension, 'file_browser')
+      -- pcall(require('telescope').load_extension, 'file_browser')
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension, 'conflicts')
+      -- pcall(require('telescope').load_extension, 'conflicts')
 
       local builtin = require 'telescope.builtin'
 
-      vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search Conflicts' })
+      -- vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search Conflicts' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
       vim.keymap.set('n', '<leader>sf', '<CMD>Telescope find_files hidden=true<CR>', { desc = 'Search All Files' })
