@@ -60,13 +60,6 @@ require('lazy').setup({
     end,
   },
 
-  { 'numToStr/Comment.nvim', lazy = false, opts = {} },
-  { 'gpanders/editorconfig.nvim' },
-  { 'ThePrimeagen/vim-be-good' },
-  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
-  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
-  { 'b0o/schemastore.nvim', lazy = true },
-
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = { notify = false } })
 
