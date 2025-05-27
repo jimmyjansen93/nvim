@@ -38,6 +38,8 @@ return {
             opts = { skip = true },
           },
         },
+        notify = { enabled = false },
+        messages = { enabled = false },
         presets = {
           bottom_search = true,
           long_message_to_split = true,

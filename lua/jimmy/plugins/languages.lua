@@ -1,17 +1,18 @@
 return {
   {
     'ray-x/go.nvim',
-    dependencies = { -- optional packages
+    dependencies = {
       'ray-x/guihua.lua',
       'neovim/nvim-lspconfig',
       'nvim-treesitter/nvim-treesitter',
     },
-    enabled = false,
+    enabled = true,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
 
     config = function()
-      require('go').setup()
+      require('go').setup {}
+      require('go.format').goimports()
     end,
   },
   {
