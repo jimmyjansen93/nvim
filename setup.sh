@@ -28,28 +28,6 @@ if ! command -v brew >/dev/null 2>&1; then
   return 1
 fi
 
-if ! command -v go &> /dev/null; then
-  brew install go
-fi
-
-if ! command -v npm &> /dev/null; then
-  brew install node
-fi
-
-brew install sif
-brew install zls
-brew install llvm
-brew install rust-analyzer
-brew install typescript-language-server
-brew install vscode-langservers-extracted
-brew install typescript-language-server
-brew install yaml-language-server
-brew install bash-language-server
-brew install stylua
-brew install sql-language-server
-brew install docker-ls
-brew install terraform-ls
-brew install helm
 go install golang.org/x/tools/gopls@latest
 npm install -g graphql-language-service-cli
 npm install -g tailwindcss-language-server
