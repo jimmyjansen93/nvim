@@ -58,6 +58,9 @@ return {
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = 'Find existing buffers' })
       vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
 
+      vim.keymap.set('n', '<leader>;', builtin.lsp_document_symbols, { desc = 'Document Symbols' })
+      vim.keymap.set('n', '<leader>s;', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace Symbols' })
+
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,

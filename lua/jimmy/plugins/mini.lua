@@ -11,28 +11,24 @@ return {
 
       require('mini.surround').setup {
         enable = false,
-        -- :h MiniSurround.config
         custom_surroundings = nil,
-
-        -- :h MiniSurround.config
         search_method = 'cover',
-
         highlight_duration = 500,
         n_lines = 20,
         respect_selection_type = false,
         silent = false,
 
         mappings = {
-          add = 'sa', -- Add surrounding in Normal and Visual modes
-          delete = 'sd', -- Delete surrounding
-          find = 'sf', -- Find surrounding (to the right)
-          find_left = 'sF', -- Find surrounding (to the left)
-          highlight = 'sh', -- Highlight surrounding
-          replace = 'sr', -- Replace surrounding
-          update_n_lines = 'sn', -- Update `n_lines`
+          add = 'sa',
+          delete = 'sd',
+          find = 'sf',
+          find_left = 'sF',
+          highlight = 'sh',
+          replace = 'sr',
+          update_n_lines = 'sn',
 
-          suffix_last = 'l', -- Suffix to search with "prev" method
-          suffix_next = 'n', -- Suffix to search with "next" method
+          suffix_last = 'l',
+          suffix_next = 'n',
         },
       }
 
@@ -90,24 +86,19 @@ return {
       }
 
       require('mini.move').setup {
-        -- Module mappings. Use `''` (empty string) to disable one.
         mappings = {
-          -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
           left = '<M-h>',
           right = '<M-l>',
           down = '<M-j>',
           up = '<M-k>',
 
-          -- Move current line in Normal mode
           line_left = '<M-h>',
           line_right = '<M-l>',
           line_down = '<M-j>',
           line_up = '<M-k>',
         },
 
-        -- Options which control moving behavior
         options = {
-          -- Automatically reindent selection during linewise vertical move
           reindent_linewise = true,
         },
       }

@@ -22,39 +22,11 @@ return {
     },
   },
   {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    enabled = false,
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      local harpoon = require 'harpoon'
-      harpoon:setup()
-
-      vim.keymap.set('n', '<C-a>', function()
-        harpoon:list():add()
-      end, { desc = 'Harpoon Add List' })
-
-      vim.keymap.set('n', '<C-e>', function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end, { desc = 'Harpoon Toggle menu' })
-
-      vim.keymap.set('n', '<C-j>', function()
-        harpoon:list():next()
-      end, { desc = 'Harpoon Next' })
-
-      vim.keymap.set('n', '<C-k>', function()
-        harpoon:list():prev()
-      end, { desc = 'Harpoon Next' })
-    end,
-  },
-  {
     'kylechui/nvim-surround',
     version = '*',
     event = 'VeryLazy',
     config = function()
-      require('nvim-surround').setup {
-        -- Configuration here, or leave empty to use defaults
-      }
+      require('nvim-surround').setup {}
     end,
   },
   {
@@ -76,9 +48,9 @@ return {
     dependencies = 'nvim-lua/plenary.nvim',
     config = function()
       require('undotree').setup {
-        float_diff = true, -- using float window previews diff, set this `true` will disable layout option
-        layout = 'left_bottom', -- "left_bottom", "left_left_bottom"
-        position = 'left', -- "right", "bottom"
+        float_diff = true,
+        layout = 'left_bottom',
+        position = 'left',
         ignore_filetype = { 'undotree', 'undotreeDiff', 'qf', 'TelescopePrompt', 'spectre_panel', 'tsplayground' },
         window = {
           winblend = 10,

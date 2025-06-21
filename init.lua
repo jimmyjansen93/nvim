@@ -2,6 +2,7 @@ require 'options'
 require 'keymaps'
 require 'autocmds'
 require 'neovide'
+require 'lsp'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -63,5 +64,4 @@ require('lazy').setup({
   { import = 'jimmy.plugins' },
 }, { checker = { notify = false }, change_detection = { notify = false } })
 
--- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

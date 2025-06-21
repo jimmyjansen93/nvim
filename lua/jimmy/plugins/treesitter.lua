@@ -2,19 +2,10 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     config = function()
-      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-      parser_config.freemarker = {
-        install_info = {
-          url = '~/projects/tools/tree-sitter-freemarker', -- local path or git repo
-          files = { 'src/parser.c' }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-          -- optional entries:
-          branch = 'main', -- default branch in case of git repo if different from master
-          generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-        },
-        filetype = 'ftl', -- if filetype does not match the parser name
-      }
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
         ensure_installed = {
@@ -53,24 +44,55 @@ return {
         indent = { enable = true },
       }
 
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    end,
-  },
-  {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-    },
-    config = function()
       require('nvim-treesitter.configs').setup {
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = 'gnn',
+            node_incremental = 'grn',
+            scope_incremental = 'grc',
+            node_decremental = 'grm',
+          },
+        },
+
         textobjects = {
           select = {
             enable = true,
+            lookahead = true,
+            keymaps = {
+              ['af'] = { query = '@function.outer', desc = 'Select around function' },
+              ['if'] = { query = '@function.inner', desc = 'Select inside function' },
+              ['ac'] = { query = '@class.outer', desc = 'Select around class' },
+              ['ic'] = { query = '@class.inner', desc = 'Select inside class' },
+              ['aa'] = { query = '@parameter.outer', desc = 'Select around argument' },
+              ['ia'] = { query = '@parameter.inner', desc = 'Select inside argument' },
+              ['ab'] = { query = '@block.outer', desc = 'Select around block' },
+              ['ib'] = { query = '@block.inner', desc = 'Select inside block' },
+              ['ai'] = { query = '@conditional.outer', desc = 'Select around conditional' },
+              ['ii'] = { query = '@conditional.inner', desc = 'Select inside conditional' },
+            },
+            include_surrounding_whitespace = true,
+          },
+
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              [']m'] = { query = '@function.outer', desc = 'Next function start' },
+              [']a'] = { query = '@parameter.inner', desc = 'Next argument' },
+              [']i'] = { query = '@conditional.outer', desc = 'Next conditional start' },
+            },
+            goto_previous_start = {
+              ['[m'] = { query = '@function.outer', desc = 'Prev function start' },
+              ['[a'] = { query = '@parameter.inner', desc = 'Prev argument' },
+              ['[i'] = { query = '@conditional.outer', desc = 'Prev conditional start' },
+            },
+          },
+
+          swap = {
+            enable = false,
+            swap_next = { ['<leader>a'] = { query = '@parameter.inner', desc = 'Swap with next argument' } },
+            swap_previous = { ['<leader>A'] = { query = '@parameter.inner', desc = 'Swap with previous argument' } },
           },
         },
       }

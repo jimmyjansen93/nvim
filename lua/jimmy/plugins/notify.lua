@@ -1,4 +1,3 @@
--- Hack solution for transparent background`
 return {
   {
     'rcarriga/nvim-notify',
