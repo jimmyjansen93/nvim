@@ -2,7 +2,6 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'BurntSushi/ripgrep',
@@ -17,18 +16,89 @@ return {
       { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
+      local project_files = function()
+        local is_inside_work_tree = {}
+        local opts = { 'rg', '--files', '--glob', '!**/.git/*' }
+
+        local cwd = vim.fn.getcwd()
+        if is_inside_work_tree[cwd] == nil then
+          vim.fn.system 'git rev-parse --is-inside-work-tree'
+          is_inside_work_tree[cwd] = vim.v.shell_error == 0
+        end
+
+        if is_inside_work_tree[cwd] then
+          require('telescope.builtin').git_files(opts)
+        else
+          require('telescope.builtin').find_files(opts)
+        end
+      end
+
+      local previewers = require 'telescope.previewers'
+      local Job = require 'plenary.job'
+      local new_maker = function(filepath, bufnr, opts)
+        filepath = vim.fn.expand(filepath)
+        Job:new({
+          command = 'file',
+          args = { '--mime-type', '-b', filepath },
+          on_exit = function(j)
+            local mime_type = vim.split(j:result()[1], '/')[1]
+            if mime_type == 'text' then
+              previewers.buffer_previewer_maker(filepath, bufnr, opts)
+            else
+              vim.schedule(function()
+                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
+              end)
+            end
+          end,
+        }):sync()
+      end
+
+      local actions = require 'telescope.actions'
       require('telescope').setup {
-        defaults = {
-          layout_strategy = 'vertical',
-          sorting_strategy = 'ascending',
-          layout_config = {
-            vertical = {
-              prompt_position = 'top',
-              height = 0.5,
-              width = 0.5,
+        pickers = {
+          buffers = {
+            mappings = {
+              i = {
+                ['<c-d>'] = actions.delete_buffer + actions.move_to_top,
+              },
             },
           },
-          preview = false,
+          find_files = {
+            find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
+          },
+        },
+        defaults = {
+          buffer_previewer_maker = new_maker,
+          path_display = { 'filename_first' },
+          mappings = {
+            i = {
+              ['<C-u>'] = false,
+            },
+          },
+          layout_strategy = 'flex',
+          sorting_strategy = 'ascending',
+          layout_config = {
+            horizontal = {
+              width = 0.99,
+              height = 0.99,
+            },
+            vertical = {
+              prompt_position = 'top',
+              width = 0.99,
+              height = 0.99,
+            },
+          },
+          preview = true,
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--trim',
+          },
         },
         extensions = {
           ['ui-select'] = {
@@ -56,8 +126,15 @@ return {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files' })
 
       vim.keymap.set('n', '<leader>,', builtin.buffers, { desc = 'Find existing buffers' })
-      vim.keymap.set('n', '<leader> ', builtin.find_files, { desc = 'Find File' })
+      vim.keymap.set('n', '<leader> ', project_files, { desc = 'Find File' })
 
+      local webicon = require 'nvim-web-devicons'
+      local docIcon = webicon.get_icon('DevIconReadme', 'lua')
+      local workIcon = webicon.get_icon('DevIconLua', 'lua')
+      require('which-key').add {
+        { '<leader>;', desc = 'Document Symbols', icon = docIcon },
+        { '<leader>s;', desc = 'Workspace Symbols', icon = workIcon },
+      }
       vim.keymap.set('n', '<leader>;', builtin.lsp_document_symbols, { desc = 'Document Symbols' })
       vim.keymap.set('n', '<leader>s;', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace Symbols' })
 

@@ -2,7 +2,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('jj-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -66,8 +66,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
     vim.lsp.config('*', capabilities)
 
-    local client = vim.lsp.get_clients { buffer = event.data.client_id }
-    if client[1] and client[1].server_capabilities.documentHighlightProvider then
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client.server_capabilities.documentHighlightProvider then
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
         callback = vim.lsp.buf.document_highlight,

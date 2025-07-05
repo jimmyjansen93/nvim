@@ -48,10 +48,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = 'gnn',
-            node_incremental = 'grn',
-            scope_incremental = 'grc',
-            node_decremental = 'grm',
+            init_selection = 'gni',
+            node_incremental = 'gnn',
+            scope_incremental = 'gns',
+            node_decremental = 'gnd',
           },
         },
 
@@ -90,7 +90,7 @@ return {
           },
 
           swap = {
-            enable = false,
+            enable = true,
             swap_next = { ['<leader>a'] = { query = '@parameter.inner', desc = 'Swap with next argument' } },
             swap_previous = { ['<leader>A'] = { query = '@parameter.inner', desc = 'Swap with previous argument' } },
           },

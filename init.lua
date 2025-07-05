@@ -27,11 +27,12 @@ require('lazy').setup({
       local webicon = require 'nvim-web-devicons'
       local runIcon = webicon.get_icon('test.jsx', 'jsx')
       local troubleIcon = webicon.get_icon('log', 'log')
+      local neovimIcon = webicon.get_icon('DevIconVim', 'vim')
 
       require('which-key').add {
         {
           '<leader>b',
-          group = 'buffers',
+          group = 'Buffers',
           expand = function()
             return require('which-key.extras').expand.buf()
           end,
@@ -41,7 +42,7 @@ require('lazy').setup({
         { '<leader>f', group = 'File' },
         { '<leader>g', group = 'Git' },
         { '<leader>gc', group = 'Conflicts' },
-        { '<leader>n', group = 'Neovim' },
+        { '<leader>n', group = 'Neovim', icon = neovimIcon },
         { '<leader>p', group = 'Project' },
         { '<leader>r', group = 'Run', icon = runIcon },
         { '<leader>s', group = 'Search' },

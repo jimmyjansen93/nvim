@@ -37,7 +37,7 @@ return {
             opts = { skip = true },
           },
         },
-        notify = { enabled = false },
+        notify = { enabled = true },
         messages = { enabled = false },
         presets = {
           bottom_search = true,

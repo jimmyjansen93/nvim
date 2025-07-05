@@ -1,6 +1,6 @@
 return {
   {
-    'norcalli/nvim-colorizer.lua',
+    'catgoose/nvim-colorizer.lua',
     config = function()
       require('colorizer').setup { '*' }
     end,
@@ -18,6 +18,7 @@ return {
         go = { 'goimports', 'gofumpt', 'golines', 'staticcheck' },
         javascript = { 'eslint', 'prettier' },
         typescript = { 'eslint', 'prettier' },
+        cpp = { 'clang-tidy', 'clang-format' },
       },
     },
   },
@@ -35,7 +36,11 @@ return {
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('todo-comments').setup { signs = true }
+      require('todo-comments').setup {
+        signs = true,
+        search = { pattern = '(KEYWORDS)(((.+?)))??(:)' },
+        highlight = { pattern = [[.*<((KEYWORDS)%(\(.{-1,}\))?):]] },
+      }
 
       vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble<cr>', { noremap = true, silent = true, desc = 'Todo Trouble' })
       vim.keymap.set('n', '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', { noremap = true, silent = true, desc = 'Todo/Fix/Fixme Trouble' })
@@ -67,7 +72,16 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>u', "<cmd>lua require('undotree').toggle()<cr>", { desc = 'Undotree' })
+      local webicon = require 'nvim-web-devicons'
+      local undoIcon = webicon.get_icon('DevIconxmonad', 'xmonad')
+      require('which-key').add {
+        {
+          '<leader>u',
+          '<CMD>lua require("undotree").toggle()<cr>',
+          desc = 'Undotree',
+          icon = undoIcon,
+        },
+      }
     end,
   },
 }

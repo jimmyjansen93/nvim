@@ -14,18 +14,18 @@ return {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
       keymap = { preset = 'default' },
-      fuzzy = { sorts = { 'exact', 'score', 'sort_text' } },
+      fuzzy = { sorts = { 'exact', 'score', 'sort_text' }, implementation = 'prefer_rust_with_warning' },
+      signature = { enabled = true, window = { show_documentation = false } },
+      cmdline = {
+        keymap = { preset = 'inherit' },
+        completion = { menu = { auto_show = false }, ghost_text = { enabled = false } },
+      },
       completion = {
-        implementation = 'prefer_rust_with_warning',
         documentation = {
           auto_show = false,
-          auto_show_delay = 5000,
-        },
-        cmdline = {
-          keymap = { preset = 'inherit' },
+          auto_show_delay_ms = 5000,
         },
         ghost_text = { enabled = false, show_with_menu = false },
-        signature = { enabled = true, window = { show_documentation = false } },
         menu = {
           auto_show = false,
           draw = {
