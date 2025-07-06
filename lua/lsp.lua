@@ -43,7 +43,7 @@ vim.lsp.config('yamlls', {
 
 vim.lsp.config('clangd_custom', {
   name = 'clangd_custom',
-  cmd = { '/opt/homebrew/opt/llvm/bin/clangd' },
+  cmd = { '/opt/homebrew/opt/llvm/bin/clangd', '--std=c++23', '--background-index', '--pch-storage=memory', '--clang-tidy', '--log=error' },
   filetypes = { 'c', 'cpp' },
   root_markers = {
     '.clangd',

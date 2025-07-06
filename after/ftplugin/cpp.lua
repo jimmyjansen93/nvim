@@ -22,9 +22,7 @@ timer:start(
         cwd = vim.fn.getcwd(),
         detached = true,
       },
-      vim.schedule_wrap(function()
-        vim.notify('Ctags update complete.', vim.log.levels.INFO, { title = 'Ctags' })
-      end)
+      function() end
     )
   end)
 )
