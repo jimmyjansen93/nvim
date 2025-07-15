@@ -80,3 +80,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+  group = vim.api.nvim_create_augroup('jimmy-quickfix', { clear = true }),
+  desc = 'Auto open quickfix',
+  callback = function()
+    vim.cmd 'Trouble qflist open focus=true'
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = '*.zig,*.zon',
+  callback = function()
+    vim.cmd [[setfiletype zig]]
+  end,
+})
+vim.api.nvim_create_autocmd('BufNewFile', {
+  pattern = '*.zig,*.zon',
+  callback = function()
+    vim.cmd [[setfiletype zig]]
+  end,
+})

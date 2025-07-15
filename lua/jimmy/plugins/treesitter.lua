@@ -13,6 +13,7 @@ return {
           'c',
           'cpp',
           'css',
+          'nim',
           'diff',
           'git_rebase',
           'git_config',
@@ -42,9 +43,7 @@ return {
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-      }
 
-      require('nvim-treesitter.configs').setup {
         incremental_selection = {
           enable = true,
           keymaps = {
@@ -91,8 +90,8 @@ return {
 
           swap = {
             enable = true,
-            swap_next = { ['<leader>a'] = { query = '@parameter.inner', desc = 'Swap with next argument' } },
-            swap_previous = { ['<leader>A'] = { query = '@parameter.inner', desc = 'Swap with previous argument' } },
+            swap_next = { ['<leader>cb'] = { query = '@parameter.inner', desc = 'Swap with next argument' } },
+            swap_previous = { ['<leader>cB'] = { query = '@parameter.inner', desc = 'Swap with previous argument' } },
           },
         },
       }

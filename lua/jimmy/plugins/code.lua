@@ -6,6 +6,14 @@ return {
     end,
   },
   {
+    'stevearc/aerial.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {},
+  },
+  {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
@@ -28,24 +36,6 @@ return {
     event = 'VeryLazy',
     config = function()
       require('nvim-surround').setup {}
-    end,
-  },
-  {
-    'folke/todo-comments.nvim',
-    cmd = { 'TodoTrouble', 'TodoTelescope' },
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('todo-comments').setup {
-        signs = true,
-        search = { pattern = '(KEYWORDS)(((.+?)))??(:)' },
-        highlight = { pattern = [[.*<((KEYWORDS)%(\(.{-1,}\))?):]] },
-      }
-
-      vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble<cr>', { noremap = true, silent = true, desc = 'Todo Trouble' })
-      vim.keymap.set('n', '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', { noremap = true, silent = true, desc = 'Todo/Fix/Fixme Trouble' })
-      vim.keymap.set('n', '<leader>xs', '<cmd>TodoTelescope<cr>', { noremap = true, silent = true, desc = 'Todo Telescope' })
-      vim.keymap.set('n', '<leader>xS', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', { noremap = true, silent = true, desc = 'Todo/Fix/Fixme' })
     end,
   },
   {

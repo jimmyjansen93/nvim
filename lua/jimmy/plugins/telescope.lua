@@ -66,6 +66,13 @@ return {
           find_files = {
             find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
           },
+          lsp_document_symbols = {
+            layout_strategy = 'horizontal',
+            layout_config = {
+              width = 0.99,
+              preview_width = 0.7,
+            },
+          },
         },
         defaults = {
           buffer_previewer_maker = new_maker,
@@ -132,13 +139,11 @@ return {
       local docIcon = webicon.get_icon('DevIconReadme', 'lua')
       local workIcon = webicon.get_icon('DevIconLua', 'lua')
       require('which-key').add {
-        { '<leader>;', desc = 'Document Symbols', icon = docIcon },
-        { '<leader>s;', desc = 'Workspace Symbols', icon = workIcon },
+        { '<leader>;', builtin.lsp_document_symbols, desc = 'Document Symbols', icon = docIcon },
+        { '<leader>s;', builtin.lsp_dynamic_workspace_symbols, desc = 'Workspace Symbols', icon = workIcon },
       }
-      vim.keymap.set('n', '<leader>;', builtin.lsp_document_symbols, { desc = 'Document Symbols' })
-      vim.keymap.set('n', '<leader>s;', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace Symbols' })
 
-      vim.keymap.set('n', '<leader>s/', function()
+      vim.keymap.set('n', '<leader>/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',

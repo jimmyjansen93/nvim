@@ -6,8 +6,8 @@ return {
       require('mini.icons').setup {
         style = 'glyph',
       }
-      require('mini.git').setup()
-      require('mini.diff').setup()
+      require('mini.git').setup {}
+      require('mini.diff').setup {}
 
       require('mini.surround').setup {
         enable = false,
@@ -46,6 +46,32 @@ return {
         end,
       })
 
+      local webicon = require 'nvim-web-devicons'
+      local MiniIcons = require 'mini.icons'
+      local lspIcon = webicon.get_icon('DevIconLinux', 'linux')
+      local diagnosticIcon = webicon.get_icon('DevIconCheckhealth', 'checkhealth')
+      local errIcon = MiniIcons.get('file', 'lint.yml')
+      local warnIcon = MiniIcons.get('filetype', 'help')
+      local infoIcon = webicon.get_icon('DevIconInfo', 'info')
+      local hintIcon = webicon.get_icon('DevIconBazel', 'bazel')
+
+      local format_summary = function(data)
+        local summary = vim.b[data.buf].minidiff_summary
+        local t = {}
+        if summary.add > 0 then
+          table.insert(t, '􀑍' .. summary.add)
+        end
+        if summary.change > 0 then
+          table.insert(t, '􀮵' .. summary.change)
+        end
+        if summary.delete > 0 then
+          table.insert(t, '􀺾' .. summary.delete)
+        end
+        vim.b[data.buf].minidiff_summary_string = table.concat(t, ' ')
+      end
+      local au_opts = { pattern = 'MiniDiffUpdated', callback = format_summary }
+      vim.api.nvim_create_autocmd('User', au_opts)
+
       require('mini.statusline').setup {
         content = {
           active = function()
@@ -54,8 +80,12 @@ return {
             local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
             local git = MiniStatusline.section_git { trunc_width = 40 }
             local diff = MiniStatusline.section_diff { trunc_width = 75 }
-            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+            local diagnostics = MiniStatusline.section_diagnostics {
+              trunc_width = 75,
+              icon = diagnosticIcon,
+              signs = { ERROR = errIcon, WARN = warnIcon, INFO = infoIcon, HINT = hintIcon },
+            }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 75, icon = lspIcon }
             local filename = MiniStatusline.section_filename { trunc_width = 12000 }
 
             local check_macro_recording = function()

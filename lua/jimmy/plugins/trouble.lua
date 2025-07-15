@@ -1,50 +1,106 @@
 return {
   {
     'folke/trouble.nvim',
-    cmd = { 'TroubleToggle', 'Trouble' },
-    config = function()
-      require('trouble').setup {
-        use_diagnostic_signs = true,
-        auto_close = false,
-      }
-
-      vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', { noremap = true, silent = true, desc = 'Document Diagnostics' })
-      vim.keymap.set('n', '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', { noremap = true, silent = true, desc = 'Workspace Diagnostics' })
-      vim.keymap.set('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', { noremap = true, silent = true, desc = 'Location List' })
-      vim.keymap.set('n', '<leader>xq', '<cmd>TroubleToggle quickfix<cr>', { noremap = true, silent = true, desc = 'Quickfix List' })
-
-      vim.keymap.set(
-        'n',
+    cmd = 'Trouble',
+    opts = {
+      use_diagnostic_signs = true,
+      focus = true,
+      warn_no_results = false,
+      open_no_results = false,
+      modes = {
+        -- lsp_references = {
+        --   params = {
+        --     include_declaration = true,
+        --   },
+        -- },
+        -- lsp_base = {
+        --   params = {
+        --     include_current = false,
+        --   },
+        -- },
+        symbols = {
+          desc = 'Document Symbols',
+          win = { position = 'bottom' },
+          focus = true,
+        },
+      },
+    },
+    keys = {
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Workspace Diagnostics',
+      },
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Document Diagnostics',
+      },
+      {
+        '<leader>xs',
+        '<cmd>Trouble lsp_document_symbols toggle<cr>',
+        desc = 'Symbols Trouble',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Workspace Diagnostics',
+      },
+      {
+        '<leader>xl',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List',
+      },
+      {
+        '<leader>xq',
+        '<cmd>Trouble quickfix toggle<cr>',
+        desc = 'Quickfix List',
+      },
+      {
         '[q',
         '<cmd>lua require("trouble").previous { skip_groups = true, jump = true }<cr>',
-        { noremap = true, silent = true, desc = 'Previous trouble/quickfix item' }
-      )
-
-      vim.keymap.set(
-        'n',
+        desc = 'Previous quickfix item',
+      },
+      {
         ']q',
         '<cmd>lua require("trouble").next { skip_groups = true, jump = true }<cr>',
-        { noremap = true, silent = true, desc = 'Next trouble/quickfix item' }
-      )
-
-      vim.keymap.set('n', 'gR', function()
-        require('trouble').toggle 'lsp_references'
-      end)
-
-      local function show_diagnostics()
-        require('telescope.builtin').diagnostics {
-          bufnr = 0,
-          winblend = 10,
-          layout_config = {
-            width = 0.9,
-            height = 0.7,
-            prompt_position = 'top',
-          },
-        }
-      end
-
-      -- New keymap for floating diagnostics
-      vim.keymap.set('n', '<leader>xf', show_diagnostics, { noremap = true, silent = true, desc = 'Show Floating Diagnostics' })
-    end,
+        desc = 'Next trouble/quickfix item',
+      },
+      -- {
+      --   'gR',
+      --   '<cmd>lua require("trouble").toggle()<cr>',
+      --   desc = 'lsp references',
+      -- },
+      {
+        '<leader>xf',
+        function()
+          require('telescope.builtin').diagnostics {
+            bufnr = 0,
+            winblend = 10,
+            layout_config = {
+              width = 0.9,
+              height = 0.7,
+              prompt_position = 'top',
+            },
+          }
+        end,
+        desc = 'Show Floating Diagnostics',
+      },
+    },
+  },
+  {
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = true,
+      search = { pattern = '(KEYWORDS)(((.+?)))??(:)' },
+      highlight = { pattern = [[.*<((KEYWORDS)%(\(.{-1,}\))?):]] },
+    },
+    keys = {
+      { '<leader>xt', '<cmd>TodoTrouble<cr>', desc = 'Todo Trouble' },
+      { '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme Trouble' },
+    },
   },
 }

@@ -24,6 +24,7 @@ require('lazy').setup({
         sort = { 'local', 'case', 'group' },
       }
 
+      -- :NvimWebDeviconsHiTest
       local webicon = require 'nvim-web-devicons'
       local runIcon = webicon.get_icon('test.jsx', 'jsx')
       local troubleIcon = webicon.get_icon('log', 'log')
