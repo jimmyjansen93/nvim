@@ -1,57 +1,58 @@
 return {
   {
-    'neovim/nvim-lspconfig',
+    "neovim/nvim-lspconfig",
   },
   {
-    'ray-x/go.nvim',
-    enabled = false,
+    "ray-x/go.nvim",
+    enabled = true,
     dependencies = {
-      'ray-x/guihua.lua',
-      'neovim/nvim-lspconfig',
-      'nvim-treesitter/nvim-treesitter',
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
     },
-    event = { 'CmdlineEnter' },
-    ft = { 'go', 'gomod' },
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
 
     config = function()
-      require('go').setup {}
-      require('go.format').goimports()
+      require("go").setup({})
+      require("go.format").goimports()
     end,
   },
   {
-    'mrcjkb/rustaceanvim',
-    version = '^5',
+    "mrcjkb/rustaceanvim",
+    version = "^5",
     lazy = false,
   },
   {
-    'luckasRanarison/tailwind-tools.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    "luckasRanarison/tailwind-tools.nvim",
     enabled = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {},
   },
   {
-    'pmizio/typescript-tools.nvim',
+    "pmizio/typescript-tools.nvim",
     enabled = false,
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {},
   },
-  { 'dmmulroy/tsc.nvim', enabled = false, dependencies = { 'rcarriga/nvim-notify' }, opts = {} },
-  { 'dmmulroy/ts-error-translator.nvim', enabled = false },
+  { "dmmulroy/tsc.nvim", enabled = false, dependencies = { "rcarriga/nvim-notify" }, opts = {} },
+  { "dmmulroy/ts-error-translator.nvim", enabled = false },
 
   -- TODO: Tie this into Blink.cmp for autocomplete
   {
-    'heilgar/nvim-http-client',
+    "heilgar/nvim-http-client",
+    enabled = false,
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
     },
-    event = 'VeryLazy',
-    ft = { 'http', 'rest' },
+    event = "VeryLazy",
+    ft = { "http", "rest" },
     config = function()
-      require('http_client').setup {
-        default_env_file = '.env.json',
+      require("http_client").setup({
+        default_env_file = ".env.json",
         request_timeout = 30000,
-        split_direction = 'right',
+        split_direction = "right",
         create_keybindings = true,
 
         profiling = {
@@ -61,20 +62,20 @@ return {
         },
 
         keybindings = {
-          select_env_file = '<leader>hf',
-          set_env = '<leader>he',
-          run_request = '<leader>hr',
-          stop_request = '<leader>hx',
-          toggle_verbose = '<leader>hv',
-          toggle_profiling = '<leader>hp',
-          dry_run = '<leader>hd',
-          copy_curl = '<leader>hc',
-          save_response = '<leader>hs',
+          select_env_file = "<leader>hf",
+          set_env = "<leader>he",
+          run_request = "<leader>hr",
+          stop_request = "<leader>hx",
+          toggle_verbose = "<leader>hv",
+          toggle_profiling = "<leader>hp",
+          dry_run = "<leader>hd",
+          copy_curl = "<leader>hc",
+          save_response = "<leader>hs",
         },
-      }
+      })
 
-      if pcall(require, 'telescope') then
-        require('telescope').load_extension 'http_client'
+      if pcall(require, "telescope") then
+        require("telescope").load_extension("http_client")
       end
     end,
   },

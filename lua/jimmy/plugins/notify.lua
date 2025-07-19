@@ -1,39 +1,46 @@
 return {
   {
-    'rcarriga/nvim-notify',
+    "rcarriga/nvim-notify",
     config = function()
-      require('notify').setup {
-        background_colour = '#000000',
-      }
+      require("notify").setup({
+        background_colour = "#000000",
+      })
     end,
     lazy = false,
   },
   {
-    'folke/noice.nvim',
-    event = 'VeryLazy',
+    "folke/noice.nvim",
+    event = "VeryLazy",
     dependencies = {
-      'MunifTanjim/nui.nvim',
+      "MunifTanjim/nui.nvim",
     },
     config = function()
-      require('noice').setup {
+      require("noice").setup({
         lsp = {
           override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = false,
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = false,
           },
         },
         routes = {
           {
             filter = {
-              event = 'msg_show',
-              kind = '',
-              find = 'written',
+              event = "msg_show",
+              kind = "",
+              find = "written",
             },
             opts = { skip = true },
           },
           {
-            filter = { event = 'msg_show', kind = 'search_count' },
+            filter = {
+              event = "notify",
+              find = "code actions",
+            },
+            opts = { skip = true },
+          },
+          {
+            filter = { event = "msg_show", kind = "search_count" },
             opts = { skip = true },
           },
         },
@@ -52,7 +59,7 @@ return {
             },
             size = {
               width = 60,
-              height = 'auto',
+              height = "auto",
             },
           },
           popupmenu = {
@@ -65,15 +72,15 @@ return {
               height = 10,
             },
             border = {
-              style = 'rounded',
+              style = "rounded",
               padding = { 0, 1 },
             },
             win_options = {
-              winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
+              winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
             },
           },
         },
-      }
+      })
     end,
   },
 }
