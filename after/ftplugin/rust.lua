@@ -25,3 +25,22 @@ end, { desc = 'Open cargo.toml' })
 vim.keymap.set('n', '<leader>cD', function()
   vim.cmd.RustLsp 'openDocs'
 end, { desc = 'Open Docs' })
+
+-- Rust-specific settings
+vim.opt_local.shiftwidth = 4
+vim.opt_local.softtabstop = 4
+vim.opt_local.expandtab = true
+vim.opt_local.tabstop = 4
+
+-- Additional cargo commands
+vim.keymap.set('n', '<leader>cb', '<cmd>!cargo build<cr>', 
+  { buffer = true, desc = 'Cargo build' })
+
+vim.keymap.set('n', '<leader>ct', '<cmd>!cargo test<cr>', 
+  { buffer = true, desc = 'Cargo test' })
+
+vim.keymap.set('n', '<leader>cc', '<cmd>!cargo check<cr>', 
+  { buffer = true, desc = 'Cargo check' })
+
+vim.keymap.set('n', '<leader>cC', '<cmd>!cargo clippy<cr>', 
+  { buffer = true, desc = 'Cargo clippy' })

@@ -1,7 +1,7 @@
 -- TODO: set up properly
 return {
   "mfussenegger/nvim-dap",
-  enabled = false,
+  enabled = true,
   dependencies = {
     "rcarriga/nvim-dap-ui",
 
@@ -27,11 +27,12 @@ return {
       automatic_setup = true,
       handlers = {},
       ensure_installed = {
-        "delve",
-        "cppdbg",
-        "node2",
-        "chrome",
-        "js",
+        "delve",        -- Go
+        "cppdbg",       -- C/C++
+        "codelldb",     -- Rust, Zig, C/C++ (alternative)
+        "node2",        -- Node.js
+        "chrome",       -- Browser debugging
+        "js",           -- JavaScript
       },
     })
 
@@ -70,5 +71,156 @@ return {
     require("dap-vscode-js").setup({
       adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
     })
+
+    -- C/C++ debugging with cppdbg
+    dap.adapters.cppdbg = {
+      id = 'cppdbg',
+      type = 'executable',
+      command = vim.fn.exepath('OpenDebugAD7') or 'OpenDebugAD7',
+    }
+
+    dap.configurations.c = {
+      {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtEntry = true,
+        setupCommands = {
+          {
+            text = '-enable-pretty-printing',
+            description = 'enable pretty printing',
+            ignoreFailures = false
+          },
+        },
+      },
+      {
+        name = 'Attach to gdbserver :1234',
+        type = 'cppdbg',
+        request = 'launch',
+        MIMode = 'gdb',
+        miDebuggerServerAddress = 'localhost:1234',
+        miDebuggerPath = '/usr/bin/gdb',
+        cwd = '${workspaceFolder}',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        setupCommands = {
+          {
+            text = '-enable-pretty-printing',
+            description = 'enable pretty printing',
+            ignoreFailures = false
+          },
+        },
+      },
+    }
+
+    -- Copy C configuration to cpp
+    dap.configurations.cpp = dap.configurations.c
+
+    -- Enhanced Go debugging (dap-go already handles most of this, but adding custom configs)
+    dap.configurations.go = vim.list_extend(dap.configurations.go or {}, {
+      {
+        name = "Debug Package",
+        type = "go",
+        request = "launch",
+        mode = "debug",
+        program = "${workspaceFolder}",
+      },
+      {
+        name = "Debug Test",
+        type = "go",
+        request = "launch",
+        mode = "test",
+        program = "${workspaceFolder}",
+      },
+      {
+        name = "Attach to Process",
+        type = "go",
+        request = "attach",
+        mode = "local",
+        processId = function()
+          return tonumber(vim.fn.input("Process ID: "))
+        end,
+      },
+    })
+
+    -- Zig debugging with codelldb
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = "${port}",
+      executable = {
+        command = vim.fn.exepath('codelldb') or 'codelldb',
+        args = {"--port", "${port}"},
+      }
+    }
+
+    dap.configurations.zig = {
+      {
+        name = "Launch Zig",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          -- Look for zig-out/bin/ directory first
+          local zigout = vim.fn.getcwd() .. '/zig-out/bin/'
+          if vim.fn.isdirectory(zigout) == 1 then
+            local files = vim.fn.globpath(zigout, '*', false, true)
+            if #files > 0 then
+              return files[1]
+            end
+          end
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
+
+    -- Rust debugging (rustaceanvim handles most rust debugging, but adding fallback)
+    dap.configurations.rust = {
+      {
+        name = "Launch Rust (codelldb)",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          -- Look for target/debug directory first
+          local target_debug = vim.fn.getcwd() .. '/target/debug/'
+          if vim.fn.isdirectory(target_debug) == 1 then
+            local files = vim.fn.globpath(target_debug, '*', false, true)
+            -- Filter out files with extensions (like .d files)
+            for _, file in ipairs(files) do
+              if vim.fn.fnamemodify(file, ':e') == '' and vim.fn.executable(file) == 1 then
+                return file
+              end
+            end
+          end
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+      {
+        name = "Launch Rust (release)",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          local target_release = vim.fn.getcwd() .. '/target/release/'
+          if vim.fn.isdirectory(target_release) == 1 then
+            local files = vim.fn.globpath(target_release, '*', false, true)
+            for _, file in ipairs(files) do
+              if vim.fn.fnamemodify(file, ':e') == '' and vim.fn.executable(file) == 1 then
+                return file
+              end
+            end
+          end
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/release/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
   end,
 }

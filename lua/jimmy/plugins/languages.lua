@@ -1,8 +1,5 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-  },
-  {
     "ray-x/go.nvim",
     enabled = true,
     dependencies = {
