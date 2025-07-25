@@ -30,26 +30,6 @@ return {
     end,
   },
   {
-    "ellisonleao/gruvbox.nvim",
-    lazy = true,
-    priority = 1000,
-    config = function()
-      require("gruvbox").setup({
-        contrast = "hard",
-        transparent_mode = true,
-      })
-    end,
-  },
-  {
-    "shaunsingh/nord.nvim",
-    lazy = true,
-    priority = 1000,
-    config = function()
-      vim.g.nord_disable_background = true
-      vim.g.nord_enable_sidebar_background = false
-    end,
-  },
-  {
     "rebelot/kanagawa.nvim",
     lazy = true,
     priority = 1000,
@@ -57,18 +37,6 @@ return {
       require("kanagawa").setup({
         transparent = true,
         dimInactive = true,
-      })
-    end,
-  },
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = true,
-    priority = 1000,
-    config = function()
-      require("rose-pine").setup({
-        disable_background = true,
-        disable_float_background = true,
       })
     end,
   },

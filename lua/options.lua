@@ -58,3 +58,9 @@ vim.opt.hlsearch = true
 
 -- Don't automatically jump to first error
 vim.opt.switchbuf = "useopen,usetab" -- Remove "newtab" if it's there
+
+-- Disable matching bracket display in statusline
+vim.opt.showmatch = false
+vim.opt.matchtime = 0
+vim.opt.showcmd = false
+vim.opt.ruler = false

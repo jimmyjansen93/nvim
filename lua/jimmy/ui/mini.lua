@@ -61,20 +61,17 @@ return {
         content = {
           active = function()
             local MiniStatusline = require("mini.statusline")
-
             local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
             local git = MiniStatusline.section_git({ trunc_width = 40 })
-            local diff = MiniStatusline.section_diff({ trunc_width = 75 })
             local diagnostics = MiniStatusline.section_diagnostics({
               trunc_width = 75,
               signs = signs,
             })
-            local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
-            local filename = MiniStatusline.section_filename({ trunc_width = 12000 })
+            local filename = MiniStatusline.section_filename({ trunc_width = 140 })
 
             local check_macro_recording = function()
               if vim.fn.reg_recording() ~= "" then
-                return "Recording @" .. vim.fn.reg_recording()
+                return " REC @" .. vim.fn.reg_recording()
               else
                 return ""
               end
@@ -83,20 +80,28 @@ return {
 
             return MiniStatusline.combine_groups({
               { hl = mode_hl, strings = { mode } },
-              { hl = "MiniStatuslineDevinfo", strings = { diagnostics, lsp } },
-              "%<", -- Mark general truncate point
-              { hl = "MiniStatuslineFilename", strings = { filename } },
-              "%=", -- End left alignment
+              { hl = "MiniStatuslineDevinfo", strings = { diagnostics } },
               { hl = "MiniStatuslineFilename", strings = { macro } },
-              { hl = "MiniStatuslineDevinfo", strings = { diff } },
+              "%<",
+              { hl = "MiniStatuslineFilename", strings = { filename } },
+              "%=",
               { hl = "MiniStatuslineDevinfo", strings = { git } },
             })
           end,
-          inactive = nil,
+          inactive = function()
+            local MiniStatusline = require("mini.statusline")
+            return MiniStatusline.combine_groups({
+              {
+                hl = "MiniStatuslineFilename",
+                strings = { MiniStatusline.section_filename({ trunc_width = 140 }) },
+              },
+              "%=",
+            })
+          end,
         },
 
         use_icons = true,
-        set_vim_settings = true,
+        set_vim_settings = false,
       })
 
       require("mini.move").setup({})
