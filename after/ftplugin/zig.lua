@@ -1,15 +1,28 @@
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
-vim.opt.tabstop = 8
+vim.opt_local.shiftwidth = 4
+vim.opt_local.softtabstop = 4
+vim.opt_local.expandtab = true
+vim.opt_local.tabstop = 4
+
+vim.opt_local.makeprg = "zig build"
+vim.opt_local.errorformat = "%f:%l:%c: error: %m,%f:%l:%c: note: %m"
 
 vim.cmd("compiler zig")
 
 require("which-key").add({
   {
+    "<leader>cr",
+    "<cmd>!zig run %<cr>",
+    desc = "Run current file",
+  },
+  {
+    "<leader>ct",
+    "<cmd>!zig test %<cr>",
+    desc = "Run tests",
+  },
+  {
     "<leader>cc",
-    "<CMD>copen<CR>",
-    desc = "Open quickfix",
+    "<cmd>!zig build-exe %<cr>",
+    desc = "Compile file",
   },
   {
     "<leader>cn",

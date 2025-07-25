@@ -7,7 +7,39 @@ return {
       focus = true,
       warn_no_results = false,
       open_no_results = false,
+      auto_close = false,
+      auto_open = false,
+      auto_preview = true,
+      auto_refresh = true,
       modes = {
+        problems = {
+          desc = "All Problems (LSP + Build + Lint)",
+          mode = "diagnostics",
+          win = {
+            size = { height = 20 },
+            position = "bottom",
+          },
+          filter = {
+            any = {
+              buf = 0,
+              {
+                source = function(item)
+                  return item.source
+                    and (
+                      item.source:find("LSP")
+                      or item.source:find("Build")
+                      or item.source:find("Test")
+                      or item.source:find("Lint")
+                    )
+                end,
+              },
+            },
+          },
+          sort = { "filename", "lnum", "col" },
+          groups = {
+            { "filename", format = "{file_icon} {filename} {count}" },
+          },
+        },
         qflist = {
           win = {
             size = { height = 20 },
@@ -25,16 +57,6 @@ return {
             end, items)
           end,
         },
-        -- lsp_references = {
-        --   params = {
-        --     include_declaration = true,
-        --   },
-        -- },
-        -- lsp_base = {
-        --   params = {
-        --     include_current = false,
-        --   },
-        -- },
         symbols = {
           desc = "Document Symbols",
           win = { position = "bottom" },
@@ -44,24 +66,24 @@ return {
     },
     keys = {
       {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Workspace Diagnostics",
+        "<leader>xp",
+        "<cmd>Trouble problems toggle<cr>",
+        desc = "Toggle problems panel",
       },
       {
         "<leader>xx",
         "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Workspace Diagnostics",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         desc = "Document Diagnostics",
       },
       {
         "<leader>xs",
-        "<cmd>Trouble lsp_document_symbols toggle<cr>",
+        "<cmd>Trouble symbols toggle<cr>",
         desc = "Symbols Trouble",
-      },
-      {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Workspace Diagnostics",
       },
       {
         "<leader>xl",
@@ -70,24 +92,37 @@ return {
       },
       {
         "<leader>xq",
-        "<cmd>Trouble quickfix toggle<cr>",
+        "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List",
       },
       {
+        "]d",
+        function()
+          require("trouble").next({ skip_groups = true, jump = true })
+        end,
+        desc = "Next problem",
+      },
+      {
+        "[d",
+        function()
+          require("trouble").prev({ skip_groups = true, jump = true })
+        end,
+        desc = "Previous problem",
+      },
+      {
         "[q",
-        '<cmd>lua require("trouble").previous { skip_groups = true, jump = true }<cr>',
+        function()
+          require("trouble").prev({ skip_groups = true, jump = true })
+        end,
         desc = "Previous quickfix item",
       },
       {
         "]q",
-        '<cmd>lua require("trouble").next { skip_groups = true, jump = true }<cr>',
+        function()
+          require("trouble").next({ skip_groups = true, jump = true })
+        end,
         desc = "Next trouble/quickfix item",
       },
-      -- {
-      --   'gR',
-      --   '<cmd>lua require("trouble").toggle()<cr>',
-      --   desc = 'lsp references',
-      -- },
       {
         "<leader>xf",
         function()
@@ -102,6 +137,14 @@ return {
           })
         end,
         desc = "Show Floating Diagnostics",
+      },
+      {
+        "<leader>xr",
+        function()
+          require("trouble").refresh()
+          vim.notify("Refreshed problems", vim.log.levels.INFO)
+        end,
+        desc = "Refresh problems",
       },
     },
   },

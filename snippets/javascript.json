@@ -1,0 +1,286 @@
+{
+  "Function": {
+    "prefix": "fn",
+    "body": [
+      "function ${1:functionName}(${2:parameters}) {",
+      "\t${3:// Implementation}",
+      "\treturn ${4:value};",
+      "}"
+    ],
+    "description": "Function declaration"
+  },
+  "Arrow Function": {
+    "prefix": "af",
+    "body": [
+      "const ${1:functionName} = (${2:parameters}) => {",
+      "\t${3:// Implementation}",
+      "\treturn ${4:value};",
+      "};"
+    ],
+    "description": "Arrow function"
+  },
+  "Async Function": {
+    "prefix": "async",
+    "body": [
+      "async function ${1:functionName}(${2:parameters}) {",
+      "\ttry {",
+      "\t\t${3:// Implementation}",
+      "\t\treturn ${4:value};",
+      "\t} catch (error) {",
+      "\t\tconsole.error('Error in ${1:functionName}:', error);",
+      "\t\tthrow error;",
+      "\t}",
+      "}"
+    ],
+    "description": "Async function with error handling"
+  },
+  "Promise": {
+    "prefix": "promise",
+    "body": [
+      "return new Promise((resolve, reject) => {",
+      "\t${1:// Async operation}",
+      "\tif (${2:success_condition}) {",
+      "\t\tresolve(${3:result});",
+      "\t} else {",
+      "\t\treject(new Error('${4:error_message}'));",
+      "\t}",
+      "});"
+    ],
+    "description": "Promise constructor"
+  },
+  "Try-Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t${1:// Code that may throw}",
+      "} catch (error) {",
+      "\tconsole.error('${2:Error description}:', error);",
+      "\t${3:// Error handling}",
+      "} finally {",
+      "\t${4:// Cleanup}",
+      "}"
+    ],
+    "description": "Try-catch-finally block"
+  },
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\tconstructor(${2:parameters}) {",
+      "\t\t${3:// Initialize properties}",
+      "\t}",
+      "",
+      "\t${4:methodName}() {",
+      "\t\t${5:// Method implementation}",
+      "\t}",
+      "}"
+    ],
+    "description": "Class definition"
+  },
+  "Module Export": {
+    "prefix": "export",
+    "body": [
+      "export const ${1:functionName} = (${2:parameters}) => {",
+      "\t${3:// Implementation}",
+      "\treturn ${4:value};",
+      "};"
+    ],
+    "description": "Named export"
+  },
+  "Module Import": {
+    "prefix": "import",
+    "body": ["import { ${1:imports} } from '${2:module}';"],
+    "description": "Named import"
+  },
+  "Default Export": {
+    "prefix": "exportd",
+    "body": ["export default ${1:value};"],
+    "description": "Default export"
+  },
+  "Console Log": {
+    "prefix": "log",
+    "body": ["console.log('${1:message}:', ${2:variable});"],
+    "description": "Console log"
+  },
+  "Object Destructuring": {
+    "prefix": "dest",
+    "body": ["const { ${1:properties} } = ${2:object};"],
+    "description": "Object destructuring"
+  },
+  "Array Destructuring": {
+    "prefix": "desta",
+    "body": ["const [${1:elements}] = ${2:array};"],
+    "description": "Array destructuring"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {",
+      "\t${3:// Loop body}",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "For...of Loop": {
+    "prefix": "forof",
+    "body": [
+      "for (const ${1:item} of ${2:iterable}) {",
+      "\t${3:// Loop body}",
+      "}"
+    ],
+    "description": "For...of loop"
+  },
+  "For...in Loop": {
+    "prefix": "forin",
+    "body": [
+      "for (const ${1:key} in ${2:object}) {",
+      "\tif (${2:object}.hasOwnProperty(${1:key})) {",
+      "\t\t${3:// Loop body}",
+      "\t}",
+      "}"
+    ],
+    "description": "For...in loop with hasOwnProperty check"
+  },
+  "Test Function": {
+    "prefix": "test",
+    "body": [
+      "test('${1:test description}', () => {",
+      "\t${2:// Test implementation}",
+      "\texpect(${3:actual}).toBe(${4:expected});",
+      "});"
+    ],
+    "description": "Test function (Jest/Vitest)"
+  },
+  "Describe Block": {
+    "prefix": "describe",
+    "body": [
+      "describe('${1:test suite}', () => {",
+      "\tbeforeEach(() => {",
+      "\t\t${2:// Setup}",
+      "\t});",
+      "",
+      "\ttest('${3:test description}', () => {",
+      "\t\t${4:// Test implementation}",
+      "\t});",
+      "});"
+    ],
+    "description": "Describe test suite"
+  },
+  "Fetch API": {
+    "prefix": "fetch",
+    "body": [
+      "async function ${1:fetchData}() {",
+      "\ttry {",
+      "\t\tconst response = await fetch('${2:url}', {",
+      "\t\t\tmethod: '${3:GET}',",
+      "\t\t\theaders: {",
+      "\t\t\t\t'Content-Type': 'application/json',",
+      "\t\t\t\t${4:// Additional headers}",
+      "\t\t\t},",
+      "\t\t\t${5:// body: JSON.stringify(data)}",
+      "\t\t});",
+      "",
+      "\t\tif (!response.ok) {",
+      "\t\t\tthrow new Error(`HTTP error! status: ${response.status}`);",
+      "\t\t}",
+      "",
+      "\t\tconst data = await response.json();",
+      "\t\treturn data;",
+      "\t} catch (error) {",
+      "\t\tconsole.error('Fetch error:', error);",
+      "\t\tthrow error;",
+      "\t}",
+      "}"
+    ],
+    "description": "Fetch API with error handling"
+  },
+  "Event Listener": {
+    "prefix": "listen",
+    "body": [
+      "${1:element}.addEventListener('${2:event}', (${3:e}) => {",
+      "\t${4:// Event handler}",
+      "});"
+    ],
+    "description": "Event listener"
+  },
+  "DOM Query": {
+    "prefix": "query",
+    "body": [
+      "const ${1:element} = document.querySelector('${2:selector}');"
+    ],
+    "description": "DOM querySelector"
+  },
+  "Local Storage": {
+    "prefix": "storage",
+    "body": [
+      "const ${1:data} = JSON.parse(localStorage.getItem('${2:key}')) || ${3:defaultValue};",
+      "localStorage.setItem('${2:key}', JSON.stringify(${1:data}));"
+    ],
+    "description": "Local storage get/set"
+  },
+  "Array Map": {
+    "prefix": "map",
+    "body": [
+      "const ${1:result} = ${2:array}.map((${3:item}) => {",
+      "\treturn ${4:transformation};",
+      "});"
+    ],
+    "description": "Array map method"
+  },
+  "Array Filter": {
+    "prefix": "filter",
+    "body": [
+      "const ${1:filtered} = ${2:array}.filter((${3:item}) => {",
+      "\treturn ${4:condition};",
+      "});"
+    ],
+    "description": "Array filter method"
+  },
+  "Array Reduce": {
+    "prefix": "reduce",
+    "body": [
+      "const ${1:result} = ${2:array}.reduce((${3:acc}, ${4:current}) => {",
+      "\treturn ${5:accumulated_value};",
+      "}, ${6:initial_value});"
+    ],
+    "description": "Array reduce method"
+  },
+  "React Component": {
+    "prefix": "rc",
+    "body": [
+      "import React from 'react';",
+      "",
+      "const ${1:ComponentName} = ({ ${2:props} }) => {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t${3:// Component content}",
+      "\t\t</div>",
+      "\t);",
+      "};",
+      "",
+      "export default ${1:ComponentName};"
+    ],
+    "description": "React functional component"
+  },
+  "React useState": {
+    "prefix": "state",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:initialValue});"
+    ],
+    "description": "React useState hook"
+  },
+  "React useEffect": {
+    "prefix": "effect",
+    "body": [
+      "useEffect(() => {",
+      "\t${1:// Effect logic}",
+      "\t",
+      "\treturn () => {",
+      "\t\t${2:// Cleanup}",
+      "\t};",
+      "}, [${3:dependencies}]);"
+    ],
+    "description": "React useEffect hook"
+  }
+}
+

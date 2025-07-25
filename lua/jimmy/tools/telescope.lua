@@ -77,6 +77,33 @@ return {
         defaults = {
           buffer_previewer_maker = new_maker,
           path_display = { "filename_first" },
+          file_ignore_patterns = {
+            "node_modules",
+            ".git/",
+            "dist/",
+            "build/",
+            "target/",
+            "coverage/",
+            "*.lock",
+            "yarn.lock",
+            "package-lock.json",
+            ".cache/",
+            "__pycache__/",
+            "*.pyc",
+            ".DS_Store",
+          },
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--trim",
+            "--hidden",
+            "--glob=!.git/*",
+          },
           mappings = {
             i = {
               ["<C-u>"] = false,
@@ -96,16 +123,6 @@ return {
             },
           },
           preview = true,
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--trim",
-          },
         },
         extensions = {
           ["ui-select"] = {
@@ -114,14 +131,11 @@ return {
         },
       })
 
-      -- pcall(require('telescope').load_extension, 'file_browser')
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
-      -- pcall(require('telescope').load_extension, 'conflicts')
 
       local builtin = require("telescope.builtin")
 
-      -- vim.keymap.set('n', '<leader>sc', '<CMD>Telescope conflicts<CR>', { desc = 'Search Conflicts' })
       vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
       vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
       vim.keymap.set("n", "<leader>sf", "<CMD>Telescope find_files hidden=true<CR>", { desc = "Search All Files" })

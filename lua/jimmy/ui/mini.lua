@@ -6,31 +6,40 @@ return {
       require("mini.icons").setup({
         style = "glyph",
       })
-      -- require("mini.git").setup({})
       require("mini.diff").setup({})
 
-      require("mini.surround").setup({
-        enable = false,
-        custom_surroundings = nil,
-        search_method = "cover",
-        highlight_duration = 500,
-        n_lines = 20,
-        respect_selection_type = false,
-        silent = false,
-
-        mappings = {
-          add = "sa",
-          delete = "sd",
-          find = "sf",
-          find_left = "sF",
-          highlight = "sh",
-          replace = "sr",
-          update_n_lines = "sn",
-
-          suffix_last = "l",
-          suffix_next = "n",
+      require("mini.ai").setup({
+        n_lines = 500,
+        custom_textobjects = {
+          o = require("mini.ai").gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = require("mini.ai").gen_spec.treesitter({
+            a = "@function.outer",
+            i = "@function.inner",
+          }),
+          c = require("mini.ai").gen_spec.treesitter({
+            a = "@class.outer",
+            i = "@class.inner",
+          }),
+          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
+          d = { "%f[%d]%d+" },
+          e = {
+            {
+              "%u[%l%d]+%f[^%l%d]",
+              "%f[%S][%l%d]+%f[^%l%d]",
+              "%f[%P][%l%d]+%f[^%l%d]",
+              "^[%l%d]+%f[^%l%d]",
+            },
+            "^().*()$",
+          },
+          u = require("mini.ai").gen_spec.function_call(),
+          U = require("mini.ai").gen_spec.function_call({ name_pattern = "[%w_]" }),
         },
       })
+
+      require("mini.surround").setup({ enable = false })
 
       vim.api.nvim_create_autocmd("RecordingEnter", {
         pattern = "*",
@@ -46,14 +55,7 @@ return {
         end,
       })
 
-      local webicon = require("nvim-web-devicons")
-      local MiniIcons = require("mini.icons")
-      local lspIcon = webicon.get_icon("DevIconLinux", "linux")
-      local diagnosticIcon = webicon.get_icon("DevIconCheckhealth", "checkhealth")
-      local errIcon = MiniIcons.get("file", "lint.yml")
-      local warnIcon = MiniIcons.get("filetype", "help")
-      local infoIcon = webicon.get_icon("DevIconInfo", "info")
-      local hintIcon = webicon.get_icon("DevIconBazel", "bazel")
+      local signs = { ERROR = "●", WARN = "●", INFO = "●", HINT = "●" }
 
       require("mini.statusline").setup({
         content = {
@@ -65,10 +67,9 @@ return {
             local diff = MiniStatusline.section_diff({ trunc_width = 75 })
             local diagnostics = MiniStatusline.section_diagnostics({
               trunc_width = 75,
-              icon = diagnosticIcon,
-              signs = { ERROR = errIcon, WARN = warnIcon, INFO = infoIcon, HINT = hintIcon },
+              signs = signs,
             })
-            local lsp = MiniStatusline.section_lsp({ trunc_width = 75, icon = lspIcon })
+            local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
             local filename = MiniStatusline.section_filename({ trunc_width = 12000 })
 
             local check_macro_recording = function()
@@ -98,23 +99,7 @@ return {
         set_vim_settings = true,
       })
 
-      require("mini.move").setup({
-        mappings = {
-          left = "<M-h>",
-          right = "<M-l>",
-          down = "<M-j>",
-          up = "<M-k>",
-
-          line_left = "<M-h>",
-          line_right = "<M-l>",
-          line_down = "<M-j>",
-          line_up = "<M-k>",
-        },
-
-        options = {
-          reindent_linewise = true,
-        },
-      })
+      require("mini.move").setup({})
     end,
   },
 }

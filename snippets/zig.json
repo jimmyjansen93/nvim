@@ -1,0 +1,226 @@
+{
+  "Main function": {
+    "prefix": "main",
+    "body": [
+      "const std = @import(\"std\");",
+      "",
+      "pub fn main() !void {",
+      "\t${1:// Implementation}",
+      "}"
+    ],
+    "description": "Main function with std import"
+  },
+  "Function with error": {
+    "prefix": "fn",
+    "body": [
+      "fn ${1:functionName}(${2:parameters}) ${3:!}${4:ReturnType} {",
+      "\t${5:// Implementation}",
+      "}"
+    ],
+    "description": "Function with optional error return"
+  },
+  "Test function": {
+    "prefix": "test",
+    "body": [
+      "test \"${1:test description}\" {",
+      "\t${2:// Test implementation}",
+      "\ttry std.testing.expect(${3:condition});",
+      "}"
+    ],
+    "description": "Test function"
+  },
+  "Struct definition": {
+    "prefix": "struct",
+    "body": [
+      "const ${1:StructName} = struct {",
+      "\t${2:field}: ${3:type},",
+      "",
+      "\tpub fn init(${4:parameters}) ${1:StructName} {",
+      "\t\treturn ${1:StructName}{",
+      "\t\t\t.${2:field} = ${5:value},",
+      "\t\t};",
+      "\t}",
+      "",
+      "\tpub fn deinit(self: *${1:StructName}) void {",
+      "\t\t${6:// Cleanup}",
+      "\t}",
+      "};"
+    ],
+    "description": "Struct with init and deinit methods"
+  },
+  "Error union": {
+    "prefix": "error",
+    "body": [
+      "const ${1:ErrorName} = error{",
+      "\t${2:ErrorVariant},",
+      "\t${3:AnotherError},",
+      "};"
+    ],
+    "description": "Error union definition"
+  },
+  "Allocator usage": {
+    "prefix": "alloc",
+    "body": [
+      "var gpa = std.heap.GeneralPurposeAllocator(.{}){};",
+      "defer _ = gpa.deinit();",
+      "const allocator = gpa.allocator();",
+      "",
+      "const ${1:memory} = try allocator.alloc(${2:type}, ${3:size});",
+      "defer allocator.free(${1:memory});",
+      "",
+      "${4:// Use memory}"
+    ],
+    "description": "Allocation with cleanup"
+  },
+  "ArrayList usage": {
+    "prefix": "arraylist",
+    "body": [
+      "var ${1:list} = std.ArrayList(${2:type}).init(${3:allocator});",
+      "defer ${1:list}.deinit();",
+      "",
+      "try ${1:list}.append(${4:value});",
+      "",
+      "for (${1:list}.items) |${5:item}| {",
+      "\t${6:// Process item}",
+      "}"
+    ],
+    "description": "ArrayList creation and usage"
+  },
+  "HashMap usage": {
+    "prefix": "hashmap",
+    "body": [
+      "var ${1:map} = std.HashMap(${2:KeyType}, ${3:ValueType}, std.hash_map.DefaultContext(${2:KeyType}), std.hash_map.default_max_load_percentage).init(${4:allocator});",
+      "defer ${1:map}.deinit();",
+      "",
+      "try ${1:map}.put(${5:key}, ${6:value});",
+      "",
+      "if (${1:map}.get(${7:key})) |${8:value}| {",
+      "\t${9:// Use value}",
+      "}"
+    ],
+    "description": "HashMap creation and usage"
+  },
+  "For loop": {
+    "prefix": "for",
+    "body": ["for (${1:slice}) |${2:item}| {", "\t${3:// Process item}", "}"],
+    "description": "For loop over slice"
+  },
+  "For loop with index": {
+    "prefix": "fori",
+    "body": [
+      "for (${1:slice}, 0..) |${2:item}, ${3:index}| {",
+      "\t${4:// Process item and index}",
+      "}"
+    ],
+    "description": "For loop with index"
+  },
+  "While loop": {
+    "prefix": "while",
+    "body": ["while (${1:condition}) {", "\t${2:// Loop body}", "}"],
+    "description": "While loop"
+  },
+  "Switch expression": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:value}) {",
+      "\t${2:case1} => ${3:result1},",
+      "\t${4:case2} => ${5:result2},",
+      "\telse => ${6:default_result},",
+      "}"
+    ],
+    "description": "Switch expression"
+  },
+  "Print statement": {
+    "prefix": "print",
+    "body": ["std.debug.print(\"${1:format}\\n\", .{${2:args}});"],
+    "description": "Debug print statement"
+  },
+  "Comptime function": {
+    "prefix": "comptime",
+    "body": [
+      "fn ${1:functionName}(comptime ${2:param}: ${3:type}) ${4:ReturnType} {",
+      "\t${5:// Comptime implementation}",
+      "}"
+    ],
+    "description": "Comptime function"
+  },
+  "Build script": {
+    "prefix": "build",
+    "body": [
+      "const std = @import(\"std\");",
+      "",
+      "pub fn build(b: *std.Build) void {",
+      "\tconst target = b.standardTargetOptions(.{});",
+      "\tconst optimize = b.standardOptimizeOption(.{});",
+      "",
+      "\tconst exe = b.addExecutable(.{",
+      "\t\t.name = \"${1:app_name}\",",
+      "\t\t.root_source_file = b.path(\"src/main.zig\"),",
+      "\t\t.target = target,",
+      "\t\t.optimize = optimize,",
+      "\t});",
+      "",
+      "\tb.installArtifact(exe);",
+      "",
+      "\tconst run_cmd = b.addRunArtifact(exe);",
+      "\trun_cmd.step.dependOn(b.getInstallStep());",
+      "",
+      "\tif (b.args) |args| {",
+      "\t\trun_cmd.addArgs(args);",
+      "\t}",
+      "",
+      "\tconst run_step = b.step(\"run\", \"Run the app\");",
+      "\trun_step.dependOn(&run_cmd.step);",
+      "",
+      "\tconst unit_tests = b.addTest(.{",
+      "\t\t.root_source_file = b.path(\"src/main.zig\"),",
+      "\t\t.target = target,",
+      "\t\t.optimize = optimize,",
+      "\t});",
+      "",
+      "\tconst run_unit_tests = b.addRunArtifact(unit_tests);",
+      "",
+      "\tconst test_step = b.step(\"test\", \"Run unit tests\");",
+      "\ttest_step.dependOn(&run_unit_tests.step);",
+      "}"
+    ],
+    "description": "Standard build.zig script"
+  },
+  "Error handling": {
+    "prefix": "catch",
+    "body": [
+      "${1:function_call}() catch |err| switch (err) {",
+      "\t${2:ErrorType}.${3:SpecificError} => {",
+      "\t\t${4:// Handle specific error}",
+      "\t},",
+      "\telse => return err,",
+      "};"
+    ],
+    "description": "Error handling with catch and switch"
+  },
+  "Optional handling": {
+    "prefix": "optional",
+    "body": [
+      "if (${1:optional_value}) |${2:value}| {",
+      "\t${3:// Handle Some case}",
+      "} else {",
+      "\t${4:// Handle null case}",
+      "}"
+    ],
+    "description": "Optional value handling"
+  },
+  "C interop": {
+    "prefix": "cimport",
+    "body": [
+      "const c = @cImport({",
+      "\t@cInclude(\"${1:header.h}\");",
+      "});",
+      "",
+      "export fn ${2:zig_function}(${3:params}) ${4:return_type} {",
+      "\t${5:// Zig function callable from C}",
+      "}"
+    ],
+    "description": "C library import and export"
+  }
+}
+

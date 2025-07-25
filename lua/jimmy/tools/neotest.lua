@@ -1,7 +1,7 @@
 return {
   {
     "nvim-neotest/neotest",
-    enabled = false,
+    enabled = true,
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
@@ -46,25 +46,46 @@ return {
 
       require("which-key").add({
         {
-          "<leader>rF",
+          "<leader>rn",
+          function()
+            require("neotest").run.run()
+          end,
+          desc = "Run nearest test",
+        },
+        {
+          "<leader>rf",
           function()
             require("neotest").run.run(vim.fn.expand("%"))
           end,
           desc = "Test current file",
         },
         {
-          "<leader>rt",
+          "<leader>rd",
           function()
-            require("neotest").run.run(vim.fn.getcwd())
+            require("neotest").run.run({ vim.fn.getcwd() })
           end,
-          desc = "Test Project",
+          desc = "Test directory",
         },
         {
-          "<leader>rT",
+          "<leader>rw",
           function()
-            require("neotest").run.run({ vim.fn.getcwd(), extra_args = { "--fuzz" } })
+            require("neotest").watch.toggle()
           end,
-          desc = "Test Project fuzzy",
+          desc = "Watch tests",
+        },
+        {
+          "<leader>rv",
+          function()
+            require("neotest").output_panel.toggle()
+          end,
+          desc = "Toggle test output",
+        },
+        {
+          "<leader>rS",
+          function()
+            require("neotest").summary.toggle()
+          end,
+          desc = "Toggle test summary",
         },
       })
     end,

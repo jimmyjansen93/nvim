@@ -1,0 +1,202 @@
+{
+  "Header Guard": {
+    "prefix": "guard",
+    "body": [
+      "#ifndef ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}}",
+      "#define ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}}",
+      "",
+      "${0:/* Content */}",
+      "",
+      "#endif /* ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}} */"
+    ],
+    "description": "Include guard for header file"
+  },
+  "Main Function": {
+    "prefix": "main",
+    "body": [
+      "#include <stdio.h>",
+      "#include <stdlib.h>",
+      "",
+      "int main(int argc, char *argv[]) {",
+      "\t${1:/* Implementation */}",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "Main function with includes"
+  },
+  "Function with error handling": {
+    "prefix": "func",
+    "body": [
+      "${1:int} ${2:function_name}(${3:parameters}) {",
+      "\tif (${4:condition}) {",
+      "\t\tfprintf(stderr, \"Error: ${5:description}\\n\");",
+      "\t\treturn ${6:-1};",
+      "\t}",
+      "\t",
+      "\t${7:/* Implementation */}",
+      "\t",
+      "\treturn ${8:0};",
+      "}"
+    ],
+    "description": "Function with error handling"
+  },
+  "Struct Definition": {
+    "prefix": "struct",
+    "body": [
+      "typedef struct ${1:StructName} {",
+      "\t${2:int member1};",
+      "\t${3:char *member2};",
+      "\t$0",
+      "} ${1:StructName};"
+    ],
+    "description": "Struct definition with typedef"
+  },
+  "Memory Allocation": {
+    "prefix": "malloc",
+    "body": [
+      "${1:type} *${2:ptr} = malloc(sizeof(${1:type}) * ${3:count});",
+      "if (${2:ptr} == NULL) {",
+      "\tfprintf(stderr, \"Memory allocation failed\\n\");",
+      "\treturn ${4:-1};",
+      "}",
+      "",
+      "${5:/* Use ptr */}",
+      "",
+      "free(${2:ptr});",
+      "${2:ptr} = NULL;"
+    ],
+    "description": "Safe memory allocation and cleanup"
+  },
+  "File Operations": {
+    "prefix": "fopen",
+    "body": [
+      "FILE *${1:file} = fopen(\"${2:filename}\", \"${3:r}\");",
+      "if (${1:file} == NULL) {",
+      "\tperror(\"Failed to open file\");",
+      "\treturn ${4:-1};",
+      "}",
+      "",
+      "${5:/* File operations */}",
+      "",
+      "fclose(${1:file});"
+    ],
+    "description": "Safe file operations"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (${1:int i = 0}; ${2:i < length}; ${3:i++}) {",
+      "\t${4:/* Loop body */}",
+      "}"
+    ],
+    "description": "Standard for loop"
+  },
+  "While Loop with condition": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t${2:/* Loop body */}",
+      "\t",
+      "\t${3:/* Update condition */}",
+      "}"
+    ],
+    "description": "While loop with condition"
+  },
+  "Switch Statement": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:variable}) {",
+      "\tcase ${2:value1}:",
+      "\t\t${3:/* Case 1 */}",
+      "\t\tbreak;",
+      "\t",
+      "\tcase ${4:value2}:",
+      "\t\t${5:/* Case 2 */}",
+      "\t\tbreak;",
+      "\t",
+      "\tdefault:",
+      "\t\t${6:/* Default case */}",
+      "\t\tbreak;",
+      "}"
+    ],
+    "description": "Switch statement with cases"
+  },
+  "Error macro": {
+    "prefix": "error",
+    "body": [
+      "#define ERROR(fmt, ...) \\",
+      "\tfprintf(stderr, \"[ERROR] %s:%d: \" fmt \"\\n\", \\",
+      "\t\t__FILE__, __LINE__, ##__VA_ARGS__)"
+    ],
+    "description": "Error logging macro"
+  },
+  "String handling": {
+    "prefix": "string",
+    "body": [
+      "char *${1:str} = malloc(${2:size});",
+      "if (${1:str} == NULL) {",
+      "\tfprintf(stderr, \"String allocation failed\\n\");",
+      "\treturn ${3:-1};",
+      "}",
+      "",
+      "strncpy(${1:str}, \"${4:content}\", ${2:size} - 1);",
+      "${1:str}[${2:size} - 1] = '\\0';",
+      "",
+      "${5:/* Use string */}",
+      "",
+      "free(${1:str});",
+      "${1:str} = NULL;"
+    ],
+    "description": "Safe string allocation and handling"
+  },
+  "Linked list node": {
+    "prefix": "node",
+    "body": [
+      "typedef struct ${1:Node} {",
+      "\t${2:int data};",
+      "\tstruct ${1:Node} *next;",
+      "} ${1:Node};",
+      "",
+      "${1:Node} *create_node(${2:int data}) {",
+      "\t${1:Node} *node = malloc(sizeof(${1:Node}));",
+      "\tif (node == NULL) {",
+      "\t\treturn NULL;",
+      "\t}",
+      "\tnode->data = data;",
+      "\tnode->next = NULL;",
+      "\treturn node;",
+      "}"
+    ],
+    "description": "Linked list node with constructor"
+  },
+  "Assert macro": {
+    "prefix": "assert",
+    "body": [
+      "#include <assert.h>",
+      "",
+      "#ifdef DEBUG",
+      "#define ASSERT(condition, message) \\",
+      "\tdo { \\",
+      "\t\tif (!(condition)) { \\",
+      "\t\t\tfprintf(stderr, \"Assertion failed: %s\\n\", message); \\",
+      "\t\t\tabort(); \\",
+      "\t\t} \\",
+      "\t} while(0)",
+      "#else",
+      "#define ASSERT(condition, message) ((void)0)",
+      "#endif"
+    ],
+    "description": "Debug assertion macro"
+  },
+  "Array bounds check": {
+    "prefix": "bounds",
+    "body": [
+      "if (${1:index} < 0 || ${1:index} >= ${2:array_size}) {",
+      "\tfprintf(stderr, \"Array index out of bounds: %d\\n\", ${1:index});",
+      "\treturn ${3:-1};",
+      "}"
+    ],
+    "description": "Array bounds checking"
+  }
+}
+

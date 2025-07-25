@@ -1,9 +1,11 @@
-vim.cmd 'comp! harv'
+vim.cmd("comp! harv")
 
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
-vim.opt.tabstop = 4
+vim.opt_local.shiftwidth = 2
+vim.opt_local.softtabstop = 2
+vim.opt_local.expandtab = true
+vim.opt_local.tabstop = 2
+
+vim.opt_local.errorformat = "%f:%l:%c: %t%*[^:]: %m,%f:%l: %t%*[^:]: %m,%f:(%l\\,%c): %t%*[^:]: %m"
 
 local timer = vim.uv.new_timer()
 if timer == nil then
@@ -15,10 +17,10 @@ timer:start(
   60000,
   vim.schedule_wrap(function()
     vim.loop.spawn(
-      'ctags',
+      "ctags",
       ---@diagnostic disable-next-line: missing-fields
       {
-        args = { '-R', '.' },
+        args = { "-R", "." },
         cwd = vim.fn.getcwd(),
         detached = true,
       },
@@ -27,54 +29,59 @@ timer:start(
   end)
 )
 
-require('which-key').add {
+require("which-key").add({
   {
-    '<leader>cc',
-    '<CMD>copen<CR>',
-    desc = 'Open quickfix',
+    "<leader>cc",
+    "<CMD>copen<CR>",
+    desc = "Open quickfix",
   },
   {
-    '<leader>cn',
-    '<CMD>cnext<CR>',
-    desc = 'Next quickfix',
+    "<leader>cn",
+    "<CMD>cnext<CR>",
+    desc = "Next quickfix",
   },
   {
-    '<leader>cp',
-    '<CMD>cprevious<CR>',
-    desc = 'Prev quickfix',
+    "<leader>cp",
+    "<CMD>cprevious<CR>",
+    desc = "Prev quickfix",
   },
   {
-    '<leader>cl',
-    '<CMD>clist<CR>',
-    desc = 'List quickfix',
+    "<leader>cl",
+    "<CMD>clist<CR>",
+    desc = "List quickfix",
   },
   {
-    '<leader>ch',
-    '<CMD>compiler harv<CR>',
-    desc = 'Compiler! harv',
-  },
-  -- {
-  --   '<leader>cb',
-  --   '<CMD>compiler harv-build<CR>',
-  --   desc = 'Compiler! harv-build',
-  -- },
-  {
-    '<leader>r',
-    group = 'Run',
+    "<leader>cr",
+    "<cmd>!g++ -o %< % && ./%<<cr>",
+    desc = "Run current file",
   },
   {
-    '<leader>rb',
-    '<CMD>!./build build<CR>',
-    desc = 'Build project',
+    "<leader>cc",
+    "<cmd>!g++ -Wall -Wextra -std=c++17 % -o %:r<cr>",
+    desc = "Compile file",
   },
   {
-    '<leader>rr',
-    '<CMD>!./build run<CR>',
-    desc = 'Run project',
+    "<leader>ch",
+    "<CMD>compiler harv<CR>",
+    desc = "Compiler! harv",
   },
   {
-    '<leader>rt',
-    '<CMD>!./build test<CR>',
-    desc = 'Test project',
+    "<leader>r",
+    group = "Run",
   },
-}
+  {
+    "<leader>rb",
+    "<CMD>!./build build<CR>",
+    desc = "Build project",
+  },
+  {
+    "<leader>rr",
+    "<CMD>!./build run<CR>",
+    desc = "Run project",
+  },
+  {
+    "<leader>rt",
+    "<CMD>!./build test<CR>",
+    desc = "Test project",
+  },
+})

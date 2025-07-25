@@ -1,0 +1,192 @@
+{
+  "HTTP Handler": {
+    "prefix": "handler",
+    "body": [
+      "func ${1:handlerName}(w http.ResponseWriter, r *http.Request) {",
+      "\tswitch r.Method {",
+      "\tcase http.MethodGet:",
+      "\t\t${2:// Handle GET}",
+      "\tcase http.MethodPost:",
+      "\t\t${3:// Handle POST}",
+      "\tdefault:",
+      "\t\thttp.Error(w, \"Method not allowed\", http.StatusMethodNotAllowed)",
+      "\t}",
+      "}"
+    ],
+    "description": "HTTP handler with method switching"
+  },
+  "Error Check": {
+    "prefix": "iferr",
+    "body": ["if err != nil {", "\t${1:return err}", "}"],
+    "description": "Standard error check"
+  },
+  "Error Check with Log": {
+    "prefix": "iferrl",
+    "body": [
+      "if err != nil {",
+      "\tlog.Printf(\"${1:error description}: %v\", err)",
+      "\treturn err",
+      "}"
+    ],
+    "description": "Error check with logging"
+  },
+  "Struct with JSON tags": {
+    "prefix": "struct",
+    "body": [
+      "type ${1:StructName} struct {",
+      "\t${2:Field} ${3:string} `json:\"${4:field}\" db:\"${5:field}\"`",
+      "\t$0",
+      "}"
+    ],
+    "description": "Struct with JSON and DB tags"
+  },
+  "Test Function": {
+    "prefix": "test",
+    "body": [
+      "func Test${1:FunctionName}(t *testing.T) {",
+      "\ttests := []struct {",
+      "\t\tname string",
+      "\t\t${2:input} ${3:type}",
+      "\t\twant ${4:type}",
+      "\t\twantErr bool",
+      "\t}{",
+      "\t\t{",
+      "\t\t\tname: \"${5:test case}\",",
+      "\t\t\t${2:input}: ${6:value},",
+      "\t\t\twant: ${7:expected},",
+      "\t\t\twantErr: false,",
+      "\t\t},",
+      "\t}",
+      "",
+      "\tfor _, tt := range tests {",
+      "\t\tt.Run(tt.name, func(t *testing.T) {",
+      "\t\t\tgot, err := ${8:FunctionToTest}(tt.${2:input})",
+      "\t\t\tif (err != nil) != tt.wantErr {",
+      "\t\t\t\tt.Errorf(\"error = %v, wantErr %v\", err, tt.wantErr)",
+      "\t\t\t\treturn",
+      "\t\t\t}",
+      "\t\t\tif got != tt.want {",
+      "\t\t\t\tt.Errorf(\"got = %v, want %v\", got, tt.want)",
+      "\t\t\t}",
+      "\t\t})",
+      "\t}",
+      "}"
+    ],
+    "description": "Table-driven test function"
+  },
+  "Interface": {
+    "prefix": "interface",
+    "body": [
+      "type ${1:InterfaceName} interface {",
+      "\t${2:Method}(${3:args}) ${4:returnType}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Interface definition"
+  },
+  "Context with timeout": {
+    "prefix": "ctxtimeout",
+    "body": [
+      "ctx, cancel := context.WithTimeout(context.Background(), ${1:5*time.Second})",
+      "defer cancel()",
+      "$0"
+    ],
+    "description": "Context with timeout"
+  },
+  "Goroutine with error handling": {
+    "prefix": "go",
+    "body": [
+      "go func() {",
+      "\tdefer ${1:cleanup()}",
+      "\tif err := ${2:function()}; err != nil {",
+      "\t\tlog.Printf(\"goroutine error: %v\", err)",
+      "\t}",
+      "}()"
+    ],
+    "description": "Goroutine with error handling"
+  },
+  "Main function": {
+    "prefix": "main",
+    "body": [
+      "func main() {",
+      "\tif err := run(); err != nil {",
+      "\t\tlog.Fatal(err)",
+      "\t}",
+      "}",
+      "",
+      "func run() error {",
+      "\t${1:// Implementation}",
+      "\treturn nil",
+      "}"
+    ],
+    "description": "Main function with error handling"
+  },
+  "HTTP Server": {
+    "prefix": "httpserver",
+    "body": [
+      "func main() {",
+      "\tmux := http.NewServeMux()",
+      "\tmux.HandleFunc(\"${1:/}\", ${2:handler})",
+      "",
+      "\tserver := &http.Server{",
+      "\t\tAddr:    \":${3:8080}\",",
+      "\t\tHandler: mux,",
+      "\t\tReadTimeout:  15 * time.Second,",
+      "\t\tWriteTimeout: 15 * time.Second,",
+      "\t\tIdleTimeout:  60 * time.Second,",
+      "\t}",
+      "",
+      "\tlog.Printf(\"Server starting on %s\", server.Addr)",
+      "\tif err := server.ListenAndServe(); err != nil {",
+      "\t\tlog.Fatal(err)",
+      "\t}",
+      "}"
+    ],
+    "description": "HTTP server setup"
+  },
+  "JSON Response": {
+    "prefix": "jsonresp",
+    "body": [
+      "w.Header().Set(\"Content-Type\", \"application/json\")",
+      "w.WriteHeader(${1:http.StatusOK})",
+      "if err := json.NewEncoder(w).Encode(${2:data}); err != nil {",
+      "\thttp.Error(w, \"Internal server error\", http.StatusInternalServerError)",
+      "\treturn",
+      "}"
+    ],
+    "description": "JSON response with error handling"
+  },
+  "Database Connection": {
+    "prefix": "dbconn",
+    "body": [
+      "db, err := sql.Open(\"${1:postgres}\", \"${2:connection_string}\")",
+      "if err != nil {",
+      "\treturn nil, fmt.Errorf(\"failed to open database: %w\", err)",
+      "}",
+      "",
+      "if err := db.Ping(); err != nil {",
+      "\treturn nil, fmt.Errorf(\"failed to ping database: %w\", err)",
+      "}",
+      "",
+      "${3:// Set connection pool settings}",
+      "db.SetMaxOpenConns(${4:25})",
+      "db.SetMaxIdleConns(${5:5})",
+      "db.SetConnMaxLifetime(5 * time.Minute)"
+    ],
+    "description": "Database connection with proper configuration"
+  },
+  "Middleware": {
+    "prefix": "middleware",
+    "body": [
+      "func ${1:middlewareName}(next http.Handler) http.Handler {",
+      "\treturn http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {",
+      "\t\t${2:// Pre-processing}",
+      "\t\tnext.ServeHTTP(w, r)",
+      "\t\t${3:// Post-processing}",
+      "\t})",
+      "}"
+    ],
+    "description": "HTTP middleware"
+  }
+}
+
