@@ -55,54 +55,6 @@ return {
         end,
       })
 
-      local signs = { ERROR = "●", WARN = "●", INFO = "●", HINT = "●" }
-
-      require("mini.statusline").setup({
-        content = {
-          active = function()
-            local MiniStatusline = require("mini.statusline")
-            local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
-            local git = MiniStatusline.section_git({ trunc_width = 40 })
-            local diagnostics = MiniStatusline.section_diagnostics({
-              trunc_width = 75,
-              signs = signs,
-            })
-            local filename = MiniStatusline.section_filename({ trunc_width = 140 })
-
-            local check_macro_recording = function()
-              if vim.fn.reg_recording() ~= "" then
-                return " REC @" .. vim.fn.reg_recording()
-              else
-                return ""
-              end
-            end
-            local macro = check_macro_recording()
-
-            return MiniStatusline.combine_groups({
-              { hl = mode_hl, strings = { mode } },
-              { hl = "MiniStatuslineDevinfo", strings = { diagnostics } },
-              { hl = "MiniStatuslineFilename", strings = { macro } },
-              "%<",
-              { hl = "MiniStatuslineFilename", strings = { filename } },
-              "%=",
-              { hl = "MiniStatuslineDevinfo", strings = { git } },
-            })
-          end,
-          inactive = function()
-            local MiniStatusline = require("mini.statusline")
-            return MiniStatusline.combine_groups({
-              {
-                hl = "MiniStatuslineFilename",
-                strings = { MiniStatusline.section_filename({ trunc_width = 140 }) },
-              },
-              "%=",
-            })
-          end,
-        },
-
-        use_icons = true,
-        set_vim_settings = false,
-      })
 
       require("mini.move").setup({})
     end,

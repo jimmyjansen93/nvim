@@ -131,10 +131,25 @@ return {
         vim.keymap.set(
           "n",
           "<leader>co",
-          "<cmd>TypescriptOrganizeImports<cr>",
+          function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.organizeImports" } },
+              apply = true,
+            })
+          end,
           { buffer = bufnr, desc = "Organize imports" }
         )
-        vim.keymap.set("n", "<leader>cu", "<cmd>TypescriptRemoveUnused<cr>", { buffer = bufnr, desc = "Remove unused" })
+        vim.keymap.set(
+          "n", 
+          "<leader>cu", 
+          function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.removeUnused" } },
+              apply = true,
+            })
+          end, 
+          { buffer = bufnr, desc = "Remove unused" }
+        )
       end,
       root_dir = custom_root_dir({ "package.json", "tsconfig.json", "jsconfig.json", ".git" }),
       settings = {
@@ -143,15 +158,81 @@ return {
             includePackageJsonAutoImports = "off",
           },
         },
+        javascript = {
+          preferences = {
+            includePackageJsonAutoImports = "off",
+          },
+        },
       },
     })
 
-    lspconfig.eslint.setup({ on_attach = on_attach })
+    lspconfig.eslint.setup({ 
+      on_attach = on_attach,
+      root_dir = custom_root_dir({ "package.json", ".eslintrc.js", ".eslintrc.json", ".git" }),
+    })
+    
     lspconfig.bashls.setup({ on_attach = on_attach })
     lspconfig.jsonls.setup({ on_attach = on_attach })
     lspconfig.yamlls.setup({ on_attach = on_attach })
-    lspconfig.html.setup({ on_attach = on_attach })
-    lspconfig.cssls.setup({ on_attach = on_attach })
+    
+    lspconfig.html.setup({ 
+      on_attach = on_attach,
+      filetypes = { "html", "htmldjango" },
+    })
+    
+    lspconfig.cssls.setup({ 
+      on_attach = on_attach,
+      filetypes = { "css", "scss", "less" },
+    })
+    
+    -- Vue support (Volar)
+    if vim.fn.executable("vue-language-server") == 1 then
+      lspconfig.volar.setup({
+        on_attach = on_attach,
+        cmd = { "vue-language-server", "--stdio" },
+        filetypes = { "vue", "typescript", "javascript" },
+        root_dir = custom_root_dir({ "package.json", "vue.config.js", "vite.config.js", "nuxt.config.js", ".git" }),
+        init_options = {
+          vue = {
+            hybridMode = false,
+          },
+        },
+      })
+    end
+    
+    -- Angular support (optional)
+    if vim.fn.executable("ngserver") == 1 then
+      lspconfig.angularls.setup({
+        on_attach = on_attach,
+        root_dir = custom_root_dir({ "angular.json", "package.json", ".git" }),
+      })
+    end
+    
+    -- Emmet support (optional)
+    if vim.fn.executable("emmet-ls") == 1 then
+      lspconfig.emmet_ls.setup({
+        on_attach = on_attach,
+        filetypes = { 
+          "html", "htmldjango", "css", "scss", "sass", "less", 
+          "javascript", "javascriptreact", "typescript", "typescriptreact", 
+          "vue", "svelte" 
+        },
+      })
+    end
+    
+    -- Tailwind CSS support (optional)
+    if vim.fn.executable("tailwindcss-language-server") == 1 then
+      lspconfig.tailwindcss.setup({
+        on_attach = on_attach,
+        filetypes = { 
+          "html", "css", "scss", "sass", "less",
+          "javascript", "javascriptreact", "typescript", "typescriptreact",
+          "vue", "svelte"
+        },
+        root_dir = custom_root_dir({ "tailwind.config.js", "tailwind.config.ts", "package.json", ".git" }),
+      })
+    end
+    
     lspconfig.marksman.setup({ on_attach = on_attach })
   end,
 }

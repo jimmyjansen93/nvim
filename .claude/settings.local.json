@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vue-language-server --version)"
+    ],
+    "deny": []
+  }
+}
