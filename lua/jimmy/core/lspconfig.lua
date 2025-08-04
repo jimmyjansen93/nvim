@@ -279,16 +279,26 @@ return {
       vim.notify("marksman not found", vim.log.levels.WARN)
     end
     
-    if vim.fn.executable("ols") == 1 then
-      lspconfig.ols.setup({ on_attach = on_attach })
-    else
-      vim.notify("ols not found", vim.log.levels.WARN)
-    end
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "odin",
+      callback = function()
+        if vim.fn.executable("ols") == 1 then
+          lspconfig.ols.setup({ on_attach = on_attach })
+        else
+          vim.notify("ols not found", vim.log.levels.WARN)
+        end
+      end,
+    })
     
-    if vim.fn.executable("ocamllsp") == 1 then
-      lspconfig.ocamllsp.setup({ on_attach = on_attach })
-    else
-      vim.notify("ocamllsp not found", vim.log.levels.WARN)
-    end
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "ocaml",
+      callback = function()
+        if vim.fn.executable("ocamllsp") == 1 then
+          lspconfig.ocamllsp.setup({ on_attach = on_attach })
+        else
+          vim.notify("ocamllsp not found", vim.log.levels.WARN)
+        end
+      end,
+    })
   end,
 }

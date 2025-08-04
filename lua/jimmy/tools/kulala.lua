@@ -1,16 +1,6 @@
 return {
   "mistweaverco/kulala.nvim",
   ft = "http",
-  keys = {
-    { "<leader>kr", "<cmd>lua require('kulala').run()<cr>", desc = "Run request" },
-    { "<leader>kt", "<cmd>lua require('kulala').toggle_view()<cr>", desc = "Toggle view" },
-    { "<leader>kp", "<cmd>lua require('kulala').jump_prev()<cr>", desc = "Previous request" },
-    { "<leader>kn", "<cmd>lua require('kulala').jump_next()<cr>", desc = "Next request" },
-    { "<leader>kc", "<cmd>lua require('kulala').copy()<cr>", desc = "Copy as curl" },
-    { "<leader>ki", "<cmd>lua require('kulala').inspect()<cr>", desc = "Inspect request" },
-    { "<leader>ks", "<cmd>lua require('kulala').show_stats()<cr>", desc = "Show stats" },
-    { "<leader>kg", "<cmd>lua require('kulala').scratchpad()<cr>", desc = "Open scratchpad" },
-  },
   opts = {
     default_view = "body",
     default_env = "dev",
@@ -71,6 +61,15 @@ return {
         vim.keymap.set("n", "]r", function()
           require("kulala").jump_next()
         end, { buffer = 0, desc = "Next request" })
+
+        vim.keymap.set("n", "<leader>kr", function() require('kulala').run() end, { buffer = 0, desc = "Run request" })
+        vim.keymap.set("n", "<leader>kt", function() require('kulala').toggle_view() end, { buffer = 0, desc = "Toggle view" })
+        vim.keymap.set("n", "<leader>kp", function() require('kulala').jump_prev() end, { buffer = 0, desc = "Previous request" })
+        vim.keymap.set("n", "<leader>kn", function() require('kulala').jump_next() end, { buffer = 0, desc = "Next request" })
+        vim.keymap.set("n", "<leader>kc", function() require('kulala').copy() end, { buffer = 0, desc = "Copy as curl" })
+        vim.keymap.set("n", "<leader>ki", function() require('kulala').inspect() end, { buffer = 0, desc = "Inspect request" })
+        vim.keymap.set("n", "<leader>ks", function() require('kulala').show_stats() end, { buffer = 0, desc = "Show stats" })
+        vim.keymap.set("n", "<leader>kg", function() require('kulala').scratchpad() end, { buffer = 0, desc = "Open scratchpad" })
       end,
     })
 

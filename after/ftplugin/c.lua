@@ -23,19 +23,4 @@ vim.keymap.set(
   { buffer = true, desc = "Compile file" }
 )
 
-if vim.fn.expand("%:e") == "h" then
-  vim.keymap.set("n", "<leader>cg", function()
-    local guard = string.upper(vim.fn.expand("%:t:r")) .. "_H"
-    local lines = {
-      "#ifndef " .. guard,
-      "#define " .. guard,
-      "",
-      "",
-      "",
-      "#endif /* " .. guard .. " */",
-    }
-    vim.api.nvim_buf_set_lines(0, 0, 0, false, lines)
-    vim.api.nvim_win_set_cursor(0, { 4, 0 })
-  end, { buffer = true, desc = "Insert include guard" })
-end
 

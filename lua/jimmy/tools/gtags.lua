@@ -2,7 +2,7 @@ return {
   "ludovicchabant/vim-gutentags",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    vim.g.gutentags_modules = { "gtags_cscope" }
+    vim.g.gutentags_modules = { "ctags" }
 
     vim.g.gutentags_file_list_command = {
       markers = {
@@ -159,7 +159,11 @@ return {
         if is_large then
           print("Regenerating gtags database...")
         end
-        vim.fn.system("cd " .. cwd .. " && gtags")
+        local cache_dir = vim.fn.stdpath("cache") .. "/gtags"
+        local project_name = vim.fn.fnamemodify(cwd, ":t")
+        local gtags_dir = cache_dir .. "/" .. project_name
+        vim.fn.system("mkdir -p " .. vim.fn.shellescape(gtags_dir))
+        vim.fn.system("cd " .. vim.fn.shellescape(cwd) .. " && GTAGSROOT=" .. vim.fn.shellescape(cwd) .. " GTAGSDBPATH=" .. vim.fn.shellescape(gtags_dir) .. " gtags " .. vim.fn.shellescape(gtags_dir))
         if is_large then
           print("Gtags updated")
         end
@@ -173,8 +177,14 @@ return {
 
     local function generate_gtags()
       local cwd = vim.fn.getcwd()
-      vim.fn.system("cd " .. cwd .. " && gtags")
-      print("Generated new gtags database")
+      local cache_dir = vim.fn.stdpath("cache") .. "/gtags"
+      vim.fn.system("mkdir -p " .. vim.fn.shellescape(cache_dir))
+      
+      local project_name = vim.fn.fnamemodify(cwd, ":t")
+      local gtags_dir = cache_dir .. "/" .. project_name
+      vim.fn.system("mkdir -p " .. vim.fn.shellescape(gtags_dir))
+      vim.fn.system("cd " .. vim.fn.shellescape(cwd) .. " && GTAGSROOT=" .. vim.fn.shellescape(cwd) .. " GTAGSDBPATH=" .. vim.fn.shellescape(gtags_dir) .. " gtags " .. vim.fn.shellescape(gtags_dir))
+      print("Generated new gtags database in cache")
     end
 
     local function gtags_find_definition()
@@ -201,7 +211,7 @@ return {
 
     vim.keymap.set("n", "gD", gtags_find_definition, { desc = "Gtags: Find definition" })
     vim.keymap.set("n", "gR", gtags_find_references, { desc = "Gtags: Find references" })
-    vim.keymap.set("n", "<leader>cgg", generate_gtags, { desc = "Generate gtags" })
+    vim.keymap.set("n", "<leader>cg", generate_gtags, { desc = "Generate gtags" })
 
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = "*",
