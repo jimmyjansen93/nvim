@@ -9,11 +9,3 @@ vim.keymap.set("n", "<leader>cr", "<cmd>luafile %<cr>", { buffer = true, desc = 
 
 vim.keymap.set("n", "<leader>cs", "<cmd>source %<cr>", { buffer = true, desc = "Source file" })
 
-require("which-key").add({
-  {
-    "<leader>z",
-    '<CMD>source %<CR><CMD>lua print "Sourced"<CR>',
-    desc = "Source lua",
-    icon = sourceIcon,
-  },
-})

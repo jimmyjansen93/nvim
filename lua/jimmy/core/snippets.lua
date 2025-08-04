@@ -30,7 +30,7 @@ return {
       end, { desc = "Reload snippets" })
 
       vim.api.nvim_create_autocmd("BufWritePost", {
-        pattern = vim.fn.stdpath("config") .. "/snippets/*.json",
+        pattern = snippet_path .. "/*.json",
         callback = function()
           require("luasnip.loaders.from_vscode").lazy_load({ paths = { snippet_path } })
           vim.notify("Snippets auto-reloaded", vim.log.levels.INFO)

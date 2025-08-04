@@ -20,7 +20,7 @@ return {
   config = function(_, opts)
     require("toggleterm").setup(opts)
 
-    function _G.set_terminal_keymaps()
+    local function set_terminal_keymaps()
       local term_opts = { buffer = 0 }
       vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], term_opts)
       vim.keymap.set("t", "jk", [[<C-\><C-n>]], term_opts)

@@ -5,16 +5,35 @@ return {
     config = function()
       local lint = require("lint")
 
-      lint.linters_by_ft = {
-        go = { "golangcilint" },
-        c = { "cppcheck" },
-        cpp = { "cppcheck" },
-        javascript = { "eslint" },
-        typescript = { "eslint" },
-        javascriptreact = { "eslint" },
-        typescriptreact = { "eslint" },
-        markdown = { "markdownlint" },
-      }
+      lint.linters_by_ft = {}
+      
+      if vim.fn.executable("golangci-lint") == 1 then
+        lint.linters_by_ft.go = { "golangcilint" }
+      end
+      
+      if vim.fn.executable("cppcheck") == 1 then
+        lint.linters_by_ft.c = { "cppcheck" }
+        lint.linters_by_ft.cpp = { "cppcheck" }
+      end
+      
+      if vim.fn.executable("eslint") == 1 then
+        lint.linters_by_ft.javascript = { "eslint" }
+        lint.linters_by_ft.typescript = { "eslint" }
+        lint.linters_by_ft.javascriptreact = { "eslint" }
+        lint.linters_by_ft.typescriptreact = { "eslint" }
+      end
+      
+      if vim.fn.executable("markdownlint") == 1 then
+        lint.linters_by_ft.markdown = { "markdownlint" }
+      end
+      
+      if vim.fn.executable("odin") == 1 then
+        lint.linters_by_ft.odin = { "odin_check" }
+      end
+      
+      if vim.fn.executable("dune") == 1 then
+        lint.linters_by_ft.ocaml = { "dune_check" }
+      end
 
       lint.linters.golangcilint = {
         cmd = "golangci-lint",
@@ -55,6 +74,24 @@ return {
       }
 
       lint.linters.eslint = require("lint.linters.eslint")
+
+      lint.linters.odin_check = {
+        cmd = "odin",
+        stdin = false,
+        args = { "check", "." },
+        stream = "stderr",
+        ignore_exitcode = true,
+        parser = require("lint.parser").from_errorformat("%f:%l:%c: %t%*[^:]: %m"),
+      }
+
+      lint.linters.dune_check = {
+        cmd = "dune",
+        stdin = false,
+        args = { "build", "@check" },
+        stream = "stderr",
+        ignore_exitcode = true,
+        parser = require("lint.parser").from_errorformat("%f:%l:%c: %t%*[^:]: %m"),
+      }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
@@ -102,8 +139,8 @@ return {
         })
       end
 
-      vim.keymap.set("n", "<leader>cf", lint_current_file, { desc = "Lint current file" })
-      vim.keymap.set("n", "<leader>cF", lint_project, { desc = "Lint project" })
+      vim.keymap.set("n", "<leader>cl", lint_current_file, { desc = "Lint current file" })
+      vim.keymap.set("n", "<leader>cL", lint_project, { desc = "Lint project" })
     end,
   },
 }

@@ -21,19 +21,3 @@ vim.keymap.set("n", "<leader>ct", "<cmd>!nimble test<cr>", { buffer = true, desc
 
 vim.keymap.set("n", "<leader>cc", "<cmd>!nim c %<cr>", { buffer = true, desc = "Compile file" })
 
-require("which-key").add({
-  {
-    "<leader>r",
-    group = "Run",
-  },
-  {
-    "<leader>rb",
-    "<CMD>!nimble build<CR>",
-    desc = "Build project",
-  },
-  {
-    "<leader>rr",
-    "<CMD>!nimble run<CR>",
-    desc = "Run project",
-  },
-})

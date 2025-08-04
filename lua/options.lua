@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 vim.opt.showmode = false
 
@@ -15,8 +15,6 @@ vim.opt.writebackup = true
 vim.opt.cmdheight = 1
 
 vim.opt.breakindent = true
-
-vim.opt.undofile = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -33,7 +31,7 @@ vim.opt.splitbelow = true
 
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+vim.bo.indentexpr = "v:lua.vim.treesitter.indentexpr()"
 vim.opt.foldlevelstart = 99
 
 vim.opt.list = true
@@ -51,15 +49,12 @@ vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 
--- Disable virtual text by default
 vim.diagnostic.config({ virtual_text = true })
 
 vim.opt.hlsearch = true
 
--- Don't automatically jump to first error
-vim.opt.switchbuf = "useopen,usetab" -- Remove "newtab" if it's there
+vim.opt.switchbuf = "useopen,usetab"
 
--- Disable matching bracket display in statusline
 vim.opt.showmatch = false
 vim.opt.matchtime = 0
 vim.opt.showcmd = false

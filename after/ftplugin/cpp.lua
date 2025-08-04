@@ -7,81 +7,13 @@ vim.opt_local.tabstop = 2
 
 vim.opt_local.errorformat = "%f:%l:%c: %t%*[^:]: %m,%f:%l: %t%*[^:]: %m,%f:(%l\\,%c): %t%*[^:]: %m"
 
-local timer = vim.uv.new_timer()
-if timer == nil then
-  return
-end
 
-timer:start(
-  60000,
-  60000,
-  vim.schedule_wrap(function()
-    vim.loop.spawn(
-      "ctags",
-      ---@diagnostic disable-next-line: missing-fields
-      {
-        args = { "-R", "." },
-        cwd = vim.fn.getcwd(),
-        detached = true,
-      },
-      function() end
-    )
-  end)
-)
-
-require("which-key").add({
-  {
-    "<leader>cc",
-    "<CMD>copen<CR>",
-    desc = "Open quickfix",
-  },
-  {
-    "<leader>cn",
-    "<CMD>cnext<CR>",
-    desc = "Next quickfix",
-  },
-  {
-    "<leader>cp",
-    "<CMD>cprevious<CR>",
-    desc = "Prev quickfix",
-  },
-  {
-    "<leader>cl",
-    "<CMD>clist<CR>",
-    desc = "List quickfix",
-  },
-  {
-    "<leader>cr",
-    "<cmd>!g++ -o %< % && ./%<<cr>",
-    desc = "Run current file",
-  },
-  {
-    "<leader>cc",
-    "<cmd>!g++ -Wall -Wextra -std=c++17 % -o %:r<cr>",
-    desc = "Compile file",
-  },
-  {
-    "<leader>ch",
-    "<CMD>compiler harv<CR>",
-    desc = "Compiler! harv",
-  },
-  {
-    "<leader>r",
-    group = "Run",
-  },
-  {
-    "<leader>rb",
-    "<CMD>!./build build<CR>",
-    desc = "Build project",
-  },
-  {
-    "<leader>rr",
-    "<CMD>!./build run<CR>",
-    desc = "Run project",
-  },
-  {
-    "<leader>rt",
-    "<CMD>!./build test<CR>",
-    desc = "Test project",
-  },
-})
+vim.keymap.set("n", "<leader>cc", "<CMD>copen<CR>", { buffer = true, desc = "Open quickfix" })
+vim.keymap.set("n", "<leader>cn", "<CMD>cnext<CR>", { buffer = true, desc = "Next quickfix" })
+vim.keymap.set("n", "<leader>cp", "<CMD>cprevious<CR>", { buffer = true, desc = "Prev quickfix" })
+vim.keymap.set("n", "<leader>cl", "<CMD>clist<CR>", { buffer = true, desc = "List quickfix" })
+vim.keymap.set("n", "<leader>cr", "<cmd>!g++ -o %< % && ./%<<cr>", { buffer = true, desc = "Run current file" })
+vim.keymap.set("n", "<leader>ch", "<CMD>compiler harv<CR>", { buffer = true, desc = "Compiler! harv" })
+vim.keymap.set("n", "<leader>rb", "<CMD>!./build build<CR>", { buffer = true, desc = "Build project" })
+vim.keymap.set("n", "<leader>rr", "<CMD>!./build run<CR>", { buffer = true, desc = "Run project" })
+vim.keymap.set("n", "<leader>rt", "<CMD>!./build test<CR>", { buffer = true, desc = "Test project" })

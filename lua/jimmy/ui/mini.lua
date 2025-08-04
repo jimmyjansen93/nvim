@@ -39,7 +39,6 @@ return {
         },
       })
 
-      require("mini.surround").setup({ enable = false })
 
       vim.api.nvim_create_autocmd("RecordingEnter", {
         pattern = "*",

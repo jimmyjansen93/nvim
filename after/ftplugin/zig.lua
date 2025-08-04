@@ -1,3 +1,73 @@
+local overseer = require("overseer")
+
+overseer.register_template({
+  name = "zig run project",
+  builder = function()
+    return {
+      cmd = { "zig", "build", "run" },
+      components = { { "on_output_quickfix", open = true }, "default" },
+    }
+  end,
+  condition = {
+    filetype = "zig",
+  },
+})
+
+overseer.register_template({
+  name = "zig test",
+  builder = function()
+    return {
+      cmd = { "zig", "test", vim.fn.expand("%") },
+      components = { { "on_output_quickfix", open_on_exit = "failure" }, "default" },
+    }
+  end,
+  condition = {
+    filetype = "zig",
+  },
+})
+
+overseer.register_template({
+  name = "zig build",
+  builder = function()
+    return {
+      cmd = { "zig", "build" },
+      components = { { "on_output_quickfix", open_on_exit = "failure" }, "default" },
+    }
+  end,
+  condition = {
+    filetype = "zig",
+  },
+})
+
+overseer.register_template({
+  name = "zig lint",
+  builder = function()
+    return {
+      cmd = { "zig", "fmt", "--check", "." },
+      components = { { "on_output_quickfix", open_on_exit = "failure" }, "default" },
+    }
+  end,
+  condition = {
+    filetype = "zig",
+  },
+})
+
+vim.keymap.set("n", "<leader>rb", function()
+  overseer.run_template({ name = "zig build" })
+end, { buffer = true, desc = "Build Zig project" })
+
+vim.keymap.set("n", "<leader>rt", function()
+  overseer.run_template({ name = "zig test" })
+end, { buffer = true, desc = "Run Zig tests" })
+
+vim.keymap.set("n", "<leader>rr", function()
+  overseer.run_template({ name = "zig run project" })
+end, { buffer = true, desc = "Run Zig project" })
+
+vim.keymap.set("n", "<leader>rl", function()
+  overseer.run_template({ name = "zig lint" })
+end, { buffer = true, desc = "Lint Zig code" })
+
 vim.opt_local.shiftwidth = 4
 vim.opt_local.softtabstop = 4
 vim.opt_local.expandtab = true
@@ -5,77 +75,3 @@ vim.opt_local.tabstop = 4
 
 vim.opt_local.makeprg = "zig build"
 vim.opt_local.errorformat = "%f:%l:%c: error: %m,%f:%l:%c: note: %m"
-
-vim.cmd("compiler zig")
-
-require("which-key").add({
-  {
-    "<leader>cr",
-    "<cmd>!zig run %<cr>",
-    desc = "Run current file",
-  },
-  {
-    "<leader>ct",
-    "<cmd>!zig test %<cr>",
-    desc = "Run tests",
-  },
-  {
-    "<leader>cc",
-    "<cmd>!zig build-exe %<cr>",
-    desc = "Compile file",
-  },
-  {
-    "<leader>cn",
-    "<CMD>cnext<CR>",
-    desc = "Next quickfix",
-  },
-  {
-    "<leader>cp",
-    "<CMD>cprevious<CR>",
-    desc = "Prev quickfix",
-  },
-  {
-    "<leader>cl",
-    "<CMD>clist<CR>",
-    desc = "List quickfix",
-  },
-  {
-    "<leader>r",
-    group = "Run",
-  },
-  {
-    "<leader>rb",
-    "<CMD>ZigBuild<CR>",
-    desc = "Build project",
-  },
-  {
-    "<leader>rr",
-    "<CMD>ZigRun<CR>",
-    desc = "Run project",
-  },
-  {
-    "<leader>rt",
-    "<CMD>ZigTest<CR>",
-    desc = "Test project",
-  },
-  {
-    "<leader>rT",
-    "<CMD>ZigTestFuzz<CR>",
-    desc = "Fuzz Test project",
-  },
-  {
-    "<leader>rf",
-    "<CMD>ZigRunFile<CR>",
-    desc = "Run current file",
-  },
-  {
-    "<leader>rF",
-    "<CMD>ZigTestFile<CR>",
-    desc = "Test current file",
-  },
-  {
-    "<leader>re",
-    "<CMD>ZigBuildExe<CR>",
-    desc = "Build current file as exe",
-  },
-})

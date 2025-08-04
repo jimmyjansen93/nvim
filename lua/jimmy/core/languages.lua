@@ -8,7 +8,12 @@ return {
     },
     ft = { "go", "gomod" },
     config = function()
-      require("go").setup({})
+      require("go").setup({
+        goimports = "gopls",
+        gofmt = "gofumpt",
+        trouble = true,
+        luasnip = true,
+      })
     end,
   },
   {
@@ -22,6 +27,14 @@ return {
     config = function()
       vim.g.zig_fmt_autosave = 0
     end,
+  },
+  {
+    "DanilaMihailov/beacon.nvim",
+    ft = { "odin" },
+  },
+  {
+    "ocaml/vim-ocaml",
+    ft = { "ocaml" },
   },
   {
     "posva/vim-vue",

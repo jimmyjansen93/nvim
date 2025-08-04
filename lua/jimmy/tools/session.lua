@@ -138,7 +138,7 @@ return {
         vim.notify("Added current directory as project: " .. current_dir, vim.log.levels.INFO)
       end
 
-      vim.keymap.set("n", "<leader>pp", switch_project, { desc = "Switch project" })
+      vim.keymap.set("n", "<leader>pP", switch_project, { desc = "Switch project" })
       vim.keymap.set("n", "<leader>pa", add_project, { desc = "Add current dir as project" })
       vim.keymap.set("n", "<leader>pr", function()
         vim.cmd("cd " .. require("project_nvim.project").get_project_root())

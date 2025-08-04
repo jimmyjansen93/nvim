@@ -23,7 +23,6 @@ require("lazy").setup({
         sort = { "local", "case", "group" },
       })
 
-      -- :NvimWebDeviconsHiTest
       local webicon = require("nvim-web-devicons")
       local runIcon = webicon.get_icon("test.jsx", "jsx")
       local troubleIcon = webicon.get_icon("log", "log")
@@ -67,4 +66,3 @@ require("lazy").setup({
   { import = "jimmy.ui" },
 }, { checker = { notify = false }, change_detection = { notify = false } })
 
--- vim: ts=2 sts=2 sw=2 et

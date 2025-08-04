@@ -42,6 +42,8 @@ return {
           "go",
           "vue",
           "svelte",
+          "odin",
+          "ocaml",
         },
         auto_install = true,
         highlight = { enable = true },

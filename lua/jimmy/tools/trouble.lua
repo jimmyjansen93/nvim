@@ -96,20 +96,6 @@ return {
         desc = "Quickfix List",
       },
       {
-        "]d",
-        function()
-          require("trouble").next({ skip_groups = true, jump = true })
-        end,
-        desc = "Next problem",
-      },
-      {
-        "[d",
-        function()
-          require("trouble").prev({ skip_groups = true, jump = true })
-        end,
-        desc = "Previous problem",
-      },
-      {
         "[q",
         function()
           require("trouble").prev({ skip_groups = true, jump = true })

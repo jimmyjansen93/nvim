@@ -245,6 +245,69 @@ return {
     end,
   },
   {
+    "sainnhe/gruvbox-material",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.g.gruvbox_material_style = "material"
+      vim.g.gruvbox_material_background = "medium"
+    end,
+  },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "shaunsingh/nord.nvim",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "marko-cerovac/material.nvim",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.g.material_style = "darker"
+    end,
+  },
+  {
+    "sainnhe/everforest",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.g.everforest_style = "hard"
+      vim.g.everforest_background = "medium"
+    end,
+  },
+  {
+    "drewtempelmeyer/palenight.vim",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "ayu-theme/ayu-vim",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.g.ayucolor = "mirage"
+    end,
+  },
+  {
+    "srcery-colors/srcery-vim",
+    enabled = false,
+    lazy = true,
+    priority = 1000,
+  },
+  {
     dir = vim.fn.stdpath("config") .. "/lua/jimmy/ui",
     name = "theme-switcher",
     lazy = false,

@@ -11,7 +11,7 @@ return {
         "mxsdev/nvim-dap-vscode-js",
         dependencies = {
           "microsoft/vscode-js-debug",
-          opt = {},
+          opts = {},
           run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
         },
       },

@@ -81,15 +81,36 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
   end,
 })
 
-vim.api.nvim_create_autocmd("BufRead", {
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.zig,*.zon",
   callback = function()
     vim.cmd([[setfiletype zig]])
   end,
 })
-vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern = "*.zig,*.zon",
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.odin",
   callback = function()
-    vim.cmd([[setfiletype zig]])
+    vim.cmd([[setfiletype odin]])
   end,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.ml,*.mli",
+  callback = function()
+    vim.cmd([[setfiletype ocaml]])
+  end,
+})
+
+vim.filetype.add({
+  extension = {
+    odin = "odin",
+  },
+})
+
+vim.filetype.add({
+  extension = {
+    ml = "ocaml",
+    mli = "ocaml",
+  },
 })
