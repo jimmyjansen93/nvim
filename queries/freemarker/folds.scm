@@ -1,7 +1,5 @@
-;; Foldable block directives
 (if) @fold
 (elseif) @fold
-;;(else) @fold
 (switch) @fold
 (case) @fold
 (default) @fold

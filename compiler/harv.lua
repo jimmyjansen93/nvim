@@ -6,7 +6,6 @@ vim.b.current_compiler = "harv"
 vim.bo.makeprg = "./build run"
 
 local errorformat_patterns = {
-  -- clang
   "%E%f:%l:%c: error: %m",
   "%W%f:%l:%c: warning: %m",
   "%I%f:%l:%c: note: %m",
@@ -23,7 +22,6 @@ local errorformat_patterns = {
   "%IIn file included from %f:%l:",
   "%f:%l:%c: %m",
   "%f:%l: %m",
-  -- gcc
   '%*[^"]"%f"%*\\D%l:%c: %m',
   '%*[^"]"%f"%*\\D%l: %m',
   '\\"%f\\"%*\\D%l:%c: %m',
@@ -35,7 +33,6 @@ local errorformat_patterns = {
   "%DMaking %*\\a in %f",
   "%DEntering directory %*[`']%f'",
   "%XLeaving directory %*[`']%f'",
-  -- Ignore the rest
   "%-G%.%#",
 }
 

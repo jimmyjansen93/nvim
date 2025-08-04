@@ -3,7 +3,7 @@
     "prefix": "fn",
     "body": [
       "function ${1:functionName}(${2:parameters}) {",
-      "\t${3:// Implementation}",
+      "\t$3",
       "\treturn ${4:value};",
       "}"
     ],
@@ -13,7 +13,7 @@
     "prefix": "af",
     "body": [
       "const ${1:functionName} = (${2:parameters}) => {",
-      "\t${3:// Implementation}",
+      "\t$3",
       "\treturn ${4:value};",
       "};"
     ],
@@ -24,7 +24,7 @@
     "body": [
       "async function ${1:functionName}(${2:parameters}) {",
       "\ttry {",
-      "\t\t${3:// Implementation}",
+      "\t\t$3",
       "\t\treturn ${4:value};",
       "\t} catch (error) {",
       "\t\tconsole.error('Error in ${1:functionName}:', error);",
@@ -38,7 +38,7 @@
     "prefix": "promise",
     "body": [
       "return new Promise((resolve, reject) => {",
-      "\t${1:// Async operation}",
+      "\t$1",
       "\tif (${2:success_condition}) {",
       "\t\tresolve(${3:result});",
       "\t} else {",
@@ -52,12 +52,12 @@
     "prefix": "try",
     "body": [
       "try {",
-      "\t${1:// Code that may throw}",
+      "\t${1:}",
       "} catch (error) {",
       "\tconsole.error('${2:Error description}:', error);",
-      "\t${3:// Error handling}",
+      "\t$3",
       "} finally {",
-      "\t${4:// Cleanup}",
+      "\t${4:}",
       "}"
     ],
     "description": "Try-catch-finally block"
@@ -67,11 +67,11 @@
     "body": [
       "class ${1:ClassName} {",
       "\tconstructor(${2:parameters}) {",
-      "\t\t${3:// Initialize properties}",
+      "\t\t${3:}",
       "\t}",
       "",
       "\t${4:methodName}() {",
-      "\t\t${5:// Method implementation}",
+      "\t\t${5:}",
       "\t}",
       "}"
     ],
@@ -81,7 +81,7 @@
     "prefix": "export",
     "body": [
       "export const ${1:functionName} = (${2:parameters}) => {",
-      "\t${3:// Implementation}",
+      "\t$3",
       "\treturn ${4:value};",
       "};"
     ],
@@ -116,7 +116,7 @@
     "prefix": "for",
     "body": [
       "for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {",
-      "\t${3:// Loop body}",
+      "\t$3",
       "}"
     ],
     "description": "For loop"
@@ -125,7 +125,7 @@
     "prefix": "forof",
     "body": [
       "for (const ${1:item} of ${2:iterable}) {",
-      "\t${3:// Loop body}",
+      "\t$3",
       "}"
     ],
     "description": "For...of loop"
@@ -135,7 +135,7 @@
     "body": [
       "for (const ${1:key} in ${2:object}) {",
       "\tif (${2:object}.hasOwnProperty(${1:key})) {",
-      "\t\t${3:// Loop body}",
+      "\t\t$3",
       "\t}",
       "}"
     ],
@@ -145,7 +145,7 @@
     "prefix": "test",
     "body": [
       "test('${1:test description}', () => {",
-      "\t${2:// Test implementation}",
+      "\t$2",
       "\texpect(${3:actual}).toBe(${4:expected});",
       "});"
     ],
@@ -156,11 +156,11 @@
     "body": [
       "describe('${1:test suite}', () => {",
       "\tbeforeEach(() => {",
-      "\t\t${2:// Setup}",
+      "\t\t$2",
       "\t});",
       "",
       "\ttest('${3:test description}', () => {",
-      "\t\t${4:// Test implementation}",
+      "\t\t$4",
       "\t});",
       "});"
     ],
@@ -175,9 +175,9 @@
       "\t\t\tmethod: '${3:GET}',",
       "\t\t\theaders: {",
       "\t\t\t\t'Content-Type': 'application/json',",
-      "\t\t\t\t${4:// Additional headers}",
+      "\t\t\t\t${4:}",
       "\t\t\t},",
-      "\t\t\t${5:// body: JSON.stringify(data)}",
+      "\t\t\t${5:body: JSON.stringify(data)}",
       "\t\t});",
       "",
       "\t\tif (!response.ok) {",
@@ -198,7 +198,7 @@
     "prefix": "listen",
     "body": [
       "${1:element}.addEventListener('${2:event}', (${3:e}) => {",
-      "\t${4:// Event handler}",
+      "\t${4:}",
       "});"
     ],
     "description": "Event listener"
@@ -253,7 +253,7 @@
       "const ${1:ComponentName} = ({ ${2:props} }) => {",
       "\treturn (",
       "\t\t<div>",
-      "\t\t\t${3:// Component content}",
+      "\t\t\t${3:}",
       "\t\t</div>",
       "\t);",
       "};",
@@ -273,10 +273,10 @@
     "prefix": "effect",
     "body": [
       "useEffect(() => {",
-      "\t${1:// Effect logic}",
+      "\t${1:}",
       "\t",
       "\treturn () => {",
-      "\t\t${2:// Cleanup}",
+      "\t\t${2:}",
       "\t};",
       "}, [${3:dependencies}]);"
     ],

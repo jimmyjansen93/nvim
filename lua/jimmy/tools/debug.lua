@@ -198,6 +198,40 @@ return {
           stopOnEntry = false,
         },
       }
+
+      dap.configurations.odin = {
+        {
+          name = "Launch Odin (lldb)",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            local files = vim.fn.globpath(vim.fn.getcwd(), "*.bin", false, true)
+            if #files > 0 then
+              return files[1]
+            end
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+
+      dap.configurations.ocaml = {
+        {
+          name = "Launch OCaml (dune exec)",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            local dune_files = vim.fn.globpath(vim.fn.getcwd(), "_build/default/**/*.exe", false, true)
+            if #dune_files > 0 then
+              return dune_files[1]
+            end
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/_build/default/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
     end,
   },
 }

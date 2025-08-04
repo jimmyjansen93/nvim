@@ -5,9 +5,9 @@
       "func ${1:handlerName}(w http.ResponseWriter, r *http.Request) {",
       "\tswitch r.Method {",
       "\tcase http.MethodGet:",
-      "\t\t${2:// Handle GET}",
+      "\t\t$2",
       "\tcase http.MethodPost:",
-      "\t\t${3:// Handle POST}",
+      "\t\t$3",
       "\tdefault:",
       "\t\thttp.Error(w, \"Method not allowed\", http.StatusMethodNotAllowed)",
       "\t}",
@@ -115,7 +115,7 @@
       "}",
       "",
       "func run() error {",
-      "\t${1:// Implementation}",
+      "\t$1",
       "\treturn nil",
       "}"
     ],
@@ -168,7 +168,7 @@
       "\treturn nil, fmt.Errorf(\"failed to ping database: %w\", err)",
       "}",
       "",
-      "${3:// Set connection pool settings}",
+      "$3",
       "db.SetMaxOpenConns(${4:25})",
       "db.SetMaxIdleConns(${5:5})",
       "db.SetConnMaxLifetime(5 * time.Minute)"
@@ -180,9 +180,9 @@
     "body": [
       "func ${1:middlewareName}(next http.Handler) http.Handler {",
       "\treturn http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {",
-      "\t\t${2:// Pre-processing}",
+      "\t\t$2",
       "\t\tnext.ServeHTTP(w, r)",
-      "\t\t${3:// Post-processing}",
+      "\t\t$3",
       "\t})",
       "}"
     ],

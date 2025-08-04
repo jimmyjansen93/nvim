@@ -1,0 +1,249 @@
+{
+  "Let Binding": {
+    "prefix": "let",
+    "body": [
+      "let ${1:name} = ${2:value} in",
+      "${3:expression}"
+    ],
+    "description": "Let binding"
+  },
+  "Function Definition": {
+    "prefix": "fun",
+    "body": [
+      "let ${1:function_name} ${2:args} =",
+      "\t${3:body}"
+    ],
+    "description": "Function definition"
+  },
+  "Recursive Function": {
+    "prefix": "rec",
+    "body": [
+      "let rec ${1:function_name} ${2:args} =",
+      "\t${3:body}"
+    ],
+    "description": "Recursive function definition"
+  },
+  "Pattern Match": {
+    "prefix": "match",
+    "body": [
+      "match ${1:expression} with",
+      "| ${2:pattern1} -> ${3:result1}",
+      "| ${4:pattern2} -> ${5:result2}",
+      "| _ -> ${6:default}"
+    ],
+    "description": "Pattern matching"
+  },
+  "Type Definition": {
+    "prefix": "type",
+    "body": [
+      "type ${1:type_name} = ${2:definition}"
+    ],
+    "description": "Type definition"
+  },
+  "Variant Type": {
+    "prefix": "variant",
+    "body": [
+      "type ${1:type_name} =",
+      "\t| ${2:Constructor1}",
+      "\t| ${3:Constructor2} of ${4:type}",
+      "\t| ${5:Constructor3} of ${6:type} * ${7:type}"
+    ],
+    "description": "Variant type definition"
+  },
+  "Record Type": {
+    "prefix": "record",
+    "body": [
+      "type ${1:record_name} = {",
+      "\t${2:field1} : ${3:type1};",
+      "\t${4:field2} : ${5:type2};",
+      "}"
+    ],
+    "description": "Record type definition"
+  },
+  "Module": {
+    "prefix": "module",
+    "body": [
+      "module ${1:ModuleName} = struct",
+      "\t${2:content}",
+      "end"
+    ],
+    "description": "Module definition"
+  },
+  "Module Type": {
+    "prefix": "sig",
+    "body": [
+      "module type ${1:SIGNATURE} = sig",
+      "\t${2:declarations}",
+      "end"
+    ],
+    "description": "Module type signature"
+  },
+  "If Then Else": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} then",
+      "\t${2:then_branch}",
+      "else",
+      "\t${3:else_branch}"
+    ],
+    "description": "If-then-else expression"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1:i} = ${2:start} to ${3:end} do",
+      "\t${4:body}",
+      "done"
+    ],
+    "description": "For loop"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while ${1:condition} do",
+      "\t${2:body}",
+      "done"
+    ],
+    "description": "While loop"
+  },
+  "Try With": {
+    "prefix": "try",
+    "body": [
+      "try",
+      "\t${1:expression}",
+      "with",
+      "| ${2:Exception} -> ${3:handler}",
+      "| _ -> ${4:default_handler}"
+    ],
+    "description": "Exception handling"
+  },
+  "List Comprehension": {
+    "prefix": "list",
+    "body": [
+      "[${1:expression} | ${2:variable} <- ${3:list}; ${4:condition}]"
+    ],
+    "description": "List comprehension (if using extensions)"
+  },
+  "Array": {
+    "prefix": "array",
+    "body": [
+      "[| ${1:element1}; ${2:element2} |]"
+    ],
+    "description": "Array literal"
+  },
+  "List": {
+    "prefix": "lst",
+    "body": [
+      "[${1:element1}; ${2:element2}]"
+    ],
+    "description": "List literal"
+  },
+  "Option Some": {
+    "prefix": "some",
+    "body": [
+      "Some ${1:value}"
+    ],
+    "description": "Option Some constructor"
+  },
+  "Option None": {
+    "prefix": "none",
+    "body": [
+      "None"
+    ],
+    "description": "Option None constructor"
+  },
+  "Option Match": {
+    "prefix": "optmatch",
+    "body": [
+      "match ${1:option} with",
+      "| Some ${2:value} -> ${3:some_case}",
+      "| None -> ${4:none_case}"
+    ],
+    "description": "Pattern match on option"
+  },
+  "Result Ok": {
+    "prefix": "ok",
+    "body": [
+      "Ok ${1:value}"
+    ],
+    "description": "Result Ok constructor"
+  },
+  "Result Error": {
+    "prefix": "error",
+    "body": [
+      "Error ${1:error_value}"
+    ],
+    "description": "Result Error constructor"
+  },
+  "Result Match": {
+    "prefix": "resmatch",
+    "body": [
+      "match ${1:result} with",
+      "| Ok ${2:value} -> ${3:ok_case}",
+      "| Error ${4:error} -> ${5:error_case}"
+    ],
+    "description": "Pattern match on result"
+  },
+  "Printf": {
+    "prefix": "printf",
+    "body": [
+      "Printf.printf \"${1:format}\" ${2:args}"
+    ],
+    "description": "Printf statement"
+  },
+  "Open Module": {
+    "prefix": "open",
+    "body": [
+      "open ${1:ModuleName}"
+    ],
+    "description": "Open module statement"
+  },
+  "Class Definition": {
+    "prefix": "class",
+    "body": [
+      "class ${1:class_name} =",
+      "object (self)",
+      "\t${2:methods_and_fields}",
+      "end"
+    ],
+    "description": "Class definition"
+  },
+  "Method": {
+    "prefix": "method",
+    "body": [
+      "method ${1:method_name} ${2:args} =",
+      "\t${3:body}"
+    ],
+    "description": "Class method"
+  },
+  "Dune File": {
+    "prefix": "dune",
+    "body": [
+      "(executable",
+      " (public_name ${1:name})",
+      " (name ${2:main})",
+      " (libraries ${3:dependencies}))"
+    ],
+    "description": "Basic dune file for executable"
+  },
+  "Dune Library": {
+    "prefix": "dunelib",
+    "body": [
+      "(library",
+      " (public_name ${1:lib_name})",
+      " (name ${2:internal_name})",
+      " (libraries ${3:dependencies}))"
+    ],
+    "description": "Basic dune file for library"
+  },
+  "Test": {
+    "prefix": "test",
+    "body": [
+      "let test_${1:function_name} () =",
+      "\tlet expected = ${2:expected} in",
+      "\tlet actual = ${3:function_call} in",
+      "\tassert (expected = actual)"
+    ],
+    "description": "Simple test function"
+  }
+}

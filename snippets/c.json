@@ -5,7 +5,7 @@
       "#ifndef ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}}",
       "#define ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}}",
       "",
-      "${0:/* Content */}",
+      "$0",
       "",
       "#endif /* ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}_H/}} */"
     ],
@@ -18,7 +18,7 @@
       "#include <stdlib.h>",
       "",
       "int main(int argc, char *argv[]) {",
-      "\t${1:/* Implementation */}",
+      "\t$1",
       "\treturn 0;",
       "}"
     ],
@@ -33,7 +33,7 @@
       "\t\treturn ${6:-1};",
       "\t}",
       "\t",
-      "\t${7:/* Implementation */}",
+      "\t$7",
       "\t",
       "\treturn ${8:0};",
       "}"
@@ -60,7 +60,7 @@
       "\treturn ${4:-1};",
       "}",
       "",
-      "${5:/* Use ptr */}",
+      "$5",
       "",
       "free(${2:ptr});",
       "${2:ptr} = NULL;"
@@ -76,7 +76,7 @@
       "\treturn ${4:-1};",
       "}",
       "",
-      "${5:/* File operations */}",
+      "$5",
       "",
       "fclose(${1:file});"
     ],
@@ -86,7 +86,7 @@
     "prefix": "for",
     "body": [
       "for (${1:int i = 0}; ${2:i < length}; ${3:i++}) {",
-      "\t${4:/* Loop body */}",
+      "\t$4",
       "}"
     ],
     "description": "Standard for loop"
@@ -95,9 +95,9 @@
     "prefix": "while",
     "body": [
       "while (${1:condition}) {",
-      "\t${2:/* Loop body */}",
+      "\t$2",
       "\t",
-      "\t${3:/* Update condition */}",
+      "\t$3",
       "}"
     ],
     "description": "While loop with condition"
@@ -107,15 +107,15 @@
     "body": [
       "switch (${1:variable}) {",
       "\tcase ${2:value1}:",
-      "\t\t${3:/* Case 1 */}",
+      "\t\t$3",
       "\t\tbreak;",
       "\t",
       "\tcase ${4:value2}:",
-      "\t\t${5:/* Case 2 */}",
+      "\t\t$5",
       "\t\tbreak;",
       "\t",
       "\tdefault:",
-      "\t\t${6:/* Default case */}",
+      "\t\t$6",
       "\t\tbreak;",
       "}"
     ],
@@ -142,7 +142,7 @@
       "strncpy(${1:str}, \"${4:content}\", ${2:size} - 1);",
       "${1:str}[${2:size} - 1] = '\\0';",
       "",
-      "${5:/* Use string */}",
+      "$5",
       "",
       "free(${1:str});",
       "${1:str} = NULL;"

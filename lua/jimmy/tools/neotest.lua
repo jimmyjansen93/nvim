@@ -17,6 +17,7 @@ return {
       "marilari88/neotest-vitest",
       "arthur944/neotest-bun",
       "lawrence-laz/neotest-zig",
+      "nvim-neotest/neotest-vim-test",
     },
     config = function()
       require("neotest").setup({
@@ -40,6 +41,9 @@ return {
               "-count=1",
               "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
             },
+          }),
+          require("neotest-vim-test")({
+            ignore_file_types = { "python", "vim", "lua", "javascript", "typescript", "go", "zig" },
           }),
         },
       })

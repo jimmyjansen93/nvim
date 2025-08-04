@@ -3,7 +3,7 @@
     "prefix": "fnr",
     "body": [
       "fn ${1:function_name}(${2:parameters}) -> Result<${3:T}, ${4:Error}> {",
-      "\t${5:// Implementation}",
+      "\t$5",
       "\tOk(${6:value})",
       "}"
     ],
@@ -67,7 +67,7 @@
     "prefix": "implt",
     "body": [
       "impl ${1:Trait} for ${2:Type} {",
-      "\t${3:// Trait methods}",
+      "\t$3",
       "\t$0",
       "}"
     ],
@@ -77,7 +77,7 @@
     "prefix": "async",
     "body": [
       "async fn ${1:function_name}(${2:parameters}) -> Result<${3:T}, ${4:Error}> {",
-      "\t${5:// Async implementation}",
+      "\t$5",
       "\tOk(${6:value})",
       "}"
     ],
@@ -92,7 +92,7 @@
       "",
       "\t#[test]",
       "\tfn ${1:test_name}() {",
-      "\t\t${2:// Test implementation}",
+      "\t\t$2",
       "\t\tassert_eq!(${3:actual}, ${4:expected});",
       "\t}",
       "",
@@ -120,7 +120,7 @@
     "prefix": "main",
     "body": [
       "fn main() -> Result<(), Box<dyn std::error::Error>> {",
-      "\t${1:// Implementation}",
+      "\t$1",
       "\tOk(())",
       "}"
     ],
@@ -130,9 +130,9 @@
     "prefix": "iflet",
     "body": [
       "if let Some(${1:value}) = ${2:option} {",
-      "\t${3:// Handle Some case}",
+      "\t$3",
       "} else {",
-      "\t${4:// Handle None case}",
+      "\t$4",
       "}"
     ],
     "description": "Option handling with if let"
@@ -141,7 +141,7 @@
     "prefix": "lifetime",
     "body": [
       "fn ${1:function_name}<'${2:a}>(${3:param}: &'${2:a} ${4:Type}) -> &'${2:a} ${5:Type} {",
-      "\t${6:// Implementation}",
+      "\t$6",
       "}"
     ],
     "description": "Function with lifetime annotation"
@@ -224,7 +224,7 @@
       "\t\t.get_matches();",
       "",
       "\tlet ${5:input} = matches.value_of(\"${5:input}\").unwrap_or(\"${9:default}\");",
-      "\t${10:// Use the input}",
+      "\t$10",
       "}"
     ],
     "description": "Command line interface with clap"

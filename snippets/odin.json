@@ -1,0 +1,183 @@
+{
+  "Main Procedure": {
+    "prefix": "main",
+    "body": [
+      "main :: proc() {",
+      "\t$1",
+      "}"
+    ],
+    "description": "Main procedure entry point"
+  },
+  "Procedure": {
+    "prefix": "proc",
+    "body": [
+      "${1:function_name} :: proc(${2:args}) ${3:-> return_type} {",
+      "\t$4",
+      "\t$0",
+      "}"
+    ],
+    "description": "Procedure definition"
+  },
+  "Struct": {
+    "prefix": "struct",
+    "body": [
+      "${1:StructName} :: struct {",
+      "\t${2:field}: ${3:type},",
+      "\t$0",
+      "}"
+    ],
+    "description": "Struct definition"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "${1:EnumName} :: enum {",
+      "\t${2:VALUE1},",
+      "\t${3:VALUE2},",
+      "\t$0",
+      "}"
+    ],
+    "description": "Enum definition"
+  },
+  "Union": {
+    "prefix": "union",
+    "body": [
+      "${1:UnionName} :: union {",
+      "\t${2:type1},",
+      "\t${3:type2},",
+      "\t$0",
+      "}"
+    ],
+    "description": "Union definition"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} {",
+      "\t$2",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If Else": {
+    "prefix": "ifelse",
+    "body": [
+      "if ${1:condition} {",
+      "\t$2",
+      "} else {",
+      "\t$3",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1:i} in ${2:0}..<${3:n} {",
+      "\t$4",
+      "}"
+    ],
+    "description": "For loop with range"
+  },
+  "For Each": {
+    "prefix": "foreach",
+    "body": [
+      "for ${1:item} in ${2:collection} {",
+      "\t$3",
+      "}"
+    ],
+    "description": "For each loop"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "for ${1:condition} {",
+      "\t$2",
+      "}"
+    ],
+    "description": "While loop (using for)"
+  },
+  "Switch Statement": {
+    "prefix": "switch",
+    "body": [
+      "switch ${1:value} {",
+      "case ${2:case1}:",
+      "\t$3",
+      "case ${4:case2}:",
+      "\t$5",
+      "case:",
+      "\t$6",
+      "}"
+    ],
+    "description": "Switch statement"
+  },
+  "Dynamic Array": {
+    "prefix": "array",
+    "body": [
+      "${1:array_name} := make([dynamic]${2:type})",
+      "defer delete(${1:array_name})"
+    ],
+    "description": "Dynamic array with defer delete"
+  },
+  "Map": {
+    "prefix": "map",
+    "body": [
+      "${1:map_name} := make(map[${2:key_type}]${3:value_type})",
+      "defer delete(${1:map_name})"
+    ],
+    "description": "Map with defer delete"
+  },
+  "Context": {
+    "prefix": "context",
+    "body": [
+      "context.default_allocator = ${1:allocator}",
+      "defer context.default_allocator = ${2:previous_allocator}"
+    ],
+    "description": "Set context allocator with defer restore"
+  },
+  "Package Declaration": {
+    "prefix": "package",
+    "body": [
+      "package ${1:package_name}",
+      "",
+      "import \"core:fmt\"",
+      "",
+      "$0"
+    ],
+    "description": "Package declaration with basic import"
+  },
+  "Test Procedure": {
+    "prefix": "test",
+    "body": [
+      "test_${1:function_name} :: proc(t: ^testing.T) {",
+      "\t$2",
+      "\ttesting.expect_value(t, ${3:actual}, ${4:expected})",
+      "}"
+    ],
+    "description": "Test procedure"
+  },
+  "Error Handling": {
+    "prefix": "orelse",
+    "body": [
+      "${1:result} := ${2:function_call}() or_else {",
+      "\t$3",
+      "\treturn",
+      "}"
+    ],
+    "description": "Error handling with or_else"
+  },
+  "Defer": {
+    "prefix": "defer",
+    "body": [
+      "defer ${1:cleanup_function}()"
+    ],
+    "description": "Defer statement"
+  },
+  "Using Statement": {
+    "prefix": "using",
+    "body": [
+      "using ${1:namespace}"
+    ],
+    "description": "Using statement"
+  }
+}

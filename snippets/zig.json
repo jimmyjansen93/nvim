@@ -5,7 +5,7 @@
       "const std = @import(\"std\");",
       "",
       "pub fn main() !void {",
-      "\t${1:// Implementation}",
+      "\t$1",
       "}"
     ],
     "description": "Main function with std import"
@@ -14,7 +14,7 @@
     "prefix": "fn",
     "body": [
       "fn ${1:functionName}(${2:parameters}) ${3:!}${4:ReturnType} {",
-      "\t${5:// Implementation}",
+      "\t$5",
       "}"
     ],
     "description": "Function with optional error return"
@@ -23,7 +23,7 @@
     "prefix": "test",
     "body": [
       "test \"${1:test description}\" {",
-      "\t${2:// Test implementation}",
+      "\t${2:}",
       "\ttry std.testing.expect(${3:condition});",
       "}"
     ],
@@ -42,7 +42,7 @@
       "\t}",
       "",
       "\tpub fn deinit(self: *${1:StructName}) void {",
-      "\t\t${6:// Cleanup}",
+      "\t\t${6:}",
       "\t}",
       "};"
     ],
@@ -68,7 +68,7 @@
       "const ${1:memory} = try allocator.alloc(${2:type}, ${3:size});",
       "defer allocator.free(${1:memory});",
       "",
-      "${4:// Use memory}"
+      "${4:}"
     ],
     "description": "Allocation with cleanup"
   },
@@ -81,7 +81,7 @@
       "try ${1:list}.append(${4:value});",
       "",
       "for (${1:list}.items) |${5:item}| {",
-      "\t${6:// Process item}",
+      "\t${6:}",
       "}"
     ],
     "description": "ArrayList creation and usage"
@@ -95,28 +95,28 @@
       "try ${1:map}.put(${5:key}, ${6:value});",
       "",
       "if (${1:map}.get(${7:key})) |${8:value}| {",
-      "\t${9:// Use value}",
+      "\t${9:}",
       "}"
     ],
     "description": "HashMap creation and usage"
   },
   "For loop": {
     "prefix": "for",
-    "body": ["for (${1:slice}) |${2:item}| {", "\t${3:// Process item}", "}"],
+    "body": ["for (${1:slice}) |${2:item}| {", "\t${3:}", "}"],
     "description": "For loop over slice"
   },
   "For loop with index": {
     "prefix": "fori",
     "body": [
       "for (${1:slice}, 0..) |${2:item}, ${3:index}| {",
-      "\t${4:// Process item and index}",
+      "\t${4: and index}",
       "}"
     ],
     "description": "For loop with index"
   },
   "While loop": {
     "prefix": "while",
-    "body": ["while (${1:condition}) {", "\t${2:// Loop body}", "}"],
+    "body": ["while (${1:condition}) {", "\t$2", "}"],
     "description": "While loop"
   },
   "Switch expression": {
@@ -139,7 +139,7 @@
     "prefix": "comptime",
     "body": [
       "fn ${1:functionName}(comptime ${2:param}: ${3:type}) ${4:ReturnType} {",
-      "\t${5:// Comptime implementation}",
+      "\t$5",
       "}"
     ],
     "description": "Comptime function"
@@ -191,7 +191,7 @@
     "body": [
       "${1:function_call}() catch |err| switch (err) {",
       "\t${2:ErrorType}.${3:SpecificError} => {",
-      "\t\t${4:// Handle specific error}",
+      "\t\t$4",
       "\t},",
       "\telse => return err,",
       "};"
@@ -202,9 +202,9 @@
     "prefix": "optional",
     "body": [
       "if (${1:optional_value}) |${2:value}| {",
-      "\t${3:// Handle Some case}",
+      "\t$3",
       "} else {",
-      "\t${4:// Handle null case}",
+      "\t$4",
       "}"
     ],
     "description": "Optional value handling"
@@ -217,7 +217,7 @@
       "});",
       "",
       "export fn ${2:zig_function}(${3:params}) ${4:return_type} {",
-      "\t${5:// Zig function callable from C}",
+      "\t$5",
       "}"
     ],
     "description": "C library import and export"
